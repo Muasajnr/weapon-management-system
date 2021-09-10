@@ -1,104 +1,56 @@
-# Codeigniter4-HMVC
+# CodeIgniter 4 Framework
 
-[![<ORG_NAME>](https://circleci.com/gh/MufidJamaluddin/Codeigniter4-HMVC.svg?style=svg)](https://circleci.com/gh/MufidJamaluddin/Codeigniter4-HMVC)
+## What is CodeIgniter?
 
-This is Hierarchical model–view–controller (HMVC) project starter using CodeIgniter4 framework. By HMVC architecture, I hope we could make scalable web application. 
+CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
+More information can be found at the [official site](http://codeigniter.com).
 
-## Prerequisites
+This repository holds the distributable version of the framework,
+including the user guide. It has been built from the
+[development repository](https://github.com/codeigniter4/CodeIgniter4).
 
-1. PHP 7.2 or above
-2. Composer version 1.10 or above
-3. intl PHP extension (for formatting currency, number and date/time, see [CodeIgniter4 Docs](https://codeigniter4.github.io/userguide/intro/requirements.html) )
-4. xdebug PHP extension (for testing purpose only, optional)
-5. php_sqlite3 PHP extension (for testing purpose only, very optional)
+More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
 
-## How to use
-
-1. Run ```composer create-project mufidjamaluddin/codeigniter4-hmvc```, rename folder codeigniter4-hmvc, goto folder inside.
-2. Configure the app by change the ```env``` file.
-3. Run ```php spark serve``` for run the app.
-
-## Make new module
-
-1. Create module folder in app/Modules folder (example: app/Module/YourModule).
-2. Create Config, Controllers, Models, and Modules by run ```php spark module:create YourModule```. You can see your page in ```http://localhost:8080/YourModule``` by run ```php spark serve --port=8080``` (in the next stage, use ```http://localhost:8080/YourModule/YourController/YourMethod```.
-3. Update or Add Controller file and add your methods and test cases in tests folder
-4. Update module routes by run ```php spark route:update``` for create/change all module routes
-   OR
-   ```php spark route:update -m YourModule``` for create/change only one module.
-5. Run ```composer test``` for run your test cases (optional, see [CodeIgniter4 Docs](https://codeigniter4.github.io/userguide/testing/index.html) or [PHPUnit Docs](https://phpunit.readthedocs.io/en/9.1/) )
-
-## Notes
-
-Always run ```php spark route:update``` after create or change module, controller, or controller methods except if you want to configure module route manually.
-
-## Command Prompt
-
-### Command route:update parameter
-
-Parameters:
-    '-n' = Set module namespace (default App\Modules)
-    '-i' = Set route with /index path without parameter (true/false, default true)
-    '-m' = Set route one module name to be create/update (app/Modules/YourModuleName)
-    '-f' = Set module folder inside app path (default Modules)
+The user guide corresponding to this version of the framework can be found
+[here](https://codeigniter4.github.io/userguide/).
 
 
-Usage command ```php spark route:update -i false -m YourModule```
+## Important Change with index.php
 
-### Command module:create parameter
+`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
+for better security and separation of components.
 
-Example ```php spark module:create invoice```
+This means that you should configure your web server to "point" to your project's *public* folder, and
+not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
+framework are exposed.
 
-First parameter (invoice) is your new module.
+**Please** read the user guide for a better explanation of how CI4 works!
 
+## Repository Management
 
-### PHPUnit
+We use Github issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
+We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
+FEATURE REQUESTS.
 
-You can run all of your test cases by run ```composer test```
+This repository is a "distribution" one, built by our release preparation script.
+Problems with it can be raised on our forum, or as issues in the main repository.
 
-### Other Command
+## Contributing
 
-You can get all command prompt list by run ```php spark list``` and composer command in composer.json > scripts.
+We welcome contributions from the community.
 
-## HMVC Structure
+Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md) section in the development repository.
 
-### Default Structure
+## Server Requirements
 
-By default, there is the structure of Codeigniter4-HMVC.
+PHP version 7.3 or higher is required, with the following extensions installed:
 
-```
-app
-   \Modules
-       \{YourModule}
-            \Config
-                Routes.php
-            \Controllers
-                BaseController.php
-                {YourController}.php
-            \Models
-                {YourModel}.php
-    \Views
-        \template
-            {YourTemplate}.php
-        \{your view module folder}
-            {Your View}.php
-    ...
-    
-    \tests
-        \unit
-            ...
-        \integration
-            \Modules
-                \{YourModule}
-                    {YourController}.php
-        ...
-```
+- [intl](http://php.net/manual/en/intl.requirements.php)
+- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
 
-### Custom Structure
+Additionally, make sure that the following extensions are enabled in your PHP:
 
-You can structuring your module freely, because CodeIgniter4 use PSR4. 
-If you want to change the structure of Routes.php in Config Module folder or the structure of Module Controllers, you must change app/Config/Routes.php in HMVC Routing section and modify RouteUpdate.php in app/Commands folder.
-
-## Contribute
-
-You can contribute for extend CodeIgniter4 capabilities or add command prompt for development use by fork this repository. After that, you can make pull request.
+- json (enabled by default - don't turn it off)
+- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php)
+- xml (enabled by default - don't turn it off)
