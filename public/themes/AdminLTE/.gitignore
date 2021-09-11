@@ -70,4 +70,4 @@ test.html
 ad.js
 /.cache/
 
-/public/themes/*
+public/themes/*
