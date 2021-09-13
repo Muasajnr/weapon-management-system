@@ -1,0 +1,67 @@
+# Database Design
+
+## Tables
+- jenis_inventaris
+    - id
+    - name
+    - created_at
+    - updated_at
+    - deleted_at
+- jenis_senpi
+    - id
+    - name
+    - created_at
+    - updated_at
+    - deleted_at
+- merk_senpi
+    - id
+    - name
+    - created_at
+    - updated_at
+    - deleted_at
+- barang
+    - id
+    - jenis_inventaris_id [nullable]
+    - jenis_senpi_id [nullable]
+    - merk_senpi_id [nullable]
+    - senpi_number
+    - bpsa_number
+    - stock_amount
+    - unit_name
+    - image_senpi
+    - condition [enum(good, bad)]
+    - desc
+    - created_at
+    - updated_at
+    - deleted_at
+- peminjaman
+    - id
+    - barang_id
+    - surat_number
+    - surat_date
+    - surat_image
+    - used_amount
+    - is_returned (enum(0, 1))
+    - desc
+    - created_at
+    - updated_at
+    - deleted_at
+- pengembalian
+    - id
+    - peminjaman_id
+    - surat_number
+    - surat_date
+    - surat_image
+    - desc
+    - created_at
+    - updated_at
+    - deleted_at
+- users
+    - id
+    - fullname
+    - username
+    - email
+    - password
+    - created_at
+    - updated_at
+    - deleted_at

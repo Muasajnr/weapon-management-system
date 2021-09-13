@@ -79,13 +79,13 @@
             <li class="nav-item">
                 <a href="#" class="nav-link">
                 <i class="fas fa-plus nav-icon"></i>
-                <p>Barang Masuk</p>
+                <p>Pengembalian</p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">
                 <i class="fas fa-minus nav-icon"></i>
-                <p>Barang Keluar</p>
+                <p>Peminjaman</p>
                 </a>
             </li>
             <li class="nav-item">

@@ -55,5 +55,7 @@
     <script src="<?=site_url('themes/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js')?>"></script>
     <!-- AdminLTE App -->
     <script src="<?=site_url('themes/AdminLTE/dist/js/adminlte.min.js')?>"></script>
+    <!-- Custom JS -->
+    <?=$this->renderSection('custom-js')?>
 </body>
 </html>
