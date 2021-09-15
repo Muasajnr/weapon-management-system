@@ -1,57 +1,58 @@
 # Database Design
 
 ## Tables
-- jenis_inventaris
+- inventory_types
     - id
     - name
     - created_at
     - updated_at
     - deleted_at
-- jenis_senpi
+- firearms_types
     - id
     - name
     - created_at
     - updated_at
     - deleted_at
-- merk_senpi
+- firearms_brands
     - id
     - name
     - created_at
     - updated_at
     - deleted_at
-- barang
+- firearms
     - id
-    - jenis_inventaris_id [nullable]
-    - jenis_senpi_id [nullable]
-    - merk_senpi_id [nullable]
-    - senpi_number
+    - inventory_type_id
+    - firearms_type_id
+    - firearms_brand_id
+    - firearms_number
     - bpsa_number
-    - stock_amount
-    - unit_name
-    - image_senpi
     - condition [enum(good, bad)]
+    - description
+    - created_at
+    - updated_at
+    - deleted_at
+- borrowings
+    - id
+    - firearms_id
+    - document_id
     - desc
     - created_at
     - updated_at
     - deleted_at
-- peminjaman
+- documents
     - id
-    - barang_id
-    - surat_number
-    - surat_date
-    - surat_image
-    - used_amount
-    - is_returned (enum(0, 1))
+    - doc_name
+    - doc_number
+    - doc_date
+    - doc_image
     - desc
     - created_at
     - updated_at
     - deleted_at
-- pengembalian
+- returnings
     - id
-    - peminjaman_id
-    - surat_number
-    - surat_date
-    - surat_image
+    - borrowing_id
+    - document_id
     - desc
     - created_at
     - updated_at
@@ -62,6 +63,7 @@
     - username
     - email
     - password
+    - level [admin, user]
     - created_at
     - updated_at
     - deleted_at

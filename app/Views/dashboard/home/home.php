@@ -129,47 +129,41 @@
                         <table class="table m-0">
                             <thead>
                                 <tr>
-                                    <th width="20%">No. Senpi</th>
-                                    <th width="5%">Stok</th>
-                                    <th width="30%">Nama</th>
-                                    <th>Gambar</th>
-                                    <th width="20%">Deskripsi</th>
+                                    <th>No.</th>
+                                    <th>Stok</th>
+                                    <th>Nama</th>
+                                    <th>Deskripsi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><strong>Wischo78111</strong></td>
+                                    <td>1.</td>
                                     <td>40</td>
                                     <td>Pistol</td>
-                                    <td><img width="50%" height="50%" src="<?=site_url('assets/images/gun-14014.png')?>" alt="Pistol"></td>
                                     <td>Senjata api</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>OR9842</strong></td>
+                                    <td>2.</td>
                                     <td>40</td>
                                     <td>Pistol</td>
-                                    <td><img width="50%" height="50%" src="<?=site_url('assets/images/gun-14014.png')?>" alt="Pistol"></td>
                                     <td>Senjata api</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>OR9842</strong></td>
+                                    <td>3.</td>
                                     <td>40</td>
                                     <td>Pistol</td>
-                                    <td><img width="50%" height="50%" src="<?=site_url('assets/images/gun-14014.png')?>" alt="Pistol"></td>
                                     <td>Senjata api</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>OR9842</strong></td>
+                                    <td>4.</td>
                                     <td>40</td>
                                     <td>Pistol</td>
-                                    <td><img width="50%" height="50%" src="<?=site_url('assets/images/gun-14014.png')?>" alt="Pistol"></td>
                                     <td>Senjata api</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>OR9842</strong></td>
+                                    <td>5.</td>
                                     <td>40</td>
                                     <td>Pistol</td>
-                                    <td><img width="50%" height="50%" src="<?=site_url('assets/images/gun-14014.png')?>" alt="Pistol"></td>
                                     <td>Senjata api</td>
                                 </tr>
                             </tbody>
