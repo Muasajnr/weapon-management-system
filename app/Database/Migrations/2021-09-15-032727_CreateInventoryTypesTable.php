@@ -4,19 +4,17 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateDocumentsTable extends Migration
+class CreateInventoryTypesTable extends Migration
 {
-    private $tableName = 'documents';
+    private $tableName = 'inventory_types';
 
     public function up()
     {
         $this->db->disableForeignKeyChecks();
 
         $fields = [
-            'doc_name'      => ['type' => 'varchar', 'constraint' => 255, 'null' => false],
-            'doc_number'    => ['type' => 'varchar', 'constraint' => 50, 'null' => false],
-            'doc_date'      => ['type' => 'date', 'null' => false],
-            'doc_image'     => ['type' => 'varchar', 'constraint' => 255, 'null' => false],
+            'name'          => ['type' => 'varchar', 'constraint' => 255, 'null' => false],
+            'desc'          => ['type' => 'text', 'null' => true],
             'created_at'    => ['type' => 'datetime', 'null' => true],
             'updated_at'    => ['type' => 'datetime', 'null' => true],
             'deleted_at'    => ['type' => 'datetime', 'null' => true],
@@ -25,8 +23,7 @@ class CreateDocumentsTable extends Migration
         $this->forge->addField('id');
         $this->forge->addField($fields);
 
-        $this->forge->addUniqueKey('doc_name');
-        $this->forge->addUniqueKey('doc_number');
+        $this->forge->addUniqueKey('name');
 
         $this->forge->createTable($this->tableName);
 

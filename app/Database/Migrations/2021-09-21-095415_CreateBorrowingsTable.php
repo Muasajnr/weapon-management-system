@@ -4,16 +4,17 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateInventoryTypeTable extends Migration
+class CreateBorrowingsTable extends Migration
 {
-    private $tableName = 'inventory_types';
+    private $tableName = 'borrowings';
 
     public function up()
     {
         $this->db->disableForeignKeyChecks();
 
         $fields = [
-            'name'          => ['type' => 'varchar', 'constraint' => 255, 'null' => false],
+            'firearm_id'   => ['type' => 'int', 'constraint' => 9, 'null' => false],
+            'document_id'   => ['type' => 'int', 'constraint' => 9, 'null' => false],
             'desc'          => ['type' => 'text', 'null' => true],
             'created_at'    => ['type' => 'datetime', 'null' => true],
             'updated_at'    => ['type' => 'datetime', 'null' => true],
@@ -23,9 +24,10 @@ class CreateInventoryTypeTable extends Migration
         $this->forge->addField('id');
         $this->forge->addField($fields);
 
-        $this->forge->addUniqueKey('name');
+        $this->forge->addForeignKey('firearm_id', 'firearms', 'id');
+        $this->forge->addForeignKey('document_id', 'documents', 'id');
 
-        $this->forge->createTable($tableName);
+        $this->forge->createTable($this->tableName);
 
         $this->db->enableForeignKeyChecks();
     }
@@ -34,7 +36,7 @@ class CreateInventoryTypeTable extends Migration
     {
         $this->db->disableForeignKeyChecks();
 
-        $this->forge->dropTable($tableName);
+        $this->forge->dropTable($this->tableName);
 
         $this->db->enableForeignKeyChecks();
     }

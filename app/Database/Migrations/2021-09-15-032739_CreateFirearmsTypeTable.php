@@ -25,7 +25,7 @@ class CreateFirearmsTypeTable extends Migration
 
         $this->forge->addUniqueKey('name');
 
-        $this->forge->createTable($tableName);
+        $this->forge->createTable($this->tableName);
 
         $this->db->enableForeignKeyChecks();
     }
@@ -34,7 +34,7 @@ class CreateFirearmsTypeTable extends Migration
     {
         $this->db->disableForeignKeyChecks();
 
-        $this->forge->dropTable($tableName);
+        $this->forge->dropTable($this->tableName);
 
         $this->db->enableForeignKeyChecks();
     }

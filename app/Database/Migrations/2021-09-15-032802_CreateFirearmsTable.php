@@ -21,9 +21,9 @@ class CreateFirearmsTable extends Migration
             'bpsa_number'       => ['type' => 'varchar', 'constraint' => 100, 'null' => false],
             'condition'         => ['type' => 'enum("good", "damage", "unknown")', 'default' => 'unknown', 'null' => false],
             'description'       => ['type' => 'text', 'null' => true],
-            'created_at'    => ['type' => 'datetime', 'null' => true],
-            'updated_at'    => ['type' => 'datetime', 'null' => true],
-            'deleted_at'    => ['type' => 'datetime', 'null' => true],
+            'created_at'        => ['type' => 'datetime', 'null' => true],
+            'updated_at'        => ['type' => 'datetime', 'null' => true],
+            'deleted_at'        => ['type' => 'datetime', 'null' => true],
         ];
 
         $this->forge->addField('id');
@@ -36,7 +36,7 @@ class CreateFirearmsTable extends Migration
         $this->forge->addForeignKey('firearms_type_id', 'firearms_types', 'id');
         $this->forge->addForeignKey('firearms_brand_id', 'firearms_brand_id', 'id');
 
-        $this->forge->createTable($tableName);
+        $this->forge->createTable($this->tableName);
 
         $this->db->enableForeignKeyChecks();
     }
@@ -45,7 +45,7 @@ class CreateFirearmsTable extends Migration
     {
         $this->db->disableForeignKeyChecks();
 
-        $this->forge->dropTable($tableName);
+        $this->forge->dropTable($this->tableName);
 
         $this->db->enableForeignKeyChecks();
     }
