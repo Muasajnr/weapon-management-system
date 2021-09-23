@@ -108,13 +108,13 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $appTimezone = 'America/Chicago';
+    public $appTimezone = 'Asia/Jakarta';
 
     /**
      * --------------------------------------------------------------------------
      * Default Character Set
      * --------------------------------------------------------------------------
-     *
+     *111fdh 1nFC XZVC;
      * This determines which character set is used by default in various methods
      * that require a character set to be provided.
      *

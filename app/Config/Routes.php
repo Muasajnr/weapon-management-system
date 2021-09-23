@@ -33,11 +33,20 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->get('/login', 'Login::index');
-$routes->post('/login', 'Login::handleLogin');
+
+/** restful api */
+$routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) {
+    $routes->post('login', 'LoginAPI::handleLogin');
+});
 
 /** dashboard routes */
-$routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function($routes) {
-    $routes->get('home', 'Dashboard::index');
+$routes->group('dashboard', ['namespace' => 'App\Controllers\Admin'], function($routes) {
+    $routes->get('/', 'Dashboard::index');
+    $routes->get('home', 'Dashboard::home');
+});
+
+$routes->group('test', ['namespace' => 'App\Controllers\TestCIFeatures'], function($routes) {
+    $routes->get('test_time_now', 'OnlyTest::testTimeNow');
 });
 /*
  * --------------------------------------------------------------------
