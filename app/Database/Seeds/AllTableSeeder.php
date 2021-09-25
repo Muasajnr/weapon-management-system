@@ -9,5 +9,6 @@ class AllTableSeeder extends Seeder
     public function run()
     {
         $this->call('UsersTableSeeder');
+        $this->call('InventoryTypesTableSeeder');
     }
 }

@@ -27,6 +27,19 @@
 }
 </style>
 <?=$this->endSection()?>
+
+<?=$this->section('custom-header-js')?>
+<script>
+const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+if (accessToken && !isTokenExpired(accessToken)) {
+    window.location.href = '<?=site_url('/dashboard')?>';
+} else {
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_KEY);
+}
+</script>
+<?=$this->endSection()?>
+
 <?=$this->section('content') ?>
 <div class="login-box">
     <!-- /.login-logo -->
@@ -104,9 +117,13 @@ $(function() {
                 data: loginData,
                 success: function(res) {
                     $('.lds-dual-ring').hide();
-                    const authToken = res.data.token;
-                    localStorage.setItem('auth_token', authToken);
+                    const resAccessToken = res.data.access_token;
+                    const resRefreshToken = res.data.refresh_token;
+
+                    localStorage.setItem(ACCESS_TOKEN_KEY, resAccessToken);
+                    localStorage.setItem(REFRESH_TOKEN_KEY, resRefreshToken);
                     
+                    $('.text-login-msg').text('');
                     $('.text-login-msg').show();
                     $('.text-login-msg').removeClass('text-danger');
                     $('.text-login-msg').addClass('text-success');
@@ -124,13 +141,15 @@ $(function() {
                 error: function(err) {
                     console.log(err.responseJSON);
                     $('.lds-dual-ring').hide();
+
+                    $('.text-login-msg').text('');
                     $('.text-login-msg').show();
                     $('.text-login-msg').removeClass('text-success');
                     $('.text-login-msg').addClass('text-danger');
                     $('.text-login-msg').text(err.responseJSON.messages.error);
                 }
             });
-        }, 2000);
+        }, 1000);
     });
 });
 </script>

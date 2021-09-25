@@ -45,7 +45,7 @@ class UserModel extends Model
     // }
 
     public function checkUser(string $username) : ?array {
-        $sql = 'SELECT id, fullname, username, email, password, level, created_at, updated_at, deleted_at FROM '.$this->table.' WHERE username = ? LIMIT 1';
+        $sql = 'SELECT `id`, `fullname`, `username`, `email`, `password`, `level` FROM '.$this->table.' WHERE `username` = ? LIMIT 1';
         $result = $this->db->query($sql, [$username]);
 
         return $result->getRowArray();
@@ -60,5 +60,11 @@ class UserModel extends Model
         $result = $this->db->query($sql, [$username]);
         
         return $result->getRow()->count > 0 ? true : false;
+    }
+
+    public function findByUsername(string $username) : object {
+        $userdata = $this->where('username', $username)->first();
+        if (!$userdata) throw new Exception('Unauthorized');
+        return $userdata;
     }
 }

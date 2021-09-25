@@ -15,6 +15,12 @@
   <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/dist/css/adminlte.min.css')?>">
   <!-- View Style -->
   <?=$this->renderSection('custom-style')?>
+  <!-- JS Header Constants -->
+  <script src="<?=site_url('assets/js/constants.js')?>"></script>
+  <!-- JS Header Global Helper -->
+  <script src="<?=site_url('assets/js/global_helpers.js')?>"></script>
+  <!-- JS on Header -->
+  <?=$this->renderSection('custom-header-js')?>
 </head>
 <body class="hold-transition login-page">
 

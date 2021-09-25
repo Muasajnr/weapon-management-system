@@ -9,9 +9,14 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use App\Exceptions\InvalidAccessFromException;
 
-class JWTAuthApiFilter implements FilterInterface
+class ApiAuthFilter implements FilterInterface
 {
     use ResponseTrait;
+
+    public function __construct()
+    {
+        helper('jwt');
+    }
 
     /**
      * Do whatever processing this filter needs to do.
@@ -30,43 +35,25 @@ class JWTAuthApiFilter implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        $authHeader     = $request->getHeader('authorization');
-        // $accessFrom     = $request->getHeader('x-access-from');
-        $accessFrom     = $request->uri->getSegments()[0] !== 'api' ? 'web' : 'api';
+        $authHeader     = $request->getHeader('Authorization');
 
         try {
             if (is_null($authHeader)) {
                 throw new \Exception('Unauthorized');
             }
-
-            helper('jwt');
+            
             $encodedToken = getJWTFromRequest($authHeader->getValue());
-            $validateJWTFromRequest($encodedToken);
+            validateAccessToken($encodedToken);
+
             return $request;
-        }
-        // catch (InvalidAccessFromException $e) {
-        //     return Services::response()
-        //         ->setJSON([
-        //             'status'    => ResponseInterface::HTTP_UNAUTHORIZED,
-        //             'error'     => 'invalid_request',
-        //             'message'   => $e->getMessage(),
-        //         ])
-        //         ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
-        // }
-        catch (\Exception $e) {
-            if ($accessFrom === 'api') {
-                return Services::response()
+        } catch (\Exception $e) {
+            return Services::response()
                     ->setJSON([
                         'status'    => ResponseInterface::HTTP_UNAUTHORIZED,
                         'error'     => 'unauthorized',
                         'message' => $e->getMessage(),
                     ])
                     ->setStatusCode(ResponseInterface::HTTP_UNAUTHORIZED);
-            }
-
-            if ($accessFrom === 'web') {
-                return redirect()->to('/');
-            }
         }
     }
 

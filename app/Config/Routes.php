@@ -36,13 +36,26 @@ $routes->get('/login', 'Login::index');
 
 /** restful api */
 $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) {
-    $routes->post('login', 'LoginAPI::handleLogin');
+    $routes->post('login', 'AuthApi::handleLogin');
+    $routes->post('renew/token', 'AuthApi::renewAccessToken');
+    $routes->post('logout', 'AuthApi::handleLogout');
+
+    $routes->group('dashboard', ['namespace' => 'App\Controllers\Api'], function($routes) {
+        $routes->group('inventory-types', function($routes) {
+            $routes->get('/', 'InventoryTypeApi::index');
+            $routes->post('datatables', 'InventoryTypeApi::datatables');
+            $routes->put('(:segment)/update/status', 'InventoryTypeApi::updateStatus/$1');
+        });
+    });
 });
 
 /** dashboard routes */
-$routes->group('dashboard', ['namespace' => 'App\Controllers\Admin'], function($routes) {
-    $routes->get('/', 'Dashboard::index');
-    $routes->get('home', 'Dashboard::home');
+$routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard'], function($routes) {
+    $routes->get('/', 'Index::index');
+    $routes->get('home', 'Index::home', ['as' => 'home']);
+    $routes->get('jenis-inventaris', 'Index::inventory_types', ['as' => 'inventory_types']);
+    $routes->get('jenis-senjata-api', 'Index::firearms_types', ['as' => 'firearms_types']);
+    $routes->get('merk-senjata-api', 'Index::firearms_brands', ['as' => 'firearms_brands']);
 });
 
 $routes->group('test', ['namespace' => 'App\Controllers\TestCIFeatures'], function($routes) {

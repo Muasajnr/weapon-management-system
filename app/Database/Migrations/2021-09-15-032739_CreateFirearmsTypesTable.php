@@ -4,9 +4,9 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateFirearmsTypeTable extends Migration
+class CreateFirearmsTypesTable extends Migration
 {
-    private $tableName = 'firearms_type';
+    private $tableName = 'firearms_types';
 
     public function up()
     {

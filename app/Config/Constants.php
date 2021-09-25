@@ -83,4 +83,6 @@ defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125); // highest auto
  | Custom Constants
  | --------------------------------------------------------------------------
  */
-defined('JWT_KEY')  || define('JWT_KEY', md5(getenv('JWT_KEY')));
+defined('JWT_ACCESS_TOKEN')  || define('JWT_ACCESS_TOKEN', getenv('JWT_ACCESS_TOKEN'));
+defined('JWT_REFRESH_TOKEN')  || define('JWT_REFRESH_TOKEN', getenv('JWT_REFRESH_TOKEN'));
+defined('JWT_ACCESS_TOKEN_LIFETIME')  || define('JWT_ACCESS_TOKEN_LIFETIME', getenv('JWT_ACCESS_TOKEN_LIFETIME'));

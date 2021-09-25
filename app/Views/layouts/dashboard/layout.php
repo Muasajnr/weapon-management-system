@@ -11,6 +11,21 @@
     <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/fontawesome-free/css/all.min.css')?>">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/dist/css/adminlte.min.css')?>">
+    <!-- pace-progress -->
+    <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/pace-progress/themes/blue/pace-theme-flat-top.css')?>">
+    <!-- Custom Style -->
+    <?=$this->renderSection('custom-css')?>
+    <!-- JS Header Constants -->
+    <script src="<?=site_url('assets/js/constants.js')?>"></script>
+    <!-- JS Header Global Helper -->
+    <script src="<?=site_url('assets/js/global_helpers.js')?>"></script>
+    <script>
+    const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+    const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
+    if (!accessToken || !refreshToken || isTokenExpired(accessToken)) {
+        window.location.href = '<?=site_url('/login')?>';
+    }
+    </script>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -55,7 +70,35 @@
     <script src="<?=site_url('themes/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js')?>"></script>
     <!-- AdminLTE App -->
     <script src="<?=site_url('themes/AdminLTE/dist/js/adminlte.min.js')?>"></script>
+    <!-- pace-progress -->
+    <script src="<?=site_url('themes/AdminLTE/plugins/pace-progress/pace.min.js')?>"></script>
     <!-- Custom JS -->
+    <script>
+    $(function() {
+        const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
+
+        $('#btn-logout').click(function(e) {
+            const logoutUrl = '<?=site_url('/api/logout')?>';
+            const logoutData = {
+                'token': refreshToken
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: logoutUrl,
+                dataType: 'json',
+                data: logoutData,
+                success: function(res) {
+                    localStorage.removeItem(ACCESS_TOKEN_KEY);
+                    localStorage.removeItem(REFRESH_TOKEN_KEY);
+                    window.location.href = '<?=site_url('/login')?>';
+                },
+                error: function(err) {
+                }
+            });
+        });
+    });
+    </script>
     <?=$this->renderSection('custom-js')?>
 </body>
 </html>

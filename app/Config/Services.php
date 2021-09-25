@@ -29,4 +29,19 @@ class Services extends BaseService
      *     return new \CodeIgniter\Example();
      * }
      */
+
+    public static function getAccessTokenKey() : string
+    {
+        return 'jwt_access_token_614eafd84465f';
+    }
+
+    public static function getRefreshTokenKey() : string
+    {
+        return 'jwt_refresh_token_614eafd8446ec';
+    }
+
+    public static function getAccessTokenLifetime() : int
+    {
+        return 3600;
+    }
 }

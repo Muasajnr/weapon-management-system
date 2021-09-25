@@ -15,7 +15,7 @@
     </ul>
 
     <!-- Right navbar links -->
-    <!-- <ul class="navbar-nav ml-auto"> -->
+    <ul class="navbar-nav ml-auto">
         <!-- Navbar Search -->
         <!-- <li class="nav-item">
             <a class="nav-link" data-widget="navbar-search" href="#" role="button">
@@ -127,6 +127,11 @@
             <i class="fas fa-th-large"></i>
             </a>
         </li> -->
-    <!-- </ul> -->
+        <li class="nav-item">
+            <a id="btn-logout" href="javascript:void(0)" class="nav-link">
+                <i class="fas fa-sign-out-alt nav-icon"></i>&nbsp;&nbsp;Logout
+            </a>
+        </li>
+    </ul>
 </nav>
 <!-- /.navbar -->
