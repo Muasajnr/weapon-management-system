@@ -21,8 +21,8 @@
                         </div>
                         <div class="form-group mb-0">
                             <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                                <input id="edit_is_active" name="is_active" type="checkbox" class="custom-control-input" id="customSwitch3">
-                                <label class="custom-control-label" for="customSwitch3">Aktifkan ?</label>
+                                <input id="edit_is_active" name="is_active" type="checkbox" class="custom-control-input">
+                                <label class="custom-control-label" for="edit_is_active">Aktifkan ?</label>
                             </div>
                         </div>
                     </div>

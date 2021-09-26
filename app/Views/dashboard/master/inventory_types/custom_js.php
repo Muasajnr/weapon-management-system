@@ -1,4 +1,5 @@
 <?=$this->section('custom-js')?>
+
 <!-- DataTables  & Plugins -->
 <script src="<?=site_url('themes/AdminLTE/plugins/datatables/jquery.dataTables.min.js')?>"></script>
 <script src="<?=site_url('themes/AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')?>"></script>
@@ -15,9 +16,6 @@
 <script src="<?=site_url('themes/AdminLTE/plugins/jquery-validation/additional-methods.min.js')?>"></script>
 
 <script>
-$(document).ajaxStart(function() {
-    Pace.restart();
-});
 $(function() {
     const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
 
@@ -125,12 +123,13 @@ $(function() {
                     type: 'PUT',
                     url: updateUrl,
                     dataType: 'json',
+                    data: JSON.stringify({
+                        "is_active": this.checked ? 1 : 0
+                    }),
                     contentType: 'application/json',
-                    data: {
-                        "is_active": this.checked
-                    },
                     headers: {
-                        'Authorization': 'Bearer ' + accessToken
+                        'Authorization': 'Bearer ' + accessToken,
+                        'X-Requested-With': 'XMLHttpRequest',
                     },
                     success: function(res) {
                         console.log(res);
@@ -142,12 +141,12 @@ $(function() {
                         table.ajax.reload()
                     },
                     error: function(err) {
-                        console.log(err.responseJSON);
+                        console.log(err);
                         $currChecked.prop('checked', !checkedValue);
                         Swal.fire(
                             'Gagal!',
                             'Status gagal diubah!',
-                            'danger'
+                            'error'
                         )
                     }
                 })
@@ -238,34 +237,37 @@ $(function() {
     $('#form-edit-inventory-type').validate({
         submitHandler: function(form, event) {
             event.preventDefault();
-            const newInventoryType = {
+            const itemId = $(form).find('input#edit_id').val();
+            const newData = {
                 "name": $(form).find('input#edit_name').val(),
                 "desc": $(form).find('textarea#edit_desc').val(),
                 "is_active": $(form).find('input#edit_is_active').is(':checked')
             };
             
-            const updateUrl = '<?=site_url('api/dashboard/inventory-types')?>';
+            const updateUrl = '<?=site_url('api/dashboard/inventory-types/')?>' + itemId + '/update';
 
             $.ajax({
-                type: 'POST',
-                url: createNewInventoryTypeUrl,
+                type: 'PUT',
+                url: updateUrl,
                 dataType: 'json',
-                data: newInventoryType,
+                data: JSON.stringify(newData),
+                contentType: 'application/json',
                 headers: {
-                    'Authorization': 'Bearer ' + accessToken
+                    'Authorization': 'Bearer ' + accessToken,
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 success: function(res) {
                     console.log(res);
 
                     Swal.fire({
                         icon: 'success',
-                        title: 'Data telah ditambahkan!',
+                        title: 'Data telah diubah!',
                         showConfirmButton: true,
                         timer: 2000
                     });
 
                     setTimeout(() => {
-                        $('#modal-add-new-inventory-type').modal('toggle');
+                        $('#modal-edit-inventory-type').modal('toggle');
                         table.ajax.reload();
                     }, 2000);
                 },
@@ -274,7 +276,7 @@ $(function() {
 
                     Swal.fire({
                         icon: 'error',
-                        title: 'Data gagal ditambahkan!',
+                        title: 'Data gagal diubah!',
                         text: err.responseJSON.message,
                         showConfirmButton: true,
                         timer: 2000

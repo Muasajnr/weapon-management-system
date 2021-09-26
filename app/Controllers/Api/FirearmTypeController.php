@@ -2,28 +2,26 @@
 
 namespace App\Controllers\Api;
 
-use App\Controllers\BaseController;
-use App\Models\InventoryTypeModel;
-use CodeIgniter\API\ResponseTrait;
+use App\Core\ApiController;
+use App\Models\FirearmTypeModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class InventoryTypeApi extends BaseController
+class FirearmTypeController extends ApiController
 {
-    use ResponseTrait;
 
     public function index()
     {
-        $inventoryTypeModel = new InventoryTypeModel();
+        $firearmTypeModel = new FirearmTypeModel();
         return $this->respond([
             'status'    => ResponseInterface::HTTP_OK,
-            'data'      => $inventoryTypeModel->findAll(),
+            'data'      => $firearmTypeModel->findAll(),
         ], ResponseInterface::HTTP_OK);
     }
 
     public function getOneData($id)
     {
-        $inventoryTypeModel = new InventoryTypeModel();
-        $data = $inventoryTypeModel->getOne($id);
+        $firearmTypeModel = new FirearmTypeModel();
+        $data = $firearmTypeModel->getOne($id);
 
         if (!$data)
             return $this->failNotFound();
@@ -44,17 +42,17 @@ class InventoryTypeApi extends BaseController
 
         $resData            = [];
 
-        $inventoryTypeModel = new InventoryTypeModel();
-        $data               = $inventoryTypeModel->getDatatables($searchQuery['value'], $start, $length, $order);
-        $recordsTotal       = $inventoryTypeModel->getTotalRecords($searchQuery['value'], $order);
-        $recordsFiltered    = $inventoryTypeModel->getTotalFilteredRecords();
+        $firearmTypeModel   = new FirearmTypeModel();
+        $data               = $firearmTypeModel->getDatatables($searchQuery['value'], $start, $length, $order);
+        $recordsTotal       = $firearmTypeModel->getTotalRecords($searchQuery['value'], $order);
+        $recordsFiltered    = $firearmTypeModel->getTotalFilteredRecords();
 
         $num = $start;
         foreach($data as $item) {
             $num++;
 
             $row        = [];
-            $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-inventory-type-id=\"$item->id\"></div>";
+            $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-item-id=\"$item->id\"></div>";
             $row[]      = "<input type=\"hidden\" value=\"$item->id\">{$num}.";
             $row[]      = "{$item->name}";
             $row[]      = "{$item->desc}";
@@ -82,8 +80,8 @@ class InventoryTypeApi extends BaseController
         if (is_null($isActive)) {
             return $this->failValidationErrors('is_active is required!', 'validation failed!');
         } else {
-            $inventoryTypeModel = new InventoryTypeModel();
-            $updateRes = $inventoryTypeModel->updateStatus($id, $isActive == 'true' ? 1 : 0);
+            $firearmTypeModel = new FirearmTypeModel();
+            $updateRes = $firearmTypeModel->updateStatus($id, $isActive == 'true' ? 1 : 0);
             if (!$updateRes) {
                 return $this->fail('Something went wrong!');
             } else {
@@ -119,8 +117,8 @@ class InventoryTypeApi extends BaseController
             return $this->failValidationErrors($this->validator->getErrors(), 'validation failed!');
         } else {
             $data = $this->request->getVar();
-            $inventoryTypeModel = new InventoryTypeModel();
-            $isAdded = $inventoryTypeModel->createNew((array) $data);
+            $firearmTypeModel = new FirearmTypeModel();
+            $isAdded = $firearmTypeModel->createNew((array) $data);
             if (!$isAdded) {
                 return $this->fail('Something went wrong!');
             } else {
@@ -155,14 +153,14 @@ class InventoryTypeApi extends BaseController
         if (!$this->validate($rules, $messages)) {
             return $this->failValidationErrors($this->validator->getErrors(), 'validation failed!');
         } else {
-            $inventoryTypeModel = new InventoryTypeModel();
-            $data = $inventoryTypeModel->getOne($id);
+            $firearmTypeModel = new FirearmTypeModel();
+            $data = $firearmTypeModel->getOne($id);
 
             if (!$data)
                 return $this->failNotFound();
             else {
                 $reqData = $this->request->getVar();
-                $isUpdated = $inventoryTypeModel->updateData($id, (array) $reqData);
+                $isUpdated = $firearmTypeModel->updateData($id, (array) $reqData);
                 if (!$isUpdated) {
                     return $this->fail('Something went wrong!');
                 } else {
@@ -177,12 +175,12 @@ class InventoryTypeApi extends BaseController
 
     public function delete($id)
     {
-        $inventoryTypeModel = new InventoryTypeModel();
-        if (!$inventoryTypeModel->isExist((int) $id)) {
+        $firearmTypeModel = new FirearmTypeModel();
+        if (!$firearmTypeModel->isExist((int) $id)) {
             return $this->failNotFound('Not found!');
         }
 
-        $isDeleted = $inventoryTypeModel->deleteData($id);
+        $isDeleted = $firearmTypeModel->deleteData($id);
         if (!$isDeleted) {
             return $this->fail('Failed to delete! please contact your administrator.');
         } else {
@@ -195,14 +193,14 @@ class InventoryTypeApi extends BaseController
 
     public function purge($id)
     {
-        $inventoryTypeModel = new InventoryTypeModel();
+        $inventoryTypeModel = new FirearmTypeModel();
     }
 
     public function deleteMultiple()
     {
         $ids = $this->request->getRawInput('ids')['ids'];
         
-        $inventoryTypeModel = new InventoryTypeModel();
+        $inventoryTypeModel = new FirearmTypeModel();
         $affectedRows = $inventoryTypeModel->deleteMultipleData($ids);
         if ($affectedRows != count($ids)) {
             return $this->fail('Only some data gets deleted! please contact your administrator.');
@@ -214,21 +212,5 @@ class InventoryTypeApi extends BaseController
         }
     }
 
-    private function buildActionButtons($id)
-    {
-        return "<div class=\"text-center\">
-                    <button type=\"button\" class=\"btn btn-primary btn-sm mr-2\" data-item-id=\"$id\"><i class=\"fas fa-eye\"></i></button>
-                    <button type=\"button\" class=\"btn btn-info btn-sm mr-2\" data-item-id=\"$id\"><i class=\"fas fa-pencil-alt\"></i></button>
-                    <button type=\"button\" class=\"btn btn-danger btn-sm\" data-item-id=\"$id\"><i class=\"fas fa-trash\"></i></button>
-                </div>";
-    }
 
-    public function buildStatusSwitch($id, $isActive)
-    {
-        $isChecked = $isActive ? 'checked' : '';
-        return "<div class=\"custom-control custom-switch custom-switch-off-danger custom-switch-on-success\">
-                    <input data-inventory-type-id=\"$id\" name=\"is_active\" type=\"checkbox\" class=\"custom-control-input\" id=\"customSwitch3\" $isChecked>
-                    <label class=\"custom-control-label\" for=\"customSwitch3\"></label>
-                </div>";
-    }
 }

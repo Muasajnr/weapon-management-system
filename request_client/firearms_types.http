@@ -1,0 +1,43 @@
+@base_url = http://inventory-barang.myprojects.com
+@active_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzI2NjIyNzAsIm5iZiI6MTYzMjY2MjI4MCwiZXhwIjoxNjMyNjY1ODcwLCJkYXRhIjp7ImlkIjoiMiIsImZ1bGxuYW1lIjoiVGVzdCBVc2VyIDIiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsImVtYWlsIjoidGVzdDJAZXhhbXBsZS5jb20iLCJsZXZlbCI6InVzZXIifX0.QcLTnwcX9c0icrt7ZHnvWcNcGJqBXLYKPSa9PJrI4rU
+
+
+# GET ALL
+get {{base_url}}/api/dashboard/firearms-types
+Authorization: Bearer {{active_token}}
+
+###
+
+# GET ONE
+get {{base_url}}/api/dashboard/firearms-types/1
+Authorization: Bearer {{active_token}}
+
+###
+
+# GET DATATABLES
+post {{base_url}}/api/dashboard/firearms-types/datatables
+Authorization: Bearer {{active_token}}
+
+###
+
+# CREATE
+post {{base_url}}/api/dashboard/firearms-types
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+
+{
+    "name": "AWM",
+    "desc": "Senjata AWM",
+    "is_active": 1
+}
+
+###
+
+# Update status
+put {{base_url}}/api/dashboard/firearms-types/3/update/status
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+
+{
+    "is_active": false
+}

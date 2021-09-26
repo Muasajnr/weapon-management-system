@@ -10,9 +10,7 @@ use App\Controllers\BaseController;
 use App\Models\UserModel;
 use App\Models\UserTokenModel;
 
-use Firebase\JWT\JWT;
-
-class AuthApi extends BaseController
+class AuthController extends BaseController
 {
     use ResponseTrait;
 

@@ -36,25 +36,50 @@ $routes->get('/login', 'Login::index');
 
 /** restful api */
 $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) {
-    $routes->post('login', 'AuthApi::handleLogin');
-    $routes->post('renew/token', 'AuthApi::renewAccessToken');
-    $routes->post('logout', 'AuthApi::handleLogout');
+    $routes->post('login', 'AuthController::handleLogin');
+    $routes->post('renew/token', 'AuthController::renewAccessToken');
+    $routes->post('logout', 'AuthController::handleLogout');
 
-    $routes->group('dashboard', ['namespace' => 'App\Controllers\Api'], function($routes) {
+    $routes->group('dashboard', function($routes) {
+        // home
+
+        // inventory types
         $routes->group('inventory-types', function($routes) {
-            $routes->get('/', 'InventoryTypeApi::index');
-            $routes->get('(:segment)', 'InventoryTypeApi::getOneData/$1');
+            $routes->get('/', 'InventoryTypeController::index');
+            $routes->get('(:segment)', 'InventoryTypeController::getOneData/$1');
             
-            $routes->post('/', 'InventoryTypeApi::create');
-            $routes->post('datatables', 'InventoryTypeApi::datatables');
+            $routes->post('/', 'InventoryTypeController::create');
+            $routes->post('datatables', 'InventoryTypeController::datatables');
 
-            $routes->put('(:segment)/update/status', 'InventoryTypeApi::updateStatus/$1');
-            $routes->put('(:segment)/update', 'InventoryTypeApi::update/$1');
+            $routes->put('(:segment)/update/status', 'InventoryTypeController::updateStatus/$1');
+            $routes->put('(:segment)/update', 'InventoryTypeController::update/$1');
 
-            $routes->delete('(:segment)/delete', 'InventoryTypeApi::delete/$1');
-            $routes->delete('delete/multiple', 'InventoryTypeApi::deleteMultiple');
-            $routes->delete('(:segment)/purge', 'InventoryTypeApi::purge/$1');
+            $routes->delete('(:segment)/delete', 'InventoryTypeController::delete/$1');
+            $routes->delete('delete/multiple', 'InventoryTypeController::deleteMultiple');
+            $routes->delete('(:segment)/purge', 'InventoryTypeController::purge/$1');
         });
+
+        // firearms types
+        $routes->group('firearms-types', function($routes) {
+            $routes->get('/', 'FirearmTypeController::index');
+            $routes->get('(:segment)', 'FirearmTypeController::getOneData/$1');
+            
+            $routes->post('/', 'FirearmTypeController::create');
+            $routes->post('datatables', 'FirearmTypeController::datatables');
+
+            $routes->put('(:segment)/update/status', 'FirearmTypeController::updateStatus/$1');
+            // $routes->put('(:segment)/update', 'FirearmTypeController::update/$1');
+
+            // $routes->delete('(:segment)/delete', 'FirearmTypeController::delete/$1');
+            // $routes->delete('delete/multiple', 'FirearmTypeController::deleteMultiple');
+            // $routes->delete('(:segment)/purge', 'FirearmTypeController::purge/$1');
+        });
+        // firearms brands
+        // firearms
+        // borrowings
+        // returnings
+        // documents
+        // reports
     });
 });
 

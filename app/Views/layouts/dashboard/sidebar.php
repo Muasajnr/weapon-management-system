@@ -57,13 +57,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?=route_to('firearms_types')?>" class="nav-link">
+                        <a href="<?=route_to('firearms_types')?>" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? (service('uri')->getSegment(3) == 'jenis-senjata-api' ? 'active' : '') : ''?>">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Data Jenis Senjata Api</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?=route_to('firearms_brands')?>" class="nav-link">
+                        <a href="<?=route_to('firearms_brands')?>" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? (service('uri')->getSegment(3) == 'merk-senjata-api' ? 'active' : '') : ''?>">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Data Merk Senjata Api</p>
                         </a>

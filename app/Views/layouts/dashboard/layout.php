@@ -78,6 +78,10 @@
     <script src="<?=site_url('themes/AdminLTE/plugins/sweetalert2/sweetalert2.min.js')?>"></script>
     <!-- Custom JS -->
     <script>
+    $(document).ajaxStart(function() {
+        Pace.restart();
+    });
+    
     $(function() {
         const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
 

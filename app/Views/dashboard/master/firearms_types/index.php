@@ -1,5 +1,16 @@
 <?=$this->extend('layouts/dashboard/layout')?>
+
+<?=$this->section('custom-css')?>
+
+<!-- DataTables -->
+<link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')?>">
+<link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')?>">
+<link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')?>">
+
+<?=$this->endSection()?>
+
 <?=$this->section('content')?>
+
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
@@ -9,8 +20,8 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Master</a></li>
-                    <li class="breadcrumb-item active">Jenis Inventaris</li>
+                <li class="breadcrumb-item"><a href="<?=route_to('master')?>">Master</a></li>
+                    <li class="breadcrumb-item active">Jenis Senjata Api</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -19,18 +30,53 @@
 <!-- /.content-header -->
 
 <!-- Main content -->
-
+<section class="content">
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <!-- <h3 class="card-title">DataTable with minimal features & hover style</h3> -->
+                <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#modal-add-new-firearm-type">
+                    <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Data
+                </button>
+                <button type="button" class="btn btn-danger" id="btn-delete-multiple">
+                    <i class="fas fa-trash"></i>&nbsp;&nbsp;Hapus banyak
+                </button>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+            <table id="data-firearms-types" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th><div class="text-center"><input id="checkAll" type="checkbox" name="multi_delete"></div></th>
+                        <th>No.</th>
+                        <th>Nama</th>
+                        <th>Deskripsi</th>
+                        <th>Status</th>
+                        <th>Tanggal Dibuat</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
 <!-- /.content -->
+
+<?php echo view('dashboard/master/firearms_types/add') ?>
+
+<?php echo view('dashboard/master/firearms_types/edit') ?>
+
 <?=$this->endSection()?>
 
-<?=$this->section('custom-js')?>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables/jquery.dataTables.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/js/buttons.html5.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/js/buttons.print.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js')?>"></script>
-<?=$this->endSection()?>
+<?php echo view('dashboard/master/firearms_types/custom_js') ?>

@@ -1,35 +1,40 @@
+@base_url = http://inventory-barang.myprojects.com
+@active_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzI2NjU5NTgsIm5iZiI6MTYzMjY2NTk2OCwiZXhwIjoxNjMyNjY5NTU4LCJkYXRhIjp7ImlkIjoiMiIsImZ1bGxuYW1lIjoiVGVzdCBVc2VyIDIiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsImVtYWlsIjoidGVzdDJAZXhhbXBsZS5jb20iLCJsZXZlbCI6InVzZXIifX0.uzUhXkgdvZvPKcbdvbi9tYtI6wYwTzTCp7ywk2Yka_g
+
+
 # GET ALL
 get http://inventory-barang.myprojects.com/api/dashboard/inventory-types
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzI2NTUwNDQsIm5iZiI6MTYzMjY1NTA1NCwiZXhwIjoxNjMyNjU4NjQ0LCJkYXRhIjp7ImlkIjoiMiIsImZ1bGxuYW1lIjoiVGVzdCBVc2VyIDIiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsImVtYWlsIjoidGVzdDJAZXhhbXBsZS5jb20iLCJsZXZlbCI6InVzZXIifX0.st8JH1TYmxHrVFFskpCWfdfuCF_To6_0dvUOKORznrs
+Authorization: Bearer {{active_token}}
 
 ###
 
 # GET ONE
 get http://inventory-barang.myprojects.com/api/dashboard/inventory-types/5
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzI2NTUwNDQsIm5iZiI6MTYzMjY1NTA1NCwiZXhwIjoxNjMyNjU4NjQ0LCJkYXRhIjp7ImlkIjoiMiIsImZ1bGxuYW1lIjoiVGVzdCBVc2VyIDIiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsImVtYWlsIjoidGVzdDJAZXhhbXBsZS5jb20iLCJsZXZlbCI6InVzZXIifX0.st8JH1TYmxHrVFFskpCWfdfuCF_To6_0dvUOKORznrs
+Authorization: Bearer {{active_token}}
 
 ###
 
 # GET DATATABLES
 post http://inventory-barang.myprojects.com/api/dashboard/inventory-types/datatables
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzI1OTI3NDIsIm5iZiI6MTYzMjU5Mjc1MiwiZXhwIjoxNjMyNTk2MzQyLCJkYXRhIjp7ImlkIjoiMiIsImZ1bGxuYW1lIjoiVGVzdCBVc2VyIDIiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsImVtYWlsIjoidGVzdDJAZXhhbXBsZS5jb20iLCJsZXZlbCI6InVzZXIifX0.gGQTPQxNEGILXckXnPUqyqa_-8M8hTvvpuei1Hdi8U4
+Authorization: Bearer {{active_token}}
 
 ###
 
 # UPDATE STATUS
-put http://inventory-barang.myprojects.com/api/dashboard/inventory-types/3/update/status
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzI2MTgyMzksIm5iZiI6MTYzMjYxODI0OSwiZXhwIjoxNjMyNjIxODM5LCJkYXRhIjp7ImlkIjoiMiIsImZ1bGxuYW1lIjoiVGVzdCBVc2VyIDIiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsImVtYWlsIjoidGVzdDJAZXhhbXBsZS5jb20iLCJsZXZlbCI6InVzZXIifX0.TzSimXg_rXZ5TjQPl9OTcJ8vWaMgY6O3gFwQph_o3qU
+put {{base_url}}/api/dashboard/inventory-types/29/update/status
+Authorization: Bearer {{active_token}}
 Content-Type: application/json
+X-Requested-With: XMLHttpRequest
 
 {
-    "is_active": true
+    "is_active": ""
 }
 
 ###
 
 # UPDATE DATA
 put http://inventory-barang.myprojects.com/api/dashboard/inventory-types/29/update
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzI2NTg4NDEsIm5iZiI6MTYzMjY1ODg1MSwiZXhwIjoxNjMyNjYyNDQxLCJkYXRhIjp7ImlkIjoiMiIsImZ1bGxuYW1lIjoiVGVzdCBVc2VyIDIiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsImVtYWlsIjoidGVzdDJAZXhhbXBsZS5jb20iLCJsZXZlbCI6InVzZXIifX0.Iq4z_NUOjg8XXcjctlNe9XYNVADs9Ff5p6UkJxWZF2Y
+Authorization: Bearer {{active_token}}
 Content-Type: application/json
 
 {
@@ -42,7 +47,7 @@ Content-Type: application/json
 
 # CREATE NEW
 post http://inventory-barang.myprojects.com/api/dashboard/inventory-types
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzI2MjE5NzYsIm5iZiI6MTYzMjYyMTk4NiwiZXhwIjoxNjMyNjI1NTc2LCJkYXRhIjp7ImlkIjoiMiIsImZ1bGxuYW1lIjoiVGVzdCBVc2VyIDIiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsImVtYWlsIjoidGVzdDJAZXhhbXBsZS5jb20iLCJsZXZlbCI6InVzZXIifX0.mMk1iy_I8FWFxriRtH4BWNLK3SzJ-Rs7zyShp8CG9mw
+Authorization: Bearer {{active_token}}
 Content-Type: application/json
 
 {
@@ -55,13 +60,13 @@ Content-Type: application/json
 
 # DELETE ONE
 delete http://inventory-barang.myprojects.com/api/dashboard/inventory-types/26/delete
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzI2Mjk5NTgsIm5iZiI6MTYzMjYyOTk2OCwiZXhwIjoxNjMyNjMzNTU4LCJkYXRhIjp7ImlkIjoiMiIsImZ1bGxuYW1lIjoiVGVzdCBVc2VyIDIiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsImVtYWlsIjoidGVzdDJAZXhhbXBsZS5jb20iLCJsZXZlbCI6InVzZXIifX0.dSGoj8u_914Gtsdvy-M9OHFBQ7UjFPy-a6sHS5QgtP8
+Authorization: Bearer {{active_token}}
 
 ###
 
 # DELETE MULTIPLE
 delete http://inventory-barang.myprojects.com/api/dashboard/inventory-types/delete/multiple
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzI2Mzc5ODYsIm5iZiI6MTYzMjYzNzk5NiwiZXhwIjoxNjMyNjQxNTg2LCJkYXRhIjp7ImlkIjoiMiIsImZ1bGxuYW1lIjoiVGVzdCBVc2VyIDIiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsImVtYWlsIjoidGVzdDJAZXhhbXBsZS5jb20iLCJsZXZlbCI6InVzZXIifX0.GbmmNLKSFpxnvQD14jRjAw2MqzJEkYx3m9s-ibqHBZk
+Authorization: Bearer {{active_token}}
 Content-Type: application/json
 
 {
