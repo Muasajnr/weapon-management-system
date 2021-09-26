@@ -33,8 +33,8 @@ class AddIsActiveFieldToMasterKindTable extends Migration
 
     public function down()
     {
-        $this->$forge->dropColumn('inventory_types', 'is_active');
-        $this->$forge->dropColumn('firearms_types', 'is_active');
-        $this->$forge->dropColumn('firearms_brands', 'is_active');
+        $this->forge->dropColumn('inventory_types', 'is_active');
+        $this->forge->dropColumn('firearms_types', 'is_active');
+        $this->forge->dropColumn('firearms_brands', 'is_active');
     }
 }

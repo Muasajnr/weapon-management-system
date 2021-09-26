@@ -34,7 +34,7 @@ class CreateFirearmsTable extends Migration
 
         $this->forge->addForeignKey('inventory_type_id', 'inventory_types', 'id');
         $this->forge->addForeignKey('firearms_type_id', 'firearms_types', 'id');
-        $this->forge->addForeignKey('firearms_brand_id', 'firearms_brand_id', 'id');
+        $this->forge->addForeignKey('firearms_brand_id', 'firearms_brands', 'id');
 
         $this->forge->createTable($this->tableName);
 

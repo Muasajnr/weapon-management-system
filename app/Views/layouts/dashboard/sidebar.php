@@ -71,39 +71,45 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                <i class="fas fa-boxes nav-icon"></i>
-                <p>Data Stok Senjata</p>
+                <a href="<?=route_to('stocks')?>" class="nav-link <?=service('uri')->getSegment(2) == 'stok' ? 'active' : ''?>">
+                    <i class="fas fa-boxes nav-icon"></i>
+                    <p>Data Stok Senjata</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                <i class="fas fa-box nav-icon"></i>
-                <p>Data Senjata Api</p>
+                <a href="<?=route_to('firearms')?>" class="nav-link <?=service('uri')->getSegment(2) == 'senjata-api' ? 'active' : ''?>">
+                    <i class="fas fa-box nav-icon"></i>
+                    <p>Data Senjata Api</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                <i class="fas fa-hand-holding nav-icon"></i>
-                <p>Peminjaman Senjata</p>
+                <a href="<?=route_to('borrowings')?>" class="nav-link <?=service('uri')->getSegment(2) == 'peminjaman' ? 'active' : ''?>">
+                    <i class="fas fa-hand-holding nav-icon"></i>
+                    <p>Peminjaman Senjata</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                <i class="fas fa-undo nav-icon"></i>
-                <p>Pengembalian Senjata</p>
+                <a href="<?=route_to('returnings')?>" class="nav-link <?=service('uri')->getSegment(2) == 'pengembalian' ? 'active' : ''?>">
+                    <i class="fas fa-undo nav-icon"></i>
+                    <p>Pengembalian Senjata</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                <i class="fas fa-chart-line nav-icon"></i>
-                <p>Laporan</p>
+                <a href="<?=route_to('documents')?>" class="nav-link <?=service('uri')->getSegment(2) == 'berita-acara' ? 'active' : ''?>">
+                    <i class="fas fa-file-signature nav-icon"></i>
+                    <p>Berita Acara</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                <i class="fas fa-users nav-icon"></i>
-                <p>Data User</p>
+                <a href="<?=route_to('reports')?>" class="nav-link <?=service('uri')->getSegment(2) == 'laporan' ? 'active' : ''?>">
+                    <i class="fas fa-chart-line nav-icon"></i>
+                    <p>Laporan</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?=route_to('users')?>" class="nav-link <?=service('uri')->getSegment(2) == 'users' ? 'active' : ''?>">
+                    <i class="fas fa-users nav-icon"></i>
+                    <p>Data User</p>
                 </a>
             </li>
             <!-- <li class="nav-item">

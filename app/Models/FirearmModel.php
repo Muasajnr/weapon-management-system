@@ -2,41 +2,34 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
+use App\Core\MyModel;
 
-class FirearmModel extends Model
+class FirearmModel extends MyModel
 {
-    protected $DBGroup              = 'default';
+
     protected $table                = 'firearms';
-    protected $primaryKey           = 'id';
-    protected $useAutoIncrement     = true;
-    protected $insertID             = 0;
-    protected $returnType           = 'array';
-    protected $useSoftDeletes       = false;
-    protected $protectFields        = true;
-    protected $allowedFields        = [];
+    protected $returnType           = 'App\Entities\FirearmEntity';
+    protected $allowedFields        = [
+        'inventory_type_id', 
+        'firearms_type_id', 
+        'firearms_brand_id', 
+        'firearms_number', 
+        'bpsa_number', 
+        'condition', 
+        'description', 
+        'created_at', 
+        'updated_at', 
+        'deleted_at'
+    ];
 
-    // Dates
-    protected $useTimestamps        = false;
-    protected $dateFormat           = 'datetime';
-    protected $createdField         = 'created_at';
-    protected $updatedField         = 'updated_at';
-    protected $deletedField         = 'deleted_at';
+    // Datatables
+    protected $columnOrder          = [];
+    protected $columnSearch         = [];
 
-    // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
 
-    // Callbacks
-    protected $allowCallbacks       = true;
-    protected $beforeInsert         = [];
-    protected $afterInsert          = [];
-    protected $beforeUpdate         = [];
-    protected $afterUpdate          = [];
-    protected $beforeFind           = [];
-    protected $afterFind            = [];
-    protected $beforeDelete         = [];
-    protected $afterDelete          = [];
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
 }

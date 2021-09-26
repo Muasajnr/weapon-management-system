@@ -10,5 +10,11 @@ class AllTableSeeder extends Seeder
     {
         $this->call('UsersTableSeeder');
         $this->call('InventoryTypesTableSeeder');
+        $this->call('FirearmsTypesTableSeeder');
+        $this->call('FirearmsBrandsTableSeeder');
+        $this->call('FirearmsTableSeeder');
+        $this->call('DocumentsTableSeeder');
+        $this->call('BorrowingsTableSeeder');
+        $this->call('ReturningsTableSeeder');
     }
 }

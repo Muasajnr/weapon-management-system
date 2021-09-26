@@ -22,9 +22,9 @@ class InventoryTypesTableSeeder extends Seeder
                 'deleted_at'    => null,
             ],
             [
-                'name'      => 'Senjata Api Non Organik',
-                'desc'      => 'Deskripsi untuk tipe inventaris senjata api non organik',
-                'is_active' => 1,
+                'name'          => 'Senjata Api Non Organik',
+                'desc'          => 'Deskripsi untuk tipe inventaris senjata api non organik',
+                'is_active'     => 1,
                 'created_at'    => $currentTime->toDateTimeString(),
                 'updated_at'    => $currentTime->toDateTimeString(),
                 'deleted_at'    => null,
