@@ -17,7 +17,7 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Master</a></li>
+                    <li class="breadcrumb-item"><a href="<?=route_to('master')?>">Master</a></li>
                     <li class="breadcrumb-item active">Jenis Inventaris</li>
                 </ol>
             </div><!-- /.col -->

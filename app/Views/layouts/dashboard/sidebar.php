@@ -36,13 +36,13 @@
         <!-- Add icons to the links using the .nav-icon class
             with font-awesome or any other icon font library -->
             <li class="nav-item">
-                <a href="<?=route_to('home')?>" class="nav-link active">
+                <a href="<?=route_to('home')?>" class="nav-link <?=service('uri')->getSegment(2) == 'home' ? 'active' : ''?>">
                 <i class="fas fa-home nav-icon"></i>
                     <p>Dashboard</p>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
+            <li class="nav-item <?=service('uri')->getSegment(2) == 'master' ? 'menu-open' : ''?>">
+                <a href="#" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? 'active' : ''?>">
                     <i class="nav-icon fas fa-desktop"></i>
                     <p>
                         Master Data
@@ -51,7 +51,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="<?=route_to('inventory_types')?>" class="nav-link">
+                        <a href="<?=route_to('inventory_types')?>" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? (service('uri')->getSegment(3) == 'jenis-inventaris' ? 'active' : '') : ''?>">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Data Jenis Inventaris</p>
                         </a>

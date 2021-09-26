@@ -62,9 +62,13 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
 $routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard'], function($routes) {
     $routes->get('/', 'Index::index');
     $routes->get('home', 'Index::home', ['as' => 'home']);
-    $routes->get('jenis-inventaris', 'Index::inventory_types', ['as' => 'inventory_types']);
-    $routes->get('jenis-senjata-api', 'Index::firearms_types', ['as' => 'firearms_types']);
-    $routes->get('merk-senjata-api', 'Index::firearms_brands', ['as' => 'firearms_brands']);
+    
+    $routes->group('master', function($routes) {
+        $routes->get('/', 'Index::master', ['as' => 'master']);
+        $routes->get('jenis-inventaris', 'Index::inventory_types', ['as' => 'inventory_types']);
+        $routes->get('jenis-senjata-api', 'Index::firearms_types', ['as' => 'firearms_types']);
+        $routes->get('merk-senjata-api', 'Index::firearms_brands', ['as' => 'firearms_brands']);
+    });
 });
 
 $routes->group('test', ['namespace' => 'App\Controllers\TestCIFeatures'], function($routes) {

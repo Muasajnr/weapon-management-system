@@ -17,6 +17,11 @@ class Index extends BaseController
         ]);
     }
 
+    public function master()
+    {
+        return redirect()->to('/dashboard/master/jenis-inventaris');
+    }
+
     public function inventory_types()
     {
         return view('dashboard/master/inventory_types/index', [
