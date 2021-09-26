@@ -34,13 +34,19 @@
         <div class="card">
             <div class="card-header">
                 <!-- <h3 class="card-title">DataTable with minimal features & hover style</h3> -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-new-inventory-type">Tambah Data</button>
+                <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#modal-add-new-inventory-type">
+                    <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Data
+                </button>
+                <button type="button" class="btn btn-danger" id="btn-delete-multiple">
+                    <i class="fas fa-trash"></i>&nbsp;&nbsp;Hapus banyak
+                </button>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
             <table id="data-inventory-types" class="table table-bordered table-hover">
                 <thead>
                     <tr>
+                        <th><div class="text-center"><input id="checkAll" type="checkbox" name="multi_delete"></div></th>
                         <th>No.</th>
                         <th>Nama</th>
                         <th>Deskripsi</th>
@@ -50,15 +56,6 @@
                     </tr>
                 </thead>
                 <tbody></tbody>
-                <!-- <tfoot>
-                    <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th>Platform(s)</th>
-                        <th>Engine version</th>
-                        <th>CSS grade</th>
-                    </tr>
-                </tfoot> -->
             </table>
             </div>
             <!-- /.card-body -->
@@ -74,6 +71,8 @@
 <!-- /.content -->
 
 <?php echo view('dashboard/master/inventory_types/add') ?>
+
+<?php echo view('dashboard/master/inventory_types/edit') ?>
 
 <?=$this->endSection()?>
 

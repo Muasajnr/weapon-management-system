@@ -43,8 +43,17 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
     $routes->group('dashboard', ['namespace' => 'App\Controllers\Api'], function($routes) {
         $routes->group('inventory-types', function($routes) {
             $routes->get('/', 'InventoryTypeApi::index');
+            $routes->get('(:segment)', 'InventoryTypeApi::getOneData/$1');
+            
+            $routes->post('/', 'InventoryTypeApi::create');
             $routes->post('datatables', 'InventoryTypeApi::datatables');
+
             $routes->put('(:segment)/update/status', 'InventoryTypeApi::updateStatus/$1');
+            $routes->put('(:segment)/update', 'InventoryTypeApi::update/$1');
+
+            $routes->delete('(:segment)/delete', 'InventoryTypeApi::delete/$1');
+            $routes->delete('delete/multiple', 'InventoryTypeApi::deleteMultiple');
+            $routes->delete('(:segment)/purge', 'InventoryTypeApi::purge/$1');
         });
     });
 });

@@ -12,5 +12,6 @@ class InventoryTypeEntity extends Entity
         'updated_at',
         'deleted_at',
     ];
-    protected $casts   = [];
+    protected $casts   = [
+    ];
 }

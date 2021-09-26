@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Core\MyModel;
+use CodeIgniter\I18n\Time;
 
 class InventoryTypeModel extends MyModel
 {
@@ -18,6 +19,18 @@ class InventoryTypeModel extends MyModel
     public function __construct()
     {
         parent::__construct();
+    }
+
+    /**
+     * ********************* get *********************************
+     */
+    public function getOne(int $id): ?object
+    {
+        $this->builder()->select('*');
+        $this->builder()->where('id', $id);
+        $this->builder()->where('deleted_at', null);
+        $this->builder()->limit(1);
+        return $this->builder()->get()->getRow();
     }
 
     public function getDatatables(string $searchQuery, int $start, int $length, array $order) {
@@ -42,6 +55,8 @@ class InventoryTypeModel extends MyModel
 
         if ($length !== -1)
             $this->builder()->limit($length, $start);
+
+        $this->builder()->where('deleted_at', null);
 
         $result = $this->builder()->get();
         return $result->getResult();
@@ -68,11 +83,75 @@ class InventoryTypeModel extends MyModel
         if ($order)
             $this->builder()->orderBy($this->columnOrder[$order['0']['column']], $order['0']['dir']);
 
+        $this->builder()->where('deleted_at', null);
+
         return $this->builder()->countAllResults();
     }
 
     public function getTotalFilteredRecords()
     {
+        $this->builder()->where('deleted_at', null);
         return $this->builder()->countAllResults();
+    }
+
+    /**
+     * ********************* checking *********************************
+     */
+    public function isExist(int $id) : bool {
+        $this->builder()->select('count(*) as count');
+        $this->builder()->where('id', $id);
+        $this->builder()->limit(1);
+        return $this->builder()->get()->getRow()->count > 0 ? true : false;
+    }
+
+    /**
+     * ********************* insert *********************************
+     */
+    public function createNew(array $data) {
+        $timeNow = Time::now();
+        $data['created_at'] = $timeNow->toDateTimeString();
+        $data['updated_at'] = $timeNow->toDateTimeString();
+        $data['deleted_at'] = null;
+
+        $this->insert($data);
+
+        return $this->db->affectedRows() > 0 ? true : false;
+    }
+
+    /**
+     * ********************* update *********************************
+     */
+    public function updateStatus(int $id, bool $isActive) : bool
+    {
+        $this->where('id', $id)
+            ->set(['is_active' => $isActive])
+            ->update();
+
+        return $this->db->affectedRows() > 0 ? true : false;
+    }
+
+    public function updateData(int $id, array $data) : bool
+    {
+        $this->where('id', $id)
+            ->set($data)
+            ->update();
+
+        return $this->db->affectedRows() > 0 ? true : false;
+    }
+
+    /**
+     * ********************* delete *********************************
+     */
+    public function deleteData(int $id): bool
+    {
+        $this->delete($id);
+
+        return $this->db->affectedRows() > 0 ? true : false;
+    }
+
+    public function deleteMultipleData(array $ids) : int {
+        $this->delete($ids);
+
+        return $this->db->affectedRows();
     }
 }

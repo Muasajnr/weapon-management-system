@@ -62,7 +62,7 @@ class AuthApi extends BaseController
                     if ($user_token_model->checkUsername($userdata['username'])) {
                         $is_updated = $user_token_model->updateToken($userdata['username'], $jwt_refresh_token);
                         if (!$is_updated) {
-                            $this->fail('Something went wrong!', ResponseInterface::HTTP_INTERNET_SERVER_ERROR);
+                            $this->fail('Something went wrong!', ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
                         }
                     } else {
                         $user_token_new = new \App\Entities\UserTokenEntity();
@@ -129,7 +129,7 @@ class AuthApi extends BaseController
                     }
                 }
             } catch (\Exception $e) {
-                return $this->fail($e->getMessage(), ResponseInterface::HTTP_INTERNET_SERVER_ERROR);
+                return $this->fail($e->getMessage(), ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
     }
@@ -160,7 +160,7 @@ class AuthApi extends BaseController
                 // todo: remove refresh token
                 $is_deleted = $user_token_model->deleteToken($username);
                 if (!$is_deleted) {
-                    $this->fail('Something went wrong!', ResponseInterface::HTTP_INTERNET_SERVER_ERROR);
+                    $this->fail('Something went wrong!', ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
                 }
 
                 return $this->respondNoContent('User logged out!');

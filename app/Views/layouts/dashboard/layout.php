@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/dist/css/adminlte.min.css')?>">
     <!-- pace-progress -->
     <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/pace-progress/themes/blue/pace-theme-flat-top.css')?>">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')?>">
     <!-- Custom Style -->
     <?=$this->renderSection('custom-css')?>
     <!-- JS Header Constants -->
@@ -72,6 +74,8 @@
     <script src="<?=site_url('themes/AdminLTE/dist/js/adminlte.min.js')?>"></script>
     <!-- pace-progress -->
     <script src="<?=site_url('themes/AdminLTE/plugins/pace-progress/pace.min.js')?>"></script>
+    <!-- SweetAlert2 -->
+    <script src="<?=site_url('themes/AdminLTE/plugins/sweetalert2/sweetalert2.min.js')?>"></script>
     <!-- Custom JS -->
     <script>
     $(function() {
