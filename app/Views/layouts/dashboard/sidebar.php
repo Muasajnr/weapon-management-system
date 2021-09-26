@@ -72,26 +72,26 @@
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                <i class="fas fa-briefcase nav-icon"></i>
-                <p>Data Stok</p>
+                <i class="fas fa-boxes nav-icon"></i>
+                <p>Data Stok Senjata</p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                <i class="fas fa-briefcase nav-icon"></i>
-                <p>Data Barang</p>
+                <i class="fas fa-box nav-icon"></i>
+                <p>Data Senjata Api</p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                <i class="fas fa-plus nav-icon"></i>
-                <p>Pengembalian</p>
+                <i class="fas fa-hand-holding nav-icon"></i>
+                <p>Peminjaman Senjata</p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                <i class="fas fa-minus nav-icon"></i>
-                <p>Peminjaman</p>
+                <i class="fas fa-undo nav-icon"></i>
+                <p>Pengembalian Senjata</p>
                 </a>
             </li>
             <li class="nav-item">
