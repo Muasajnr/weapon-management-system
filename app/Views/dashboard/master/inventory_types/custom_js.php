@@ -105,7 +105,7 @@ $(function() {
         const checkedValue = this.checked;
         const $currChecked = $(this);
 
-        const inventoryTypeId = $(this).data().inventoryTypeId;
+        const itemId = $(this).data().itemId;
 
         Swal.fire({
             title: 'Anda yakin?',
@@ -117,7 +117,7 @@ $(function() {
             confirmButtonText: 'Iya, ganti!'
         }).then((result) => {
             if (result.isConfirmed) {
-                const updateUrl = '<?=site_url('api/dashboard/inventory-types/')?>' + inventoryTypeId + '/update/status';
+                const updateUrl = '<?=site_url('api/dashboard/inventory-types/')?>' + itemId + '/update/status';
 
                 $.ajax({
                     type: 'PUT',
@@ -188,6 +188,11 @@ $(function() {
 
                     setTimeout(() => {
                         $('#modal-add-new-inventory-type').modal('toggle');
+
+                        $(form).find('input#name').val('');
+                        $(form).find('textarea#desc').val('');
+                        $(form).find('input#is_active').prop('checked', false);
+
                         table.ajax.reload();
                     }, 2000);
                 },
@@ -407,7 +412,7 @@ $(function() {
                     const ids = [];
 
                     selectedRows.each(function(index, item) {
-                        ids.push($(item).data().inventoryTypeId);
+                        ids.push($(item).data().itemId);
                     });
 
                     const idsData = {"ids": ids};
@@ -415,7 +420,7 @@ $(function() {
                     $.ajax({
                         type: 'DELETE',
                         url: deleteUrl,
-                        data: idsData,
+                        data: JSON.stringify(idsData),
                         contentType: 'application/json',
                         headers: {
                             'Authorization': 'Bearer ' + accessToken

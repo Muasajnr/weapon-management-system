@@ -9,6 +9,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 class FirearmTypeController extends ApiController
 {
 
+    /******************** get **********************/
     public function index()
     {
         $firearmTypeModel = new FirearmTypeModel();
@@ -32,6 +33,7 @@ class FirearmTypeController extends ApiController
             ], ResponseInterface::HTTP_OK);
     }
 
+    /******************** datatable **********************/
     public function datatables()
     {
         $draw               = $this->request->getPost('draw');
@@ -73,44 +75,17 @@ class FirearmTypeController extends ApiController
         return $this->respond($output, ResponseInterface::HTTP_OK);
     }
 
-    public function updateStatus($id)
-    {
-        $isActive = $this->request->getRawInput()['is_active'];
-        
-        if (is_null($isActive)) {
-            return $this->failValidationErrors('is_active is required!', 'validation failed!');
-        } else {
-            $firearmTypeModel = new FirearmTypeModel();
-            $updateRes = $firearmTypeModel->updateStatus($id, $isActive == 'true' ? 1 : 0);
-            if (!$updateRes) {
-                return $this->fail('Something went wrong!');
-            } else {
-                return $this->respondUpdated([
-                    'status'    => ResponseInterface::HTTP_OK,
-                    'message'   => 'Updated successfuly!',
-                ], 'Updated successfully!');
-            }
-        }
-    }
-
+    /******************** insert **********************/
     public function create()
     {
-        $rules = [
-            'name'      => 'required',
-            'desc'      => 'required',
-            'is_active' => 'required'
-        ];
-
-        $messages = [
-            'name' => [
-                'required' => 'name is required',
-            ],
-            'desc' => [
-                'required' => 'desc is required',
-            ],
-            'is_active' => [
-                'required' => 'is_active is required',
-            ],
+        if (!$this->request->isAJAX())
+            return $this->fail('Invalid request!');
+        
+        $rules      = ['name' => 'required', 'desc' => 'required', 'is_active' => 'required'];
+        $messages   = [
+            'name'      => ['required' => 'name is required'],
+            'desc'      => ['required' => 'desc is required'],
+            'is_active' => ['required' => 'is_active is required'],
         ];
 
         if (!$this->validate($rules, $messages)) {
@@ -124,92 +99,117 @@ class FirearmTypeController extends ApiController
             } else {
                 return $this->respondCreated([
                     'status'    => ResponseInterface::HTTP_CREATED,
-                    'message'   => 'Data inserted!'
+                    'message'   => 'Data telah ditambahkan!'
                 ]);
             }
         }
     }
 
-    public function update($id)
+    /******************** update **********************/
+    public function updateStatus($id)
     {
-        $rules = [
-            'name'      => 'required',
-            'desc'      => 'required',
-            'is_active' => 'required'
-        ];
+        if (!$this->request->isAJAX())
+            return $this->fail('Invalid request!');
 
-        $messages = [
-            'name' => [
-                'required' => 'name is required',
-            ],
-            'desc' => [
-                'required' => 'desc is required',
-            ],
-            'is_active' => [
-                'required' => 'is_active is required',
-            ],
-        ];
-
-        if (!$this->validate($rules, $messages)) {
+        $rules      = ['is_active' => 'required'];
+        $messages   = ['is_active' => ['required' => 'is_active is required']];
+        if (!$this->validate($rules, $messages))
             return $this->failValidationErrors($this->validator->getErrors(), 'validation failed!');
-        } else {
-            $firearmTypeModel = new FirearmTypeModel();
-            $data = $firearmTypeModel->getOne($id);
 
-            if (!$data)
-                return $this->failNotFound();
-            else {
-                $reqData = $this->request->getVar();
-                $isUpdated = $firearmTypeModel->updateData($id, (array) $reqData);
-                if (!$isUpdated) {
-                    return $this->fail('Something went wrong!');
-                } else {
-                    return $this->respondUpdated([
-                        'status'    => ResponseInterface::HTTP_OK,
-                        'message'   => 'Data updated!'
-                    ]);
-                }
-            }
-        }
+        $firearmTypeModel = new FirearmTypeModel();
+        if (!$firearmTypeModel->isExist((int) $id))
+            return $this->failNotFound('Data not found!');
+
+        $reqData = $this->request->getVar();
+        $updateRes = $firearmTypeModel->updateStatus($id, $reqData->is_active);
+        if (!$updateRes)
+            return $this->fail('Something went wrong!');
+        
+        return $this->respondUpdated([
+            'status'    => ResponseInterface::HTTP_OK,
+            'message'   => 'Data telah diupdate!',
+        ], 'Data telah diupdate!');
     }
 
+    public function update($id)
+    {
+        if (!$this->request->isAJAX())
+            return $this->fail('Invalid request!');
+        
+        $rules      = ['name' => 'required', 'desc' => 'required', 'is_active' => 'required'];
+        $messages   = [
+            'name'      => ['required' => 'name is required'],
+            'desc'      => ['required' => 'desc is required'],
+            'is_active' => ['required' => 'is_active is required'],
+        ];
+
+        if (!$this->validate($rules, $messages))
+            return $this->failValidationErrors($this->validator->getErrors(), 'validation failed!');
+        
+        $firearmTypeModel = new FirearmTypeModel();
+        $data = $firearmTypeModel->getOne((int)$id);
+
+        if (!$data)
+            return $this->failNotFound();
+        
+        $reqData = $this->request->getVar();
+        $isUpdated = $firearmTypeModel->updateData((int)$id, (array) $reqData);
+        if (!$isUpdated)
+            return $this->fail('Something went wrong!');
+        
+        return $this->respondUpdated([
+            'status'    => ResponseInterface::HTTP_OK,
+            'message'   => 'Data telah diupdate!'
+        ]);
+    }
+    
+    /******************** delete **********************/
     public function delete($id)
     {
         $firearmTypeModel = new FirearmTypeModel();
-        if (!$firearmTypeModel->isExist((int) $id)) {
+        if (!$firearmTypeModel->isExist((int) $id))
             return $this->failNotFound('Not found!');
-        }
 
         $isDeleted = $firearmTypeModel->deleteData($id);
-        if (!$isDeleted) {
+        if (!$isDeleted)
             return $this->fail('Failed to delete! please contact your administrator.');
-        } else {
-            return $this->respondDeleted([
-                'success'   => ResponseInterface::HTTP_OK,
-                'message'   => 'Data telah dihapus!'
-            ]);
-        }
-    }
-
-    public function purge($id)
-    {
-        $inventoryTypeModel = new FirearmTypeModel();
+        
+        return $this->respondDeleted([
+            'success'   => ResponseInterface::HTTP_OK,
+            'message'   => 'Data telah dihapus!'
+        ]);
     }
 
     public function deleteMultiple()
     {
-        $ids = $this->request->getRawInput('ids')['ids'];
+        if (!$this->request->isAJAX())
+            return $this->fail('Invalid request!');
         
-        $inventoryTypeModel = new FirearmTypeModel();
-        $affectedRows = $inventoryTypeModel->deleteMultipleData($ids);
-        if ($affectedRows != count($ids)) {
+        $rules      = ['ids' => 'required'];
+        $messages   = [
+            'ids' => ['required' => 'ids is required']
+        ];
+        
+        if (!$this->validate($rules, $messages))
+            return $this->failValidationErrors($this->validator->getErrors(), 'validation failed!');
+
+        $ids = $this->request->getVar('ids');
+        
+        $firearmTypeModel = new FirearmTypeModel();
+        $affectedRows = $firearmTypeModel->deleteMultipleData($ids);
+        if ($affectedRows != count($ids))
             return $this->fail('Only some data gets deleted! please contact your administrator.');
-        } else {
-            return $this->respondDeleted([
-                'success'   => ResponseInterface::HTTP_OK,
-                'message'   => 'Data yang dipilih telah terhapus!'
-            ]);
-        }
+        
+        return $this->respondDeleted([
+            'success'   => ResponseInterface::HTTP_OK,
+            'message'   => 'Data yang dipilih telah terhapus!'
+        ]);
+    }
+
+    /******************** purge **********************/
+    public function purge($id)
+    {
+        $inventoryTypeModel = new FirearmTypeModel();
     }
 
 

@@ -125,9 +125,11 @@ class MyModel extends Model {
     public function isExist(int $id) : bool {
         $this->builder()->select('count(*) as count');
         $this->builder()->where('id', $id);
-        $this->builder()->where('deleted_at', null);
+        $this->builder()->where('deleted_at is null');
         $this->builder()->limit(1);
-        return $this->builder()->get()->getRow()->count > 0 ? true : false;
+        $count = $this->builder()->get()->getRow()->count;
+        // print_r($this->db->getLastQuery());die();
+        return $count > 0 ? true : false;
     }
 
     /**

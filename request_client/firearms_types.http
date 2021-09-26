@@ -1,43 +1,78 @@
 @base_url = http://inventory-barang.myprojects.com
-@active_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzI2NjIyNzAsIm5iZiI6MTYzMjY2MjI4MCwiZXhwIjoxNjMyNjY1ODcwLCJkYXRhIjp7ImlkIjoiMiIsImZ1bGxuYW1lIjoiVGVzdCBVc2VyIDIiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsImVtYWlsIjoidGVzdDJAZXhhbXBsZS5jb20iLCJsZXZlbCI6InVzZXIifX0.QcLTnwcX9c0icrt7ZHnvWcNcGJqBXLYKPSa9PJrI4rU
+@active_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzI2Njg1NTQsIm5iZiI6MTYzMjY2ODU2NCwiZXhwIjoxNjMyNjcyMTU0LCJkYXRhIjp7ImlkIjoiMiIsImZ1bGxuYW1lIjoiVGVzdCBVc2VyIDIiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsImVtYWlsIjoidGVzdDJAZXhhbXBsZS5jb20iLCJsZXZlbCI6InVzZXIifX0.ioh5ukNI3jfwtbB3cwJ25JZboDA3dcQ8LLEsSBv11O0
 
 
-# GET ALL
+# get all
 get {{base_url}}/api/dashboard/firearms-types
 Authorization: Bearer {{active_token}}
 
 ###
 
-# GET ONE
+# get one
 get {{base_url}}/api/dashboard/firearms-types/1
 Authorization: Bearer {{active_token}}
 
 ###
 
-# GET DATATABLES
+# datatables
 post {{base_url}}/api/dashboard/firearms-types/datatables
 Authorization: Bearer {{active_token}}
 
 ###
 
-# CREATE
+# create
 post {{base_url}}/api/dashboard/firearms-types
 Authorization: Bearer {{active_token}}
 Content-Type: application/json
+X-Requested-With: XMLHttpRequest
 
 {
-    "name": "AWM",
-    "desc": "Senjata AWM",
+    "name": "Sniper",
+    "desc": "Senjata Sniper",
     "is_active": 1
 }
 
 ###
 
-# Update status
+# update status
 put {{base_url}}/api/dashboard/firearms-types/3/update/status
 Authorization: Bearer {{active_token}}
 Content-Type: application/json
+X-Requested-With: XMLHttpRequest
 
 {
-    "is_active": false
+    "is_active": 1
+}
+
+###
+
+# update data
+put {{base_url}}/api/dashboard/firearms-types/5/update
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{
+    "name": "Sniper 2",
+    "desc": "Senjata Sniper 2",
+    "is_active": 0
+}
+
+###
+
+# delete data
+delete {{base_url}}/api/dashboard/firearms-types/4/delete
+Authorization: Bearer {{active_token}}
+X-Requested-With: XMLHttpRequest
+
+###
+
+# delete multiple
+delete {{base_url}}/api/dashboard/firearms-types/delete/multiple
+Authorization: Bearer {{active_token}}
+X-Requested-With: XMLHttpRequest
+Content-Type: application/json
+
+{
+    "ids": [1, 3]
 }

@@ -54,7 +54,7 @@ class InventoryTypeController extends ApiController
             $num++;
 
             $row        = [];
-            $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-inventory-type-id=\"$item->id\"></div>";
+            $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-item-id=\"$item->id\"></div>";
             $row[]      = "<input type=\"hidden\" value=\"$item->id\">{$num}.";
             $row[]      = "{$item->name}";
             $row[]      = "{$item->desc}";
@@ -128,7 +128,7 @@ class InventoryTypeController extends ApiController
             $reqData = $this->request->getVar();
 
             $inventoryTypeModel = new InventoryTypeModel();
-            if (!$inventoryTypeModel->isExist($id))
+            if (!$inventoryTypeModel->isExist((int)$id))
                 return $this->failNotFound('Data not found!');
 
             $updateRes = $inventoryTypeModel->updateStatus($id, $reqData->is_active);
@@ -170,7 +170,7 @@ class InventoryTypeController extends ApiController
                 } else {
                     return $this->respondUpdated([
                         'status'    => ResponseInterface::HTTP_OK,
-                        'message'   => 'Data updated!'
+                        'message'   => 'Data telah diupdate!'
                     ]);
                 }
             }

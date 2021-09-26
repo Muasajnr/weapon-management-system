@@ -37,7 +37,7 @@
         <div class="card">
             <div class="card-header">
                 <!-- <h3 class="card-title">DataTable with minimal features & hover style</h3> -->
-                <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#modal-add-new-firearm-type">
+                <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#modal-add-firearms-types">
                     <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Data
                 </button>
                 <button type="button" class="btn btn-danger" id="btn-delete-multiple">

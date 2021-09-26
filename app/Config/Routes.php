@@ -68,11 +68,11 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
             $routes->post('datatables', 'FirearmTypeController::datatables');
 
             $routes->put('(:segment)/update/status', 'FirearmTypeController::updateStatus/$1');
-            // $routes->put('(:segment)/update', 'FirearmTypeController::update/$1');
+            $routes->put('(:segment)/update', 'FirearmTypeController::update/$1');
 
-            // $routes->delete('(:segment)/delete', 'FirearmTypeController::delete/$1');
-            // $routes->delete('delete/multiple', 'FirearmTypeController::deleteMultiple');
-            // $routes->delete('(:segment)/purge', 'FirearmTypeController::purge/$1');
+            $routes->delete('(:segment)/delete', 'FirearmTypeController::delete/$1');
+            $routes->delete('delete/multiple', 'FirearmTypeController::deleteMultiple');
+            $routes->delete('(:segment)/purge', 'FirearmTypeController::purge/$1');
         });
         // firearms brands
         // firearms
@@ -80,6 +80,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
         // returnings
         // documents
         // reports
+        // users
     });
 });
 

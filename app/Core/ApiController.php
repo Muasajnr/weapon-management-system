@@ -22,8 +22,8 @@ class ApiController extends BaseController
     {
         $isChecked = $isActive ? 'checked' : '';
         return "<div class=\"custom-control custom-switch custom-switch-off-danger custom-switch-on-success\">
-                    <input data-inventory-type-id=\"$id\" name=\"is_active\" type=\"checkbox\" class=\"custom-control-input\" id=\"customSwitch3\" $isChecked>
-                    <label class=\"custom-control-label\" for=\"customSwitch3\"></label>
+                    <input data-item-id=\"$id\" name=\"is_active\" type=\"checkbox\" class=\"custom-control-input\" id=\"customSwitch3-$id\" $isChecked>
+                    <label class=\"custom-control-label\" for=\"customSwitch3-$id\"></label>
                 </div>";
     }
 }
