@@ -30,6 +30,7 @@ $(function() {
 
     // handles datatable
     const table = $('#data-inventory-types').DataTable({
+        "responsive": true,
         "drawCallback": function(settings) {
             if ($('#checkAll').is(":checked")) {
                 $('.multi_delete').prop('checked', true);

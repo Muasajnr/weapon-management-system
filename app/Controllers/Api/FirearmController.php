@@ -41,7 +41,8 @@ class FirearmController extends ApiController
             $row[]      = "{$item->firearm_brand}";
             $row[]      = "{$item->firearm_number}";
             $row[]      = "{$item->bpsa_number}";
-            $row[]      = "{$item->condition}";
+            $row[]      = $this->buildDatatableConditionRow($item->condition);
+            $row[]      = $this->buildDatatableStatusRow();
             $row[]      = $this->buildActionButtons($item->firearm_id);
 
             $resData[] = $row;
@@ -55,5 +56,25 @@ class FirearmController extends ApiController
         ];
 
         return $this->respond($output, ResponseInterface::HTTP_OK);
+    }
+
+    private function buildDatatableConditionRow(string $condition) : string
+    {
+        switch($condition):
+            case 'good':
+                return "<div class=\"text-center\"><span class=\"badge badge-success\">bagus</span></div>";
+            case 'damage':
+                return "<div class=\"text-center\"><span class=\"badge badge-danger\">rusak</span></div>";
+            case 'unknown':
+                return "<div class=\"text-center\"><span class=\"badge badge-warning\">unknown</span></div>";
+            default:
+                return "<div class=\"text-center\"><span class=\"badge badge-info\">undefined</span></div>";
+        endswitch;
+    }
+
+    private function buildDatatableStatusRow() : string
+    {
+        $randInt = random_int(0, 1);
+        return $randInt == 0 ? "<span class=\"badge badge-warning\">dipinjam</span" : "<span class=\"badge badge-success\">tersedia</span";
     }
 }

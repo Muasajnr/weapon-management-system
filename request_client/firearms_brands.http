@@ -1,0 +1,6 @@
+@base_url = http://inventory-barang.myprojects.com
+@active_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzI3NTE3MjgsIm5iZiI6MTYzMjc1MTczOCwiZXhwIjoxNjMyNzU1MzI4LCJkYXRhIjp7ImlkIjoiMiIsImZ1bGxuYW1lIjoiVGVzdCBVc2VyIDIiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsImVtYWlsIjoidGVzdDJAZXhhbXBsZS5jb20iLCJsZXZlbCI6InVzZXIifX0.T0Ajp0YEzdhIpTiNrb7zBG3xftyCU_XzjTJwFKtmOSo
+
+# datatables
+post {{base_url}}/api/dashboard/firearms-brands/datatables
+Authorization: Bearer {{active_token}}

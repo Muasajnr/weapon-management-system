@@ -13,7 +13,7 @@ class CreateBorrowingsTable extends Migration
         $this->db->disableForeignKeyChecks();
 
         $fields = [
-            'firearm_id'   => ['type' => 'int', 'constraint' => 9, 'null' => false],
+            'firearm_id'    => ['type' => 'int', 'constraint' => 9, 'null' => false],
             'document_id'   => ['type' => 'int', 'constraint' => 9, 'null' => false],
             'desc'          => ['type' => 'text', 'null' => true],
             'created_at'    => ['type' => 'datetime', 'null' => true],

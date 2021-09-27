@@ -36,16 +36,16 @@
         <div class="card">
             <div class="card-header">
                 <!-- <h3 class="card-title">DataTable with minimal features & hover style</h3> -->
-                <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#modal-add-firearms-types">
+                <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#modal-add-firearms-types">
                     <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Data
                 </button>
-                <button type="button" class="btn btn-danger" id="btn-delete-multiple">
+                <button type="button" class="btn btn-danger btn-sm" id="btn-delete-multiple">
                     <i class="fas fa-trash"></i>&nbsp;&nbsp;Hapus banyak
                 </button>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-            <table id="data-firearms" class="table table-bordered table-hover">
+            <table id="data-firearms" class="table table-bordered table-hover table-sm">
                 <thead>
                     <tr>
                         <th><div class="text-center"><input id="checkAll" type="checkbox" name="multi_delete"></div></th>
@@ -56,6 +56,7 @@
                         <th>No. Senjata Api</th>
                         <th>No. BPSA</th>
                         <th>Kondisi</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>

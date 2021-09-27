@@ -14,7 +14,7 @@
 $(function() {
     const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
     // handles datatable
-    const table = $('#data-inventory-types').DataTable({
+    const table = $('#data-documents').DataTable({
         "responsive": true,
         "drawCallback": function(settings) {
             if ($('#checkAll').is(":checked")) {
@@ -27,12 +27,11 @@ $(function() {
         "serverSide": true,
         "order": [],
         "ajax": function(data, callback, settings) {
-            const inventoryTypesDataUrl = '<?=site_url('api/dashboard/firearms-brands/datatables')?>';
-            let result = null;
+            const dataUrl = '<?=site_url('api/dashboard/documents/datatables')?>';
 
             $.ajax({
                 type: 'POST',
-                url: inventoryTypesDataUrl,
+                url: dataUrl,
                 dataType: 'json',
                 data: data,
                 headers: {
@@ -64,22 +63,28 @@ $(function() {
             },
             {
                 "targets": 3,
-                "orderable": false,
-                "searchable": false
+                "orderable": true,
+                "searchable": true
             },
             {
                 "targets": 4,
-                "orderable": false,
-                "searchable": false
+                "orderable": true,
+                "searchable": true
             },
             {
                 "targets": 5,
-                "orderable": true,
-                "searchable": true,
+                "orderable": false,
+                "searchable": false
             },
             {
                 "targets": 6,
                 "orderable": false,
+                "searchable": false
+            },
+            {
+                "targets": 7,
+                "orderable": false,
+                "searchable": false
             }
         ],
     });

@@ -12,6 +12,7 @@
 $(function() {
 
     const table = $('#data-firearms').DataTable({
+        "responsive": true,
         "drawCallback": function(settings) {
             if ($('#checkAll').is(":checked")) {
                 $('.multi_delete').prop('checked', true);
@@ -85,6 +86,11 @@ $(function() {
             },
             {
                 "targets": 8,
+                "orderable": false,
+                "searchable": false,
+            },
+            {
+                "targets": 7,
                 "orderable": false,
                 "searchable": false,
             }
