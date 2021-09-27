@@ -147,7 +147,12 @@ $routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard'], functi
 
     $routes->get('stok', 'Index::stocks', ['as' => 'stocks']);
     $routes->get('senjata-api', 'Index::firearms', ['as' => 'firearms']);
-    $routes->get('peminjaman', 'Index::borrowings', ['as' => 'borrowings']);
+    
+    $routes->group('peminjaman', function($routes) {
+        $routes->get('sedang-dipinjam', 'Index::borrowings_ongoing', ['as' => 'borrowings_ongoing']);
+        $routes->get('histori', 'Index::borrowings_history', ['as' => 'borrowings_ongoing']);
+    });
+
     $routes->get('pengembalian', 'Index::returnings', ['as' => 'returnings']);
     $routes->get('berita-acara', 'Index::documents', ['as' => 'documents']);
     $routes->get('laporan', 'Index::reports', ['as' => 'reports']);

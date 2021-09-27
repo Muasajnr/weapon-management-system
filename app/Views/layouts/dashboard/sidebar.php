@@ -82,11 +82,34 @@
                     <p>Data Senjata Api</p>
                 </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="<?=route_to('borrowings')?>" class="nav-link <?=service('uri')->getSegment(2) == 'peminjaman' ? 'active' : ''?>">
                     <i class="fas fa-hand-holding nav-icon"></i>
                     <p>Peminjaman Senjata</p>
                 </a>
+            </li> -->
+            <li class="nav-item <?=service('uri')->getSegment(2) == 'peminjaman' ? 'menu-open' : ''?>">
+                <a href="#" class="nav-link <?=service('uri')->getSegment(2) == 'peminjaman' ? 'active' : ''?>">
+                    <i class="nav-icon fas fa-desktop"></i>
+                    <p>
+                        Peminjaman Senjata
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="<?=route_to('borrowings_ongoing')?>" class="nav-link <?=service('uri')->getSegment(2) == 'peminjaman' ? (service('uri')->getSegment(3) == 'sedang-dipinjam' ? 'active' : '') : ''?>">
+                            <i style="font-size: 14px;" class="far fa-circle nav-icon"></i>
+                            <p style="font-size: 14px;">Sedang dipinjam</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?=route_to('borrowings_histori')?>" class="nav-link <?=service('uri')->getSegment(2) == 'peminjaman' ? (service('uri')->getSegment(3) == 'histori' ? 'active' : '') : ''?>">
+                            <i style="font-size: 14px;" class="far fa-circle nav-icon"></i>
+                            <p style="font-size: 14px;">Histori</p>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item">
                 <a href="<?=route_to('returnings')?>" class="nav-link <?=service('uri')->getSegment(2) == 'pengembalian' ? 'active' : ''?>">

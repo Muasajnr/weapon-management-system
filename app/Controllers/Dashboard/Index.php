@@ -57,10 +57,17 @@ class Index extends BaseController
         ]);
     }
 
-    public function borrowings()
+    public function borrowings_ongoing()
     {
-        return view('dashboard/borrowing/index', [
-            'page_title' => 'Peminjaman Senjata Api'
+        return view('dashboard/borrowings/index', [
+            'page_title' => 'Sedang dipinjam'
+        ]);
+    }
+
+    public function borrowings_histori()
+    {
+        return view('dashboard/borrowings/history', [
+            'page_title' => 'Histori'
         ]);
     }
 
