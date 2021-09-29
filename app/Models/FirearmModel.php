@@ -93,4 +93,84 @@ class FirearmModel extends MyModel
         return $result->getResult();
     }
 
+    /** datatables for stocks */
+    public function getDatatablesForStok(string $searchQuery, int $start, int $length, array $order)
+    {
+        $i = 0;
+        $stockStatusSql = 'IF(count(firearms.firearms_type_id)<10, "sedikit", IF(count(firearms.firearms_type_id)<50, "lumayan", IF(count(firearms.firearms_type_id)<100, "banyak", "unknown")))';
+        $countStockSql = 'count(firearms.firearms_type_id)';
+        $this->builder()->select(
+            "
+            firearms_types.id as firearms_types_id,
+            firearms_types.name as firearms_types_name,
+            $countStockSql as stock,
+            count(borrowings.firearm_id) as borrowed_count,
+            $stockStatusSql as stock_status
+            "
+        );
+        $this->builder()->join('firearms_types', 'firearms_types.id = firearms.firearms_type_id', 'left');
+        $this->builder()->join('borrowings', 'borrowings.firearm_id = firearms.id', 'left');
+
+        foreach($this->columnSearch as $column) {
+            if ($searchQuery) {
+                if ($i === 0) {
+                    $this->builder()->groupStart();
+                    $this->builder()->like($column, $searchQuery);
+                } else {
+                    $this->builder()->orLike($column, $searchQuery);
+                }
+
+                if (count($this->columnSearch) - 1 === $i)
+                    $this->builder()->groupEnd();
+            }
+            $i++;
+        }
+
+        if ($order)
+            $this->builder()->orderBy($this->columnOrder[$order['0']['column']], $order['0']['dir']);
+
+        if ($length !== -1)
+            $this->builder()->limit($length, $start);
+
+        $this->builder()->where('firearms.deleted_at', null);
+        $this->builder()->groupBy('firearms.firearms_type_id');
+
+        $result = $this->builder()->get();
+        return $result->getResult();
+    }
+
+    public function getTotalRecordsForStock(string $searchQuery, array $order)
+    {
+        $i = 0;
+        foreach($this->columnSearch as $column) {
+            if ($searchQuery) {
+                if ($i === 0) {
+                    $this->builder()->groupStart();
+                    $this->builder()->like($column, $searchQuery);
+                } else {
+                    $this->builder()->orLike($column, $searchQuery);
+                }
+
+                if (count($this->columnSearch) - 1 === $i)
+                    $this->builder()->groupEnd();
+            }
+            $i++;
+        }
+
+        if ($order)
+            $this->builder()->orderBy($this->columnOrder[$order['0']['column']], $order['0']['dir']);
+
+        $this->builder()->where('deleted_at', null);
+        $this->builder()->groupBy('firearms.firearms_type_id');
+
+        return $this->builder()->countAllResults();
+    }
+
+    public function getTotalFilteredRecordsForStock()
+    {
+        $this->builder()->where('deleted_at', null);
+        $this->builder()->groupBy('firearms.firearms_type_id');
+        return $this->builder()->countAllResults();
+    }
+
 }

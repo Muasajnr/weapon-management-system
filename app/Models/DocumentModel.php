@@ -8,10 +8,10 @@ class DocumentModel extends MyModel
 {
     protected $table                = 'documents';
     protected $returnType           = 'App\Entities\DocumentEntity';
-    protected $allowedFields        = ['doc_name', 'doc_number', 'doc_date', 'doc_image', 'created_at', 'updated_at', 'deleted_at'];
+    protected $allowedFields        = ['doc_name', 'doc_number', 'doc_date', 'doc_image', 'doc_type', 'created_at', 'updated_at', 'deleted_at'];
 
     // Datatables
-    protected $columnOrder          = [null, null, 'doc_name', 'doc_number', 'doc_date'];
+    protected $columnOrder          = [null, null, 'doc_name', 'doc_number', 'doc_date', 'doc_type'];
     protected $columnSearch         = ['doc_name', 'doc_number', 'doc_date'];
 
     public function __construct()

@@ -109,7 +109,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
         });
 
         // returnings
-        $routes->group('returnigs', function($routes) {
+        $routes->group('returnings', function($routes) {
             $routes->post('/', 'ReturningController::create');
             $routes->post('datatables', 'ReturningController::datatables');
         });

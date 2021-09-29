@@ -48,13 +48,13 @@
                         <tr>
                             <th><div class="text-center"><input id="checkAll" type="checkbox" name="multi_delete"></div></th>
                             <th>No.</th>
-                            <th>No. BPSA</th>
+                            <th>No. Peminjaman</th>
+                            <th>No. Dokumen</th>
                             <th>No. Senjata</th>
                             <th>Tipe</th>
                             <th>Brand</th>
                             <th>Deskripsi</th>
-                            <th>Tanggal Dibuat</th>
-                            <th>Status</th>
+                            <th>Tanggal Dipinjam</th>
                             <th>Actions</th>
                         </tr>
                     </thead>

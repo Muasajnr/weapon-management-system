@@ -13,12 +13,13 @@ class CreateBorrowingsTable extends Migration
         $this->db->disableForeignKeyChecks();
 
         $fields = [
-            'firearm_id'    => ['type' => 'int', 'constraint' => 9, 'null' => false],
-            'document_id'   => ['type' => 'int', 'constraint' => 9, 'null' => false],
-            'desc'          => ['type' => 'text', 'null' => true],
-            'created_at'    => ['type' => 'datetime', 'null' => true],
-            'updated_at'    => ['type' => 'datetime', 'null' => true],
-            'deleted_at'    => ['type' => 'datetime', 'null' => true],
+            'firearm_id'        => ['type' => 'int', 'constraint' => 9, 'null' => false],
+            'document_id'       => ['type' => 'int', 'constraint' => 9, 'null' => false],
+            'borrowing_number'  => ['type' => 'varchar', 'constraint' => 50, 'null' => false],
+            'desc'              => ['type' => 'text', 'null' => true],
+            'created_at'        => ['type' => 'datetime', 'null' => true],
+            'updated_at'        => ['type' => 'datetime', 'null' => true],
+            'deleted_at'        => ['type' => 'datetime', 'null' => true],
         ];
 
         $this->forge->addField('id');

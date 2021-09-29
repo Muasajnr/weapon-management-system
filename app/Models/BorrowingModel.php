@@ -8,7 +8,7 @@ class BorrowingModel extends MyModel
 {
     protected $table                = 'borrowings';
     protected $returnType           = 'App\Entities\BorrowingEntity';
-    protected $allowedFields        = ['firearm_id', 'document_id', 'desc', 'created_at', 'updated_at', 'deleted_at'];
+    protected $allowedFields        = ['firearm_id', 'document_id', 'borrowing_number', 'desc', 'created_at', 'updated_at', 'deleted_at'];
 
     // Datatables
     protected $columnOrder          = [];
@@ -33,14 +33,20 @@ class BorrowingModel extends MyModel
             firearms.firearms_number as firearm_number,
 
             borrowings.id as id,
+            borrowings.borrowing_number as borrowing_number,
             borrowings.desc as desc,
-            borrowings.created_at as created_at
+            borrowings.created_at as created_at,
+
+            documents.id as doc_id,
+            documents.doc_number as doc_number
             '
         );
 
         $this->builder()->join('firearms', 'firearms.id = borrowings.firearm_id', 'left');
         $this->builder()->join('firearms_types', 'firearms_types.id = firearms.firearms_type_id', 'left');
         $this->builder()->join('firearms_brands', 'firearms_brands.id = firearms.firearms_brand_id', 'left');
+        $this->builder()->join('documents', 'documents.id = borrowings.document_id', 'left');
+        $this->builder()->join('returnings', 'returnings.borrowing_id = borrowings.id', 'left');
 
         foreach($this->columnSearch as $column) {
             if ($searchQuery) {

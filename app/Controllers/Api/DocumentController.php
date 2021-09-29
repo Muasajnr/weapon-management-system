@@ -39,7 +39,9 @@ class DocumentController extends ApiController
             $row[]      = "{$item->doc_number}";
             $row[]      = "{$item->doc_name}";
             $row[]      = "{$item->doc_date}";
-            $row[]      = "<span class=\"badge badge-info\">peminjaman</span>";
+            $docTypeBadge = $item->doc_type == 'borrowing' ? 'info' : ($item->doc_type == 'returning' ? 'warning' : 'danger');
+            $docTypeText = $item->doc_type == 'borrowing' ? 'peminjaman' : ($item->doc_type == 'returning' ? 'pengembalian' : 'danger');
+            $row[]      = "<span class=\"badge badge-$docTypeBadge\">{$docTypeText}</span>";
             $row[]      = "{$item->created_at}";
             $row[]      = $this->buildCustomActionButtons($item->id);
 
