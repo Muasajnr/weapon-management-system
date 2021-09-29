@@ -57,6 +57,20 @@ class Index extends BaseController
         ]);
     }
 
+    public function firearms_add()
+    {
+        return view('dashboard/firearms/add', [
+            'page_title' => 'Tambah Senjata Api'
+        ]);
+    }
+
+    public function firearms_idk()
+    {
+        return view('dashboard/firearms/idk', [
+            'page_title' => 'Tambah Senjata Idk'
+        ]);
+    }
+
     public function borrowings_ongoing()
     {
         return view('dashboard/borrowings/index', [
@@ -82,6 +96,13 @@ class Index extends BaseController
     {
         return view('dashboard/documents/index', [
             'page_title' => 'Berita Acara'
+        ]);
+    }
+
+    public function documents_add()
+    {
+        return view('dashboard/documents/add', [
+            'page_title' => 'Tambah Berita Acara'
         ]);
     }
 

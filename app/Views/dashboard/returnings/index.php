@@ -48,7 +48,7 @@
                             <th><div class="text-center"><input id="checkAll" type="checkbox" name="multi_delete"></div></th>
                             <th>No.</th>
                             <th>No. Peminjaman</th>
-                            <th>No. Dokumen</th>
+                            <th>No. Berita Acara</th>
                             <th>No. Senjata</th>
                             <!-- <th>Tipe</th>
                             <th>Brand</th> -->
@@ -99,6 +99,7 @@ $(function() {
         },
         "processing": true,
         "serverSide": true,
+        "searching": false,
         "order": [],
         "ajax": function(data, callback, settings) {
             const dataUrl = '<?=site_url('api/dashboard/returnings/datatables')?>';

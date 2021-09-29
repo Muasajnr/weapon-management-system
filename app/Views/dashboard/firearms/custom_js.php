@@ -22,6 +22,7 @@ $(function() {
         },
         "processing": true,
         "serverSide": true,
+        "searching": false,
         "order": [],
         "ajax": function(data, callback, settings) {
             const dataUrl = '<?=site_url('api/dashboard/firearms/datatables')?>';

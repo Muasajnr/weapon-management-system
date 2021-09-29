@@ -146,7 +146,11 @@ $routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard'], functi
     });
 
     $routes->get('stok', 'Index::stocks', ['as' => 'stocks']);
-    $routes->get('senjata-api', 'Index::firearms', ['as' => 'firearms']);
+
+    $routes->group('senjata-api', function($routes) {
+        $routes->get('/', 'Index::firearms', ['as' => 'firearms']);
+        $routes->get('create', 'Index::firearms_add');
+    });
     
     $routes->group('peminjaman', function($routes) {
         $routes->get('sedang-dipinjam', 'Index::borrowings_ongoing', ['as' => 'borrowings_ongoing']);
@@ -154,7 +158,10 @@ $routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard'], functi
     });
 
     $routes->get('pengembalian', 'Index::returnings', ['as' => 'returnings']);
-    $routes->get('berita-acara', 'Index::documents', ['as' => 'documents']);
+    $routes->group('berita-acara', function($routes) {
+        $routes->get('/', 'Index::documents', ['as' => 'documents']);
+        $routes->get('create', 'Index::documents_add', ['as' => 'documents_add']);
+    });
     $routes->get('laporan', 'Index::reports', ['as' => 'reports']);
     $routes->get('users', 'Index::users', ['as' => 'users']);
 });

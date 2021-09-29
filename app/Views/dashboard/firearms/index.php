@@ -36,9 +36,9 @@
         <div class="card">
             <div class="card-header">
                 <!-- <h3 class="card-title">DataTable with minimal features & hover style</h3> -->
-                <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#modal-add-firearms-types">
+                <a href="<?=route_to('firearms_add')?>" type="button" class="btn btn-primary btn-sm mr-2">
                     <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Data
-                </button>
+                </a>
                 <button type="button" class="btn btn-danger btn-sm" id="btn-delete-multiple">
                     <i class="fas fa-trash"></i>&nbsp;&nbsp;Hapus banyak
                 </button>

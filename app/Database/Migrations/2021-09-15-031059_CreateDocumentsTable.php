@@ -16,7 +16,7 @@ class CreateDocumentsTable extends Migration
             'doc_name'      => ['type' => 'varchar', 'constraint' => 255, 'null' => false],
             'doc_number'    => ['type' => 'varchar', 'constraint' => 50, 'null' => false],
             'doc_date'      => ['type' => 'date', 'null' => false],
-            'doc_image'     => ['type' => 'varchar', 'constraint' => 255, 'null' => false],
+            'doc_media'     => ['type' => 'varchar', 'constraint' => 255, 'null' => false],
             'doc_type'      => ['type' => 'enum("borrowing", "returning")', 'default' => 'borrowing', 'null' => false],
             'created_at'    => ['type' => 'datetime', 'null' => true],
             'updated_at'    => ['type' => 'datetime', 'null' => true],
