@@ -23,8 +23,6 @@ class CreateInventoryTypesTable extends Migration
         $this->forge->addField('id');
         $this->forge->addField($fields);
 
-        $this->forge->addUniqueKey('name');
-
         $this->forge->createTable($this->tableName);
 
         $this->db->enableForeignKeyChecks();

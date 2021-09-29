@@ -34,7 +34,7 @@
         <div class="card">
             <div class="card-header">
                 <!-- <h3 class="card-title">DataTable with minimal features & hover style</h3> -->
-                <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#modal-add-new-inventory-type">
+                <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#modal-add-new-firearm-brand">
                     <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Data
                 </button>
                 <button type="button" class="btn btn-danger btn-sm" id="btn-delete-multiple">
@@ -43,7 +43,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-            <table id="data-inventory-types" class="table table-bordered table-hover table-sm" width="100%">
+            <table id="data-firearms-brands" class="table table-bordered table-hover table-sm" width="100%">
                 <thead>
                     <tr>
                         <th><div class="text-center"><input id="checkAll" type="checkbox" name="multi_delete"></div></th>

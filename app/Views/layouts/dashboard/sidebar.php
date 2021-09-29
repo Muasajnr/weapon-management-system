@@ -52,20 +52,20 @@
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="<?=route_to('inventory_types')?>" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? (service('uri')->getSegment(3) == 'jenis-inventaris' ? 'active' : '') : ''?>">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Data Jenis Inventaris</p>
+                            <i style="font-size: 14px;" class="far fa-circle nav-icon"></i>
+                            <p style="font-size: 14px;">Data Jenis Inventaris</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="<?=route_to('firearms_types')?>" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? (service('uri')->getSegment(3) == 'jenis-senjata-api' ? 'active' : '') : ''?>">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Data Jenis Senjata Api</p>
+                            <i style="font-size: 14px;" class="far fa-circle nav-icon"></i>
+                            <p style="font-size: 14px;">Data Jenis Senjata Api</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="<?=route_to('firearms_brands')?>" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? (service('uri')->getSegment(3) == 'merk-senjata-api' ? 'active' : '') : ''?>">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Data Merk Senjata Api</p>
+                            <i style="font-size: 14px;" class="far fa-circle nav-icon"></i>
+                            <p style="font-size: 14px;">Data Merk Senjata Api</p>
                         </a>
                     </li>
                 </ul>

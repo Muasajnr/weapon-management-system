@@ -77,18 +77,18 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
 
         // firearms brands
         $routes->group('firearms-brands', function($routes) {
-            // $routes->get('/', 'FirearmTypeController::index');
-            // $routes->get('(:segment)', 'FirearmTypeController::getOneData/$1');
+            // $routes->get('/', 'FirearmBrandController::index');
+            // $routes->get('(:segment)', 'FirearmBrandController::getOneData/$1');
             
-            $routes->post('/', 'FirearmTypeController::create');
+            $routes->post('/', 'FirearmBrandController::create');
             $routes->post('datatables', 'FirearmBrandController::datatables');
 
-            // $routes->put('(:segment)/update/status', 'FirearmTypeController::updateStatus/$1');
-            // $routes->put('(:segment)/update', 'FirearmTypeController::update/$1');
+            $routes->put('(:segment)/update/status', 'FirearmBrandController::updateStatus/$1');
+            $routes->put('(:segment)/update', 'FirearmBrandController::update/$1');
 
-            // $routes->delete('(:segment)/delete', 'FirearmTypeController::delete/$1');
-            // $routes->delete('delete/multiple', 'FirearmTypeController::deleteMultiple');
-            // $routes->delete('(:segment)/purge', 'FirearmTypeController::purge/$1');
+            $routes->delete('(:segment)/delete', 'FirearmBrandController::delete/$1');
+            $routes->delete('delete/multiple', 'FirearmBrandController::deleteMultiple');
+            // $routes->delete('(:segment)/purge', 'FirearmBrandController::purge/$1');
         });
 
         // stocks
