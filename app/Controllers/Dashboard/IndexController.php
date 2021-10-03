@@ -3,9 +3,10 @@
 namespace App\Controllers\Dashboard;
 
 use App\Controllers\BaseController;
+use App\Models\DocumentModel;
 use App\Models\FirearmModel;
 
-class Index extends BaseController
+class IndexController extends BaseController
 {
     public function index() {
         return redirect()->to('/dashboard/home');
@@ -120,10 +121,26 @@ class Index extends BaseController
         ]);
     }
 
-    public function documents_edit()
+    public function documents_edit($id)
     {
+        $documentModel = new DocumentModel();
+        $documentEditData = $documentModel->getDocumentEditData($id);
         return view('dashboard/documents/edit', [
-            'page_title' => 'Edit Berita Acara'
+            'page_title' => 'Edit Berita Acara',
+            'doc_id'    => $id,
+            'doc_edit_data' => $documentEditData
+        ]);
+    }
+
+    public function documents_show($id)
+    {
+        $documentModel = new DocumentModel();
+        $documentData = $documentModel->getOne($id);
+        return view('dashboard/documents/show', [
+            'page_title' => 'Lihat Berita Acara',
+            'doc_media' => $documentData->doc_media,
+            'doc_name'  => $documentData->doc_name,
+            'doc_ext'   => $documentData->uploaded_media_ext,
         ]);
     }
 

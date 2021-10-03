@@ -69,7 +69,7 @@ class BorrowingController extends ApiController
 
     private function buildDocNumberURL($docId, $docNumber)
     {
-        $hrefUrl = site_url('dashboard/documents/show-document/'.$docId);
+        $hrefUrl = site_url('dashboard/berita-acara/show/'.$docId);
 
         return "<a href=\"javascript:void(0)\" onclick=\"window.open('$hrefUrl', 'ShowDocument', 'width=800, height=1200')\">$docNumber</a>";
     }

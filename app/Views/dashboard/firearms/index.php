@@ -45,7 +45,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-            <table id="data-firearms" class="table table-bordered table-hover table-sm">
+            <table id="data-firearms" class="table table-bordered table-hover table-sm" width="100%">
                 <thead>
                     <tr>
                         <th><div class="text-center"><input id="checkAll" type="checkbox" name="multi_delete"></div></th>

@@ -12,7 +12,15 @@
 
 <script>
 $(function() {
-    const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+    // checkAll
+    $('#checkAll').click(function(e) {
+        if ($(this).is(":checked")) {
+            $('.multi_delete').prop('checked', true);
+        } else {
+            $('.multi_delete').prop('checked', false);
+        }
+    });
+
     // handles datatable
     const table = $('#data-documents').DataTable({
         "responsive": true,
@@ -88,6 +96,122 @@ $(function() {
             }
         ],
     });
+
+    // handle show detail
+    $('#data-documents tbody').on('click', 'tr td button.btn-primary', function(e) {
+        e.preventDefault();
+
+        Swal.fire({
+            icon: 'warning',
+            title: 'Fitur belum tersedia!',
+            showConfirmButton: true,
+            timer: 2000
+        });
+    });
+
+    // handle delete data
+    $('#data-documents tbody').on('click', 'tr td button.btn-danger', function(e) {
+        e.preventDefault();
+
+        const itemId = $(this).data().itemId;
+
+        Swal.fire({
+            title: 'Anda yakin?',
+            text: `Anda akan menghapus data ini.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const deleteUrl = '<?=site_url('api/dashboard/documents/')?>' + itemId + '/delete';
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: deleteUrl,
+                    headers: {
+                        'Authorization': 'Bearer ' + accessToken
+                    },
+                    success: function(res) {
+                        console.log(res);
+                        Swal.fire(
+                            'Terhapus!',
+                            'Data telah terhapus!',
+                            'success'
+                        )
+                        table.ajax.reload();
+                    },
+                    error: function(err) {
+                        console.log(err.responseJSON);
+                        Swal.fire(
+                            'Gagal!',
+                            'Data gagal terhapus!',
+                            'error'
+                        )
+                    }
+                })
+            }
+        });
+    });
+
+    // handle multi delete
+    $('#btn-delete-multiple').click(function(e) {
+        e.preventDefault();
+
+        const selectedRows = $('.multi_delete:checked');
+        
+        if (selectedRows.length > 0) {
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: `Anda akan menghapus ke-${selectedRows.length} data ini.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Iya, hapus semua!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const deleteUrl = '<?=site_url('api/dashboard/documents/delete/multiple')?>';
+                    const ids = [];
+
+                    selectedRows.each(function(index, item) {
+                        ids.push($(item).data().itemId);
+                    });
+
+                    const idsData = {"ids": ids};
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: deleteUrl,
+                        data: JSON.stringify(idsData),
+                        contentType: 'application/json',
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken
+                        },
+                        success: function(res) {
+                            console.log(res);
+                            Swal.fire(
+                                'Terhapus!',
+                                selectedRows.length + ' data telah terhapus!',
+                                'success'
+                            )
+                            table.ajax.reload();
+                        },
+                        error: function(err) {
+                            console.log(err.responseJSON);
+                            Swal.fire(
+                                'Gagal!',
+                                'Data menghapus '+selectedRows.length+' data!',
+                                'error'
+                            )
+                        }
+                    })
+                }
+            });
+        }
+    });
+
 });
 </script>
 

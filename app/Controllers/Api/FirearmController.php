@@ -84,20 +84,19 @@ class FirearmController extends ApiController
             'description'           => ['required' => 'desc is required'],
         ];
 
-        if (!$this->validate($rules, $messages)) {
+        if (!$this->validate($rules, $messages))
             return $this->failValidationErrors($this->validator->getErrors(), 'validation failed!');
+        
+        $data = $this->request->getVar();
+        $firearmModel = new FirearmModel();
+        $isAdded = $firearmModel->createNew((array) $data);
+        if (!$isAdded) {
+            return $this->fail('Something went wrong!');
         } else {
-            $data = $this->request->getVar();
-            $firearmModel = new FirearmModel();
-            $isAdded = $firearmModel->createNew((array) $data);
-            if (!$isAdded) {
-                return $this->fail('Something went wrong!');
-            } else {
-                return $this->respondCreated([
-                    'status'    => ResponseInterface::HTTP_CREATED,
-                    'message'   => 'Data telah ditambahkan!'
-                ]);
-            }
+            return $this->respondCreated([
+                'status'    => ResponseInterface::HTTP_CREATED,
+                'message'   => 'Data telah ditambahkan!'
+            ]);
         }
     }
 

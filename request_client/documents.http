@@ -1,0 +1,16 @@
+@base_url = http://inventory-barang.myprojects.com
+@active_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzMyNDk1MDUsIm5iZiI6MTYzMzI0OTUxNSwiZXhwIjoxNjMzMjUzMTA1LCJkYXRhIjp7ImlkIjoiMiIsImZ1bGxuYW1lIjoiVGVzdCBVc2VyIDIiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsImVtYWlsIjoidGVzdDJAZXhhbXBsZS5jb20iLCJsZXZlbCI6InVzZXIifX0.UZ5zlpuYL9nnFCmYP9-dLWFlOYqh_EcAca1705UPcxQ
+
+post {{base_url}}/api/dashboard/documents
+Authorization: Bearer {{active_token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="text"
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="gun-14014.png"
+Content-Type: image/png
+
+< ../public/assets/images/gun-14014.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--

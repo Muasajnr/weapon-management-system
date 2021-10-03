@@ -139,8 +139,15 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
 
         // documents
         $routes->group('documents', function($routes) {
+            $routes->get('/', 'DocumentController::index');
+
             $routes->post('/', 'DocumentController::create');
             $routes->post('datatables', 'DocumentController::datatables');
+
+            $routes->post('(:segment)/update', 'DocumentController::update/$1');
+
+            $routes->delete('(:segment)/delete', 'DocumentController::delete/$1');
+            $routes->delete('delete/multiple', 'DocumentController::deleteMultiple');
         });
 
         // reports
@@ -169,46 +176,47 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
 
 /** dashboard routes */
 $routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard'], function($routes) {
-    $routes->get('/', 'Index::index');
-    $routes->get('home', 'Index::home', ['as' => 'home']);
+    $routes->get('/', 'IndexController::index');
+    $routes->get('home', 'IndexController::home', ['as' => 'home']);
     
     $routes->group('master', function($routes) {
-        $routes->get('/', 'Index::master', ['as' => 'master']);
-        $routes->get('jenis-inventaris', 'Index::inventory_types', ['as' => 'inventory_types']);
-        $routes->get('jenis-senjata-api', 'Index::firearms_types', ['as' => 'firearms_types']);
-        $routes->get('merk-senjata-api', 'Index::firearms_brands', ['as' => 'firearms_brands']);
+        $routes->get('/', 'IndexController::master', ['as' => 'master']);
+        $routes->get('jenis-inventaris', 'IndexController::inventory_types', ['as' => 'inventory_types']);
+        $routes->get('jenis-senjata-api', 'IndexController::firearms_types', ['as' => 'firearms_types']);
+        $routes->get('merk-senjata-api', 'IndexController::firearms_brands', ['as' => 'firearms_brands']);
     });
 
-    $routes->get('stok', 'Index::stocks', ['as' => 'stocks']);
+    $routes->get('stok', 'IndexController::stocks', ['as' => 'stocks']);
 
     $routes->group('senjata-api', function($routes) {
-        $routes->get('/', 'Index::firearms', ['as' => 'firearms']);
-        $routes->get('create', 'Index::firearms_add', ['as' => 'firearms_add']);
-        $routes->get('(:segment)/edit', 'Index::firearms_edit/$1', ['as' => 'firearms_edit']);
+        $routes->get('/', 'IndexController::firearms', ['as' => 'firearms']);
+        $routes->get('create', 'IndexController::firearms_add', ['as' => 'firearms_add']);
+        $routes->get('(:segment)/edit', 'IndexController::firearms_edit/$1', ['as' => 'firearms_edit']);
     });
     
     $routes->group('peminjaman', function($routes) {
-        $routes->get('sedang-dipinjam', 'Index::borrowings_ongoing', ['as' => 'borrowings_ongoing']);
-        $routes->get('histori', 'Index::borrowings_history', ['as' => 'borrowings_ongoing']);
-        $routes->get('create', 'Index::borrowings_add', ['as' => 'borrowings_add']);
-        $routes->get('(:segment)/edit', 'Index::borrowings_edit/$1', ['as' => 'borrowings_edit']);
+        $routes->get('sedang-dipinjam', 'IndexController::borrowings_ongoing', ['as' => 'borrowings_ongoing']);
+        $routes->get('histori', 'IndexController::borrowings_history', ['as' => 'borrowings_ongoing']);
+        $routes->get('create', 'IndexController::borrowings_add', ['as' => 'borrowings_add']);
+        $routes->get('(:segment)/edit', 'IndexController::borrowings_edit/$1', ['as' => 'borrowings_edit']);
     });
 
     $routes->group('pengembalian', function($routes) {
-        $routes->get('/', 'Index::returnings', ['as' => 'returnings']);
-        $routes->get('create', 'Index::returnings_add', ['as' => 'returnings_add']);
-        $routes->get('(:segment)/edit', 'Index::returnings_edit/$1', ['as' => 'returnings_edit']);
+        $routes->get('/', 'IndexController::returnings', ['as' => 'returnings']);
+        $routes->get('create', 'IndexController::returnings_add', ['as' => 'returnings_add']);
+        $routes->get('(:segment)/edit', 'IndexController::returnings_edit/$1', ['as' => 'returnings_edit']);
     });
 
     $routes->group('berita-acara', function($routes) {
-        $routes->get('/', 'Index::documents', ['as' => 'documents']);
-        $routes->get('create', 'Index::documents_add', ['as' => 'documents_add']);
-        $routes->get('(:segment)/edit', 'Index::documents_edit/$1', ['as' => 'documents_edit']);
+        $routes->get('/', 'IndexController::documents', ['as' => 'documents']);
+        $routes->get('create', 'IndexController::documents_add', ['as' => 'documents_add']);
+        $routes->get('(:segment)/edit', 'IndexController::documents_edit/$1', ['as' => 'documents_edit']);
+        $routes->get('(:segment)/show', 'IndexController::documents_show/$1', ['as' => 'documents_show']);
     });
 
-    $routes->get('laporan', 'Index::reports', ['as' => 'reports']);
+    $routes->get('laporan', 'IndexController::reports', ['as' => 'reports']);
     
-    $routes->get('users', 'Index::users', ['as' => 'users']);
+    $routes->get('users', 'IndexController::users', ['as' => 'users']);
 });
 
 $routes->group('test', ['namespace' => 'App\Controllers\TestCIFeatures'], function($routes) {
