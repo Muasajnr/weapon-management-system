@@ -11,7 +11,11 @@ class DocumentController extends ApiController
 {
     public function index()
     {
-        //
+        $docModel = new DocumentModel();
+        return $this->respond([
+            'status'    => ResponseInterface::HTTP_OK,
+            'data'      => $docModel->findAll(),
+        ], ResponseInterface::HTTP_OK);
     }
 
     /******************** datatable **********************/

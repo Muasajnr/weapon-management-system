@@ -58,6 +58,41 @@ class BorrowingController extends ApiController
         return $this->respond($output, ResponseInterface::HTTP_OK);
     }
 
+    /******************** insert **********************/
+    public function create()
+    {
+        if (!$this->request->isAJAX())
+            return $this->fail('Invalid request!');
+        
+        $rules      = [
+            'firearm_id'     => 'required',
+            'document_id'      => 'required',
+            'borrowing_number'     => 'required',
+            'desc'       => 'required',
+        ];
+        $messages   = [
+            'firearm_id'     => ['required' => 'firearm_id is required'],
+            'document_id'      => ['required' => 'document_id is required'],
+            'borrowing_number'     => ['required' => 'borrowing_number is required'],
+            'desc'       => ['required' => 'desc is required'],
+        ];
+
+        if (!$this->validate($rules, $messages))
+            return $this->failValidationErrors($this->validator->getErrors(), 'validation failed!');
+        
+        $data = $this->request->getVar();
+        $borrowingModel = new BorrowingModel();
+        $isAdded = $borrowingModel->createNew((array) $data);
+        if (!$isAdded) {
+            return $this->fail('Something went wrong!');
+        } else {
+            return $this->respondCreated([
+                'status'    => ResponseInterface::HTTP_CREATED,
+                'message'   => 'Data telah ditambahkan!'
+            ]);
+        }
+    }
+
     private function buildCustomActionButtons(int $id)
     {
         return "<div class=\"text-center\">

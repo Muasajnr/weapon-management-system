@@ -210,4 +210,25 @@ class FirearmModel extends MyModel
         return $result->getResult();
     }
 
+    public function findAllForSelect2()
+    {
+        $this->builder()->select('
+            inventory_types.name as inventory_type,
+            firearms_types.name as firearm_type,
+            firearms_brands.name as firearm_brand,
+            firearms.firearms_number as firearm_number,
+            firearms.bpsa_number as bpsa_number,
+            firearms.id as firearm_id,
+            firearms_types.name as name,
+        ');
+
+        $this->builder()->join('inventory_types', 'inventory_types.id=firearms.inventory_type_id', 'left');
+        $this->builder()->join('firearms_types', 'firearms_types.id=firearms.firearms_type_id', 'left');
+        $this->builder()->join('firearms_brands', 'firearms_brands.id=firearms.firearms_brand_id', 'left');
+
+        $this->builder()->where('firearms.deleted_at', null);
+        // $this->builder()->limit(5);
+        return $this->builder()->get()->getResult();
+    }
+
 }

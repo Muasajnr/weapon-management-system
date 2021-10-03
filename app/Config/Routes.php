@@ -104,6 +104,8 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
 
         // firearms
         $routes->group('firearms', function($routes) {
+            $routes->get('/', 'FirearmController::index');
+
             $routes->post('/', 'FirearmController::create');
             $routes->post('datatables', 'FirearmController::datatables');
 
@@ -120,10 +122,10 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
             $routes->post('/', 'BorrowingController::create');
             $routes->post('datatables', 'BorrowingController::datatables');
 
-            // $routes->put('(:segment)/update', 'FirearmController::update/$1');
+            $routes->put('(:segment)/update', 'FirearmController::update/$1');
             
-            // $routes->delete('(:segment)/delete', 'FirearmBrandController::delete/$1');
-            // $routes->delete('delete/multiple', 'FirearmBrandController::deleteMultiple');
+            $routes->delete('(:segment)/delete', 'FirearmBrandController::delete/$1');
+            $routes->delete('delete/multiple', 'FirearmBrandController::deleteMultiple');
         });
 
         // returnings
@@ -131,10 +133,10 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
             $routes->post('/', 'ReturningController::create');
             $routes->post('datatables', 'ReturningController::datatables');
 
-            // $routes->put('(:segment)/update', 'FirearmController::update/$1');
+            $routes->put('(:segment)/update', 'FirearmController::update/$1');
             
-            // $routes->delete('(:segment)/delete', 'FirearmBrandController::delete/$1');
-            // $routes->delete('delete/multiple', 'FirearmBrandController::deleteMultiple');
+            $routes->delete('(:segment)/delete', 'FirearmBrandController::delete/$1');
+            $routes->delete('delete/multiple', 'FirearmBrandController::deleteMultiple');
         });
 
         // documents
@@ -152,7 +154,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
 
         // reports
         $routes->group('reports', function($routes) {
-            $routes->post('datatables', 'ReportController::datatables');
+            // show graph that has datetimepicker to change report date
         });
 
         // users

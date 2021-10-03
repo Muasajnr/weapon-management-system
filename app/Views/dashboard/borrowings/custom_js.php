@@ -12,7 +12,6 @@
 
 <script>
 $(function() {
-    const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
     // handles datatable
     const table = $('#data-borrowings').DataTable({
         "responsive": true,
@@ -97,6 +96,18 @@ $(function() {
                 "searchable": false
             }
         ],
+    });
+
+    // handle show detail
+    $('#data-borrowings tbody').on('click', 'tr td button.btn-primary', function(e) {
+        e.preventDefault();
+
+        Swal.fire({
+            icon: 'warning',
+            title: 'Fitur belum tersedia!',
+            showConfirmButton: true,
+            timer: 2000
+        });
     });
 });
 </script>

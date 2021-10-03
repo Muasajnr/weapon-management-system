@@ -100,6 +100,13 @@ class IndexController extends BaseController
         ]);
     }
 
+    public function borrowings_add()
+    {
+        return view('dashboard/borrowings/add', [
+            'page_title' => 'Pinjam Senjata'
+        ]);
+    }
+
     public function returnings()
     {
         return view('dashboard/returnings/index', [
