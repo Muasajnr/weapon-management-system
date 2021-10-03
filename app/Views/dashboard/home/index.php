@@ -95,7 +95,7 @@
                     </div>
                     <div class="card-body">
                         <div class="position-relative mb-4">
-                            <canvas id="sales-chart" height="400"></canvas>
+                            <canvas id="chart-inventory-types" height="400"></canvas>
                         </div>
                     </div>
                 </div>
@@ -344,7 +344,7 @@
 <?=$this->section('custom-js')?>
 <script src="<?=site_url('themes/AdminLTE/plugins/chart.js/Chart.min.js')?>"></script>
 <script>
-    $(function () {
+$(function () {
     'use strict'
 
     var ticksStyle = {
@@ -354,22 +354,7 @@
 
     var mode = 'index'
     var intersect = true
-
-    var $salesChart = $('#sales-chart')
-    // eslint-disable-next-line no-unused-vars
-    var salesChart = new Chart($salesChart, {
-        type: 'bar',
-        data: {
-        labels: ['Senjata Api', 'Non Organik', 'Gudang', 'Regu Pengamanan', 'Tidak Diketahui'],
-        datasets: [
-            {
-                backgroundColor: ['#007bff', '#00ff00', '#ffff00', '#ff3399', '#ff0000'],
-                borderColor: '#007bff',
-                data: [59, 20, 11, 80, 30]
-            },
-        ]
-        },
-        options: {
+    var optionsConfig = {
         maintainAspectRatio: false,
         tooltips: {
             mode: mode,
@@ -408,8 +393,94 @@
             ticks: ticksStyle
             }]
         }
+    };
+
+    var $chartInventoryTypes = $('#chart-inventory-types')
+
+
+
+
+    $.ajax({
+        type: 'GET',
+        url: '<?=site_url('api/dashboard/stock-by-inventory-type')?>',
+        dataType: 'json',
+        headers: {
+            'Authorization': 'Bearer ' + accessToken,
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        success: function(res) {
+            console.log(res)
+            var chartInventoryTypes = new Chart($chartInventoryTypes, {
+                type: 'bar',
+                data: {
+                labels: ['Senjata Api', 'Non Organik', 'Gudang', 'Regu Pengamanan', 'Tidak Diketahui'],
+                datasets: [{
+                        backgroundColor: ['#B71C1C', '#880E4F', '#4A148C', '#311B92', '#1A237E'],
+                        borderColor: '#007bff',
+                        data: [59, 20, 11, 80, 30]
+                    }]
+                },
+                options: optionsConfig
+            });
+        },
+        error: function(err) {
+            console.log(err)
+            var chartInventoryTypes = new Chart($chartInventoryTypes, {
+                type: 'bar',
+                data: {
+                labels: ['Senjata Api', 'Non Organik', 'Gudang', 'Regu Pengamanan', 'Tidak Diketahui'],
+                datasets: [
+                    {
+                        backgroundColor: ['#B71C1C', '#880E4F', '#4A148C', '#311B92', '#1A237E'],
+                        borderColor: '#007bff',
+                        data: [59, 20, 11, 80, 30]
+                    },
+                ]
+                },
+                options: optionsConfig
+            });
         }
-    })
+    });
+    $.ajax({
+        type: 'GET',
+        url: '<?=site_url('api/dashboard/stock-by-firearm-type')?>',
+        dataType: 'json',
+        headers: {
+            'Authorization': 'Bearer ' + accessToken,
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        success: function(res) {
+
+        },
+        error: function(err) {
+
+        }
+    });
+    $.ajax({
+        type: 'GET',
+        url: '<?=site_url('api/dashboard/stock-by-firearm-brand')?>',
+        dataType: 'json',
+        headers: {
+            'Authorization': 'Bearer ' + accessToken,
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        success: function(res) {
+
+        },
+        error: function(err) {
+
+        }
+    });
+
+
+
+
+
+
+
+
+
+    
 
     var $chartJenisSenpi = $('#chart-jenis-senpi')
     // eslint-disable-next-line no-unused-vars

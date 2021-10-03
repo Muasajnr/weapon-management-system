@@ -10,7 +10,11 @@ class FirearmBrandController extends ApiController
 {
     public function index()
     {
-        //
+        $firearmBrandModel = new FirearmBrandModel();
+        return $this->respond([
+            'status'    => ResponseInterface::HTTP_OK,
+            'data'      => $firearmBrandModel->findAll(),
+        ], ResponseInterface::HTTP_OK);
     }
 
     /******************** datatable **********************/

@@ -3,6 +3,7 @@
 namespace App\Controllers\Dashboard;
 
 use App\Controllers\BaseController;
+use App\Models\FirearmModel;
 
 class Index extends BaseController
 {
@@ -64,10 +65,23 @@ class Index extends BaseController
         ]);
     }
 
-    public function firearms_idk()
+    public function firearms_edit($id)
     {
-        return view('dashboard/firearms/idk', [
-            'page_title' => 'Tambah Senjata Idk'
+        $firearmModel = new FirearmModel();
+        $dataEditFirearm = $firearmModel->getDataEditFirearm($id);
+        return view('dashboard/firearms/edit', [
+            'page_title'    => 'Edit Senjata Api',
+            'firearm_id'    => $id,
+            'inventory_type'    => $dataEditFirearm->inventory_type,
+            'inventory_type_id'    => $dataEditFirearm->inventory_type_id,
+            'firearm_type'    => $dataEditFirearm->firearm_type,
+            'firearm_type_id'    => $dataEditFirearm->firearm_type_id,
+            'firearm_brand'    => $dataEditFirearm->firearm_brand,
+            'firearm_brand_id'    => $dataEditFirearm->firearm_brand_id,
+            'firearm_number'    => $dataEditFirearm->firearm_number,
+            'bpsa_number'    => $dataEditFirearm->bpsa_number,
+            'condition'    => $dataEditFirearm->condition,
+            'description'    => $dataEditFirearm->description
         ]);
     }
 
@@ -103,6 +117,13 @@ class Index extends BaseController
     {
         return view('dashboard/documents/add', [
             'page_title' => 'Tambah Berita Acara'
+        ]);
+    }
+
+    public function documents_edit()
+    {
+        return view('dashboard/documents/edit', [
+            'page_title' => 'Edit Berita Acara'
         ]);
     }
 

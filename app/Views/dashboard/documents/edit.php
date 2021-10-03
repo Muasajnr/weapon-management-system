@@ -12,12 +12,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Tambah Berita Acara</h1>
+                <h1 class="m-0">Edit Berita Acara</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="<?=route_to('documents')?>">Berita Acara</a></li>
-                    <li class="breadcrumb-item active">Tambah Berita Acara</li>
+                    <li class="breadcrumb-item active">Edit Berita Acara</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -33,7 +33,7 @@
                 <div class="card">
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <form id="form-add-document">
+                        <form id="form-edit-document">
                             <div class="form-group">
                                 <label for="doc_name">Judul Berita Acara</label>
                                 <input type="text" name="doc_name" class="form-control" id="doc_name" placeholder="Masukkan Judul...">

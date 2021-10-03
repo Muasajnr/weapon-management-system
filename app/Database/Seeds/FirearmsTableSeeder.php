@@ -15,9 +15,8 @@ class FirearmsTableSeeder extends Seeder
     {
         $currentTime = Time::now();
         $conditions = [
-            'good',
-            'damage',
-            'unknown'
+            'normal',
+            'damaged'
         ];
 
         $data = [];

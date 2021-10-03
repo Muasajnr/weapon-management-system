@@ -42,6 +42,12 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
 
     $routes->group('dashboard', function($routes) {
         // home
+        $routes->get('/cards', 'HomeController::cardsData()');
+        $routes->get('/stock-by-inventory-type', 'HomeController::stockByInventoryType()');
+        $routes->get('/stock-by-firearm-type', 'HomeController::stockByFirearmType()');
+        $routes->get('/stock-by-firearm-brand', 'HomeController::stockByFirearmBrand()');
+        $routes->get('/top-10-firearm', 'HomeController::top10Firearm');
+        $routes->get('/top-10-borrowed-firearm', 'HomeController::top10BorrowedFirearm');
 
         // inventory types
         $routes->group('inventory-types', function($routes) {
@@ -77,7 +83,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
 
         // firearms brands
         $routes->group('firearms-brands', function($routes) {
-            // $routes->get('/', 'FirearmBrandController::index');
+            $routes->get('/', 'FirearmBrandController::index');
             // $routes->get('(:segment)', 'FirearmBrandController::getOneData/$1');
             
             $routes->post('/', 'FirearmBrandController::create');
@@ -100,18 +106,35 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
         $routes->group('firearms', function($routes) {
             $routes->post('/', 'FirearmController::create');
             $routes->post('datatables', 'FirearmController::datatables');
+
+            $routes->put('(:segment)/update', 'FirearmController::update/$1');
+
+            $routes->delete('(:segment)/delete', 'FirearmController::delete/$1');
+            $routes->delete('delete/multiple', 'FirearmController::deleteMultiple');
         });
 
         // borrowings
         $routes->group('borrowings', function($routes) {
+            $routes->get('/history', 'BorrowingController::getDeleted');
+
             $routes->post('/', 'BorrowingController::create');
             $routes->post('datatables', 'BorrowingController::datatables');
+
+            // $routes->put('(:segment)/update', 'FirearmController::update/$1');
+            
+            // $routes->delete('(:segment)/delete', 'FirearmBrandController::delete/$1');
+            // $routes->delete('delete/multiple', 'FirearmBrandController::deleteMultiple');
         });
 
         // returnings
         $routes->group('returnings', function($routes) {
             $routes->post('/', 'ReturningController::create');
             $routes->post('datatables', 'ReturningController::datatables');
+
+            // $routes->put('(:segment)/update', 'FirearmController::update/$1');
+            
+            // $routes->delete('(:segment)/delete', 'FirearmBrandController::delete/$1');
+            // $routes->delete('delete/multiple', 'FirearmBrandController::deleteMultiple');
         });
 
         // documents
@@ -127,7 +150,18 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
 
         // users
         $routes->group('users', function($routes) {
+            $routes->get('/', 'UserController::index');
+            $routes->get('(:segment)', 'UserController::getOneData/$1');
+            
+            $routes->post('/', 'UserController::create');
             $routes->post('datatables', 'UserController::datatables');
+
+            $routes->put('(:segment)/update/status', 'UserController::updateStatus/$1');
+            $routes->put('(:segment)/update', 'UserController::update/$1');
+
+            $routes->delete('(:segment)/delete', 'UserController::delete/$1');
+            $routes->delete('delete/multiple', 'UserController::deleteMultiple');
+            // $routes->delete('(:segment)/purge', 'FirearmTypeController::purge/$1');
         });
 
     });
@@ -149,20 +183,31 @@ $routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard'], functi
 
     $routes->group('senjata-api', function($routes) {
         $routes->get('/', 'Index::firearms', ['as' => 'firearms']);
-        $routes->get('create', 'Index::firearms_add');
+        $routes->get('create', 'Index::firearms_add', ['as' => 'firearms_add']);
+        $routes->get('(:segment)/edit', 'Index::firearms_edit/$1', ['as' => 'firearms_edit']);
     });
     
     $routes->group('peminjaman', function($routes) {
         $routes->get('sedang-dipinjam', 'Index::borrowings_ongoing', ['as' => 'borrowings_ongoing']);
         $routes->get('histori', 'Index::borrowings_history', ['as' => 'borrowings_ongoing']);
+        $routes->get('create', 'Index::borrowings_add', ['as' => 'borrowings_add']);
+        $routes->get('(:segment)/edit', 'Index::borrowings_edit/$1', ['as' => 'borrowings_edit']);
     });
 
-    $routes->get('pengembalian', 'Index::returnings', ['as' => 'returnings']);
+    $routes->group('pengembalian', function($routes) {
+        $routes->get('/', 'Index::returnings', ['as' => 'returnings']);
+        $routes->get('create', 'Index::returnings_add', ['as' => 'returnings_add']);
+        $routes->get('(:segment)/edit', 'Index::returnings_edit/$1', ['as' => 'returnings_edit']);
+    });
+
     $routes->group('berita-acara', function($routes) {
         $routes->get('/', 'Index::documents', ['as' => 'documents']);
         $routes->get('create', 'Index::documents_add', ['as' => 'documents_add']);
+        $routes->get('(:segment)/edit', 'Index::documents_edit/$1', ['as' => 'documents_edit']);
     });
+
     $routes->get('laporan', 'Index::reports', ['as' => 'reports']);
+    
     $routes->get('users', 'Index::users', ['as' => 'users']);
 });
 

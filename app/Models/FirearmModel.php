@@ -53,18 +53,22 @@ class FirearmModel extends MyModel
         $i = 0;
         
         $this->builder()->select(
-            'firearms.bpsa_number as bpsa_number,
+            '
+            firearms.bpsa_number as bpsa_number,
             firearms.firearms_number as firearm_number,
             firearms.condition as condition, 
             firearms.description as description,
             inventory_types.name as inventory_type, 
             firearms_types.name as firearm_type, 
             firearms_brands.name as firearm_brand,
-            firearms.id as firearm_id'
+            firearms.id as firearm_id,
+            (CASE WHEN borrowings.firearm_id IS NOT NULL THEN (CASE WHEN borrowings.deleted_at IS NULL THEN 1 ELSE 0 END) ELSE 0 END) as is_borrowed
+            '
         );
         $this->builder()->join('inventory_types', 'inventory_types.id = firearms.inventory_type_id', 'left');
         $this->builder()->join('firearms_types', 'firearms_types.id = firearms.firearms_type_id', 'left');
         $this->builder()->join('firearms_brands', 'firearms_brands.id = firearms.firearms_brand_id', 'left');
+        $this->builder()->join('borrowings', 'borrowings.firearm_id = firearms.id', 'left');
 
         foreach($this->columnSearch as $column) {
             if ($searchQuery) {
@@ -171,6 +175,39 @@ class FirearmModel extends MyModel
         $this->builder()->where('deleted_at', null);
         $this->builder()->groupBy('firearms.firearms_type_id');
         return $this->builder()->countAllResults();
+    }
+
+    public function getDataEditFirearm($id) : object
+    {
+        $this->builder()->select(
+            '
+            inventory_types.id as inventory_type_id,
+            inventory_types.name as inventory_type,
+            firearms_types.id as firearm_type_id,
+            firearms_types.name as firearm_type,
+            firearms_brands.id as firearm_brand_id,
+            firearms_brands.name as firearm_brand,
+            firearms.firearms_number as firearm_number,
+            firearms.bpsa_number as bpsa_number,
+            firearms.condition as condition,
+            firearms.description as description
+            '
+        );
+        $this->builder()->join('inventory_types', 'inventory_types.id=firearms.inventory_type_id', 'left');
+        $this->builder()->join('firearms_types', 'firearms_types.id=firearms.firearms_type_id', 'left');
+        $this->builder()->join('firearms_brands', 'firearms_brands.id=firearms.firearms_brand_id', 'left');
+
+        $this->builder()->where('firearms.id', $id);
+
+        return $this->builder()->get()->getRow();
+    }
+
+    public function getChartDataByInventoryTypes() : array
+    {
+        $sql = 'SELECT DISTINCT(inventory_type_id), COUNT(id) as total FROM '.$this->table.' GROUP BY inventory_type_id';
+        $result = $this->db->query($sql);
+
+        return $result->getResult();
     }
 
 }

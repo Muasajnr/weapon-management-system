@@ -17,8 +17,6 @@
 
 <script>
 $(function() {
-    const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
-
     // checkAll
     $('#checkAll').click(function(e) {
         if ($(this).is(":checked")) {
