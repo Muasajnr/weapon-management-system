@@ -198,7 +198,7 @@ $routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard'], functi
     
     $routes->group('peminjaman', function($routes) {
         $routes->get('sedang-dipinjam', 'IndexController::borrowings_ongoing', ['as' => 'borrowings_ongoing']);
-        $routes->get('histori', 'IndexController::borrowings_history', ['as' => 'borrowings_ongoing']);
+        $routes->get('histori', 'IndexController::borrowings_history', ['as' => 'borrowings_history']);
         $routes->get('create', 'IndexController::borrowings_add', ['as' => 'borrowings_add']);
         $routes->get('(:segment)/edit', 'IndexController::borrowings_edit/$1', ['as' => 'borrowings_edit']);
     });

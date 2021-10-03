@@ -104,7 +104,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?=route_to('borrowings_histori')?>" class="nav-link <?=service('uri')->getSegment(2) == 'peminjaman' ? (service('uri')->getSegment(3) == 'histori' ? 'active' : '') : ''?>">
+                        <a href="<?=route_to('borrowings_history')?>" class="nav-link <?=service('uri')->getSegment(2) == 'peminjaman' ? (service('uri')->getSegment(3) == 'histori' ? 'active' : '') : ''?>">
                             <i style="font-size: 14px;" class="far fa-circle nav-icon"></i>
                             <p style="font-size: 14px;">Histori</p>
                         </a>

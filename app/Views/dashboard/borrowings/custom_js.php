@@ -109,6 +109,54 @@ $(function() {
             timer: 2000
         });
     });
+
+    // handle show detail
+    $('#data-borrowings tbody').on('click', 'tr td button.btn-primary', function(e) {
+        e.preventDefault();
+
+        Swal.fire({
+            icon: 'warning',
+            title: 'Fitur belum tersedia!',
+            showConfirmButton: true,
+            timer: 2000
+        });
+    });
+
+    // handle show detail
+    $('#data-borrowings tbody').on('click', 'tr td button.btn-info', function(e) {
+        e.preventDefault();
+
+        Swal.fire({
+            icon: 'warning',
+            title: 'Fitur belum tersedia!',
+            showConfirmButton: true,
+            timer: 2000
+        });
+    });
+
+    // handle show detail
+    $('#data-borrowings tbody').on('click', 'tr td button.btn-danger', function(e) {
+        e.preventDefault();
+
+        Swal.fire({
+            icon: 'warning',
+            title: 'Fitur belum tersedia!',
+            showConfirmButton: true,
+            timer: 2000
+        });
+    });
+
+    // handle multi delete
+    $('#btn-delete-multiple').click(function(e) {
+        e.preventDefault();
+
+        Swal.fire({
+            icon: 'warning',
+            title: 'Fitur belum tersedia!',
+            showConfirmButton: true,
+            timer: 2000
+        });
+    });
 });
 </script>
 

@@ -93,7 +93,7 @@ class IndexController extends BaseController
         ]);
     }
 
-    public function borrowings_histori()
+    public function borrowings_history()
     {
         return view('dashboard/borrowings/history', [
             'page_title' => 'Histori'
