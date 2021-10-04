@@ -32,7 +32,8 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
-$routes->get('/login', 'Login::index');
+$routes->get('/login', 'LoginController::login2');
+// $routes->get('/login2', 'LoginController::login2');
 
 /** restful api */
 $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) {
