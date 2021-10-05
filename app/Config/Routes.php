@@ -196,6 +196,13 @@ $routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard'], functi
         $routes->get('create', 'IndexController::firearms_add', ['as' => 'firearms_add']);
         $routes->get('(:segment)/edit', 'IndexController::firearms_edit/$1', ['as' => 'firearms_edit']);
     });
+
+    $routes->group('sarana-keamanan', function($routes) {
+        $routes->get('tambah', 'SaranaKeamananController::tambah', ['as' => 'SK_tambah']);
+        $routes->get('senjata-api', 'SaranaKeamananController::senjata_api', ['as' => 'SK_senjata_api']);
+        $routes->get('non-organik', 'SaranaKeamananController::non_organik', ['as' => 'SK_non_organik']);
+        $routes->get('lainnya', 'SaranaKeamananController::lainnya', ['as' => 'SK_lainnya']);
+    });
     
     $routes->group('peminjaman', function($routes) {
         $routes->get('sedang-dipinjam', 'IndexController::borrowings_ongoing', ['as' => 'borrowings_ongoing']);

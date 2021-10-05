@@ -15,6 +15,14 @@
     <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/pace-progress/themes/blue/pace-theme-flat-top.css')?>">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')?>">
+    <style>
+    [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active-btn,
+    [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active-btn:focus,
+    [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active-btn:hover {
+        background-color: #ffc107;
+        color: #343a40;
+    }
+    </style>
     <!-- Custom Style -->
     <?=$this->renderSection('custom-css')?>
     <!-- JS Header Constants -->

@@ -2,8 +2,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-    <img src="<?=site_url('themes/AdminLTE/dist/img/AdminLTELogo.png')?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-light">Inventaris Senjata Api</span>
+    <img src="<?=site_url('assets/images/logo3.png')?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light"><strong>IRAMADIBATU</strong></span>
     </a>
 
     <!-- Sidebar -->
@@ -52,20 +52,20 @@
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="<?=route_to('inventory_types')?>" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? (service('uri')->getSegment(3) == 'jenis-inventaris' ? 'active' : '') : ''?>">
-                            <i style="font-size: 14px;" class="far fa-circle nav-icon"></i>
-                            <p style="font-size: 14px;">Data Jenis Inventaris</p>
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Data Jenis Inventaris</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="<?=route_to('firearms_types')?>" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? (service('uri')->getSegment(3) == 'jenis-senjata-api' ? 'active' : '') : ''?>">
-                            <i style="font-size: 14px;" class="far fa-circle nav-icon"></i>
-                            <p style="font-size: 14px;">Data Jenis Senjata Api</p>
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Data Jenis Sarana</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="<?=route_to('firearms_brands')?>" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? (service('uri')->getSegment(3) == 'merk-senjata-api' ? 'active' : '') : ''?>">
-                            <i style="font-size: 14px;" class="far fa-circle nav-icon"></i>
-                            <p style="font-size: 14px;">Data Merk Senjata Api</p>
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Data Merk</p>
                         </a>
                     </li>
                 </ul>
@@ -76,11 +76,46 @@
                     <p>Data Stok Senjata</p>
                 </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="<?=route_to('firearms')?>" class="nav-link <?=service('uri')->getSegment(2) == 'senjata-api' ? 'active' : ''?>">
                     <i class="fas fa-box nav-icon"></i>
                     <p>Data Senjata Api</p>
                 </a>
+            </li> -->
+            <li class="nav-item <?=service('uri')->getSegment(2) == 'sarana-keamanan' ? 'menu-open' : ''?>">
+                <a href="#" class="nav-link <?=service('uri')->getSegment(2) == 'sarana-keamanan' ? 'active' : ''?>">
+                    <i class="nav-icon fas fa-box"></i>
+                    <p>
+                        Sarana Keamanan
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <!-- <li class="nav-item">
+                        <a href="<?=route_to('SK_tambah')?>" class="nav-link active-btn">
+                            <i class="fas fa-plus nav-icon"></i>
+                            <p>Tambah Data</p>
+                        </a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a href="<?=route_to('senjata-api')?>" class="nav-link <?=service('uri')->getSegment(2) == 'sarana-keamanan' ? (service('uri')->getSegment(3) == 'senjata-api' ? 'active' : '') : ''?>">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Senjata Api</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?=route_to('non-organik')?>" class="nav-link <?=service('uri')->getSegment(2) == 'sarana-keamanan' ? (service('uri')->getSegment(3) == 'non-organik' ? 'active' : '') : ''?>">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Non Organik</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?=route_to('lainnya')?>" class="nav-link <?=service('uri')->getSegment(2) == 'sarana-kemanan' ? (service('uri')->getSegment(3) == 'lainnya' ? 'active' : '') : ''?>">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Lainnya</p>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <!-- <li class="nav-item">
                 <a href="<?=route_to('borrowings')?>" class="nav-link <?=service('uri')->getSegment(2) == 'peminjaman' ? 'active' : ''?>">
@@ -99,14 +134,14 @@
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="<?=route_to('borrowings_ongoing')?>" class="nav-link <?=service('uri')->getSegment(2) == 'peminjaman' ? (service('uri')->getSegment(3) == 'sedang-dipinjam' ? 'active' : '') : ''?>">
-                            <i style="font-size: 14px;" class="far fa-circle nav-icon"></i>
-                            <p style="font-size: 14px;">Sedang dipinjam</p>
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Sedang dipinjam</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="<?=route_to('borrowings_history')?>" class="nav-link <?=service('uri')->getSegment(2) == 'peminjaman' ? (service('uri')->getSegment(3) == 'histori' ? 'active' : '') : ''?>">
-                            <i style="font-size: 14px;" class="far fa-circle nav-icon"></i>
-                            <p style="font-size: 14px;">Histori</p>
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Histori</p>
                         </a>
                     </li>
                 </ul>
