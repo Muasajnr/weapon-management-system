@@ -3,11 +3,9 @@
 namespace App\Modules\Login\Controllers;
 
 use App\Controllers\BaseController;
+use CodeIgniter\API\ResponseTrait;
 
 class ApiController extends BaseController
 {
-    public function index()
-    {
-        //
-    }
+    use ResponseTrait;
 }

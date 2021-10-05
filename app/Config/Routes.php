@@ -174,20 +174,20 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
         });
 
         // users
-        $routes->group('users', function($routes) {
-            $routes->get('/', 'UserController::index');
-            $routes->get('(:segment)', 'UserController::getOneData/$1');
+        // $routes->group('users', function($routes) {
+        //     $routes->get('/', 'UserController::index');
+        //     $routes->get('(:segment)', 'UserController::getOneData/$1');
             
-            $routes->post('/', 'UserController::create');
-            $routes->post('datatables', 'UserController::datatables');
+        //     $routes->post('/', 'UserController::create');
+        //     $routes->post('datatables', 'UserController::datatables');
 
-            $routes->put('(:segment)/update/status', 'UserController::updateStatus/$1');
-            $routes->put('(:segment)/update', 'UserController::update/$1');
+        //     $routes->put('(:segment)/update/status', 'UserController::updateStatus/$1');
+        //     $routes->put('(:segment)/update', 'UserController::update/$1');
 
-            $routes->delete('(:segment)/delete', 'UserController::delete/$1');
-            $routes->delete('delete/multiple', 'UserController::deleteMultiple');
-            // $routes->delete('(:segment)/purge', 'FirearmTypeController::purge/$1');
-        });
+        //     $routes->delete('(:segment)/delete', 'UserController::delete/$1');
+        //     $routes->delete('delete/multiple', 'UserController::deleteMultiple');
+        //     // $routes->delete('(:segment)/purge', 'FirearmTypeController::purge/$1');
+        // });
 
     });
 });

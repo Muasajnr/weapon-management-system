@@ -3,12 +3,13 @@
 namespace App\Modules\Api\Models;
 
 use App\Core\ApiModel;
+use App\Modules\Api\Entities\UserEntity;
 use CodeIgniter\I18n\Time;
 
 class UserModel extends ApiModel
 {
     protected $table                = 'users';
-    protected $returnType           = 'App\Modules\Api\Entities\UserEntity';
+    protected $returnType           = '\App\Modules\Api\Entities\UserEntity';
     protected $allowedFields        = ['fullname', 'username', 'email', 'password', 'level'];
 
     // Datatables
@@ -51,5 +52,45 @@ class UserModel extends ApiModel
         $this->builder()->where('username', $username);
         $this->builder()->set('last_logout', Time::now()->toDateTimeString());
         $this->builder()->update();
+    }
+
+    public function getAllUser()
+    {
+        return $this->findAll();
+    }
+
+    public function getAllDeletedUser()
+    {
+        return $this->onlyDeleted()->findAll();
+    }
+
+    public function createUser(array $data) : bool
+    {
+        $user = new UserEntity();
+        $user->fill($data);
+        $this->insert($user);
+
+        return $this->db->affectedRows() > 0 ? true : false;
+    }
+
+    public function createUserMultiple(array $data) : int {
+        foreach($data as &$item) {
+            $item = (array)$item;
+            $item['password'] = password_hash($item['password'], PASSWORD_BCRYPT);
+            $item = array_merge($item, $this->getCommondFields());
+        }
+
+        $this->builder()->insertBatch($data);
+
+        return $this->db->affectedRows();
+    }
+
+    public function updateUser(int $id, array $data) : bool
+    {
+        $user = new UserEntity();
+        $user->fill($data);
+        $this->update($id, $user);
+
+        return $this->db->affectedRows() > 0 ? true : false;
     }
 }

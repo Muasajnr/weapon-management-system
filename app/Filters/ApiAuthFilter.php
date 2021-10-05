@@ -35,7 +35,7 @@ class ApiAuthFilter implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        $authHeader     = $request->getHeader('Authorization');
+        $authHeader     = $request->header('Authorization');
 
         try {
             if (is_null($authHeader)) {
@@ -43,7 +43,9 @@ class ApiAuthFilter implements FilterInterface
             }
             
             $encodedToken = getJWTFromRequest($authHeader->getValue());
-            validateAccessToken($encodedToken);
+            $userdata = validateAccessToken($encodedToken);
+            
+            $request->setHeader('logged_user', $userdata->username);
 
             return $request;
         } catch (\Exception $e) {

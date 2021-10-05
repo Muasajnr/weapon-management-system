@@ -3,6 +3,7 @@
 namespace App\Modules\Api\Entities;
 
 use CodeIgniter\Entity\Entity;
+use CodeIgniter\I18n\Time;
 
 class UserEntity extends Entity
 {

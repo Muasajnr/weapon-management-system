@@ -1,0 +1,124 @@
+@base_url = http://inventory-barang.myprojects.com
+@active_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzM0NDk1MTgsIm5iZiI6MTYzMzQ0OTUyOCwiZXhwIjoxNjMzNDUzMTE4LCJkYXRhIjp7ImlkIjoiMiIsImZ1bGxuYW1lIjoiVGVzdCBVc2VyIDIiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsImVtYWlsIjoidGVzdDJAZXhhbXBsZS5jb20iLCJsZXZlbCI6InVzZXIifX0.Mv2_0SEPSsniloJL6zNZimTypgzldgKRZDAqSbEy0Mw
+
+# get all active user
+get {{base_url}}/api/dashboard/users
+Authorization: Bearer {{active_token}}
+###
+
+# get all deleted user
+get {{base_url}}/api/dashboard/users/deleted
+Authorization: Bearer {{active_token}}
+###
+
+# get one user
+get {{base_url}}/api/dashboard/users/4
+Authorization: Bearer {{active_token}}
+###
+
+# create a new user
+post {{base_url}}/api/dashboard/users
+Authorization: Beraer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{
+    "fullname": "test user 18",
+    "username": "testuser18",
+    "email": "testuser18@example.com",
+    "password": "12345",
+    "level": "admin"
+}
+
+###
+# create multiple user
+post {{base_url}}/api/dashboard/users/multiple
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{
+    "data": [
+        {
+            "fullname": "test user 14",
+            "username": "testuser14",
+            "email": "testuser14@example.com",
+            "password": "12345",
+            "level": "admin"
+        },
+        {
+            "fullname": "test user 15",
+            "username": "testuser15",
+            "email": "testuser15@example.com",
+            "password": "12345",
+            "level": "admin"
+        },
+        {
+            "fullname": "test user 16",
+            "username": "testuser16",
+            "email": "testuser16@example.com",
+            "password": "12345",
+            "level": "admin"
+        },
+        {
+            "fullname": "test user 17",
+            "username": "testuser17",
+            "email": "testuser17@example.com",
+            "password": "12345",
+            "level": "admin"
+        }
+    ]
+}
+
+###
+
+# update a user
+put {{base_url}}/api/dashboard/users/3/update
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{
+    "fullname": "test user 19",
+    "username": "testuser19",
+    "email": "testuser19@example.com",
+    "password": "67890",
+    "level": "user"
+}
+
+###
+
+# delete a user
+delete {{base_url}}/api/dashboard/users/4/delete
+Authorization: Bearer {{active_token}}
+X-Requested-With: XMLHttpRequest
+
+###
+
+# delete multiple user
+delete {{base_url}}/api/dashboard/users/delete/multiple
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{
+    "ids": [5, 6, 7]
+}
+###
+
+# purge a user
+delete {{base_url}}/api/dashboard/users/4/purge
+Authorization: Bearer {{active_token}}
+X-Requested-With: XMLHttpRequest
+
+###
+
+# purge multiple user
+delete {{base_url}}/api/dashboard/users/purge/multiple
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{
+    "ids": [1, 2, 3]
+}

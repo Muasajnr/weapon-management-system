@@ -47,16 +47,6 @@ class ApiModel extends Model
     public function __construct()
     {
         parent::__construct();
-
-        // array_push($this->allowedFields, [
-        //     'created_at',
-        //     'sys_created_user',
-        //     'updated_at',
-        //     'sys_updated_user',
-        //     'deleted_at',
-        //     'sys_deleted_user',
-        //     'sys_purged_user'
-        // ]);
     }
 
     protected function setupCommonFields(array $data)
@@ -69,10 +59,24 @@ class ApiModel extends Model
         $data['data']['updated_at'] = $currentTime->toDateTimeString();
         $data['data']['sys_updated_user'] = $currentUser;
         $data['data']['deleted_at'] = null;
-        $data['data']['sys_deleted_user'] = $currentUser;
-        $data['data']['sys_purged_user'] = $currentUser;
+        $data['data']['sys_deleted_user'] = null;
+        $data['data']['sys_purged_user'] = null;
 
         return $data;
+    }
+
+    protected function getCommondFields() : array
+    {
+        $currentTime = Time::now();
+        return [
+            'created_at'        => $currentTime->toDateTimeString(),
+            'sys_created_user'  => $this->loggedUsername,
+            'updated_at'        => $currentTime->toDateTimeString(),
+            'sys_updated_user'  => $this->loggedUsername,
+            'deleted_at'        => null,
+            'sys_deleted_user'  => null,
+            'sys_purged_user'   => null,
+        ];
     }
 
     public function setLoggedUsername(string $username)
@@ -163,18 +167,25 @@ class ApiModel extends Model
         $this->builder()->limit(1);
         $count = $this->builder()->get()->getRow()->count;
         // print_r($this->db->getLastQuery());die();
+        
         return $count > 0 ? true : false;
+    }
+
+    public function isExistDeleted(int $id) : bool 
+    {
+        $this->builder()->select('count(*) as count');
+        $this->builder()->where('id', $id);
+        $this->builder()->where('deleted_at is not null');
+        $this->builder()->limit(1);
+        $count = $this->builder()->get()->getRow()->count;
+        
+        return $count > 0;
     }
 
     /**
      * ********************* insert *********************************
      */
     public function createNew(array $data) {
-        $timeNow = Time::now();
-        $data['created_at'] = $timeNow->toDateTimeString();
-        $data['updated_at'] = $timeNow->toDateTimeString();
-        $data['deleted_at'] = null;
-
         $this->insert($data);
 
         return $this->db->affectedRows() > 0 ? true : false;
@@ -208,12 +219,24 @@ class ApiModel extends Model
     {
         $this->delete($id);
 
-        return $this->db->affectedRows() > 0 ? true : false;
+        return $this->db->affectedRows() > 0;
     }
 
     public function deleteMultipleData(array $ids) : int {
         $this->delete($ids);
 
         return $this->db->affectedRows();
+    }
+
+    public function purgeData(int $id): bool
+    {
+        $this->delete($id, true);
+
+        return $this->db->affectedRows() > 0;
+    }
+
+    public function purgeMultipleData(array $ids)
+    {
+        $this->delete($ids, true);
     }
 }
