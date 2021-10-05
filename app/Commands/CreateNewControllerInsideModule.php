@@ -63,7 +63,7 @@ class CreateNewControllerInsideModule extends BaseCommand
         try {
             if (!is_dir($baseModulePath)) throw new \Exception('Module not found!');
 
-            $this->call('make:controller', ['App/Modules/'.$moduleName.'/Controllers//'.$controllerName]);
+            $this->call('make:controller', ['App/Modules/'.$moduleName.'/Controllers/'.$controllerName]);
         } catch (\Exception $e) {
             CLI::write(CLI::color($e->getMessage(), 'red'));
         }

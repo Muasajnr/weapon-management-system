@@ -64,7 +64,7 @@ class CreateNewViewInsideModule extends BaseCommand
         try {
             if (!is_dir($baseModulePath)) throw new Exception('Module not found!');
 
-            $viewFile = ROOTPATH.'app/Modules/'.$moduleName.'/Views//'.$viewName.'.php';
+            $viewFile = ROOTPATH.'app/Modules/'.$moduleName.'/Views/'.$viewName.'.php';
             if (file_exists($viewFile)) throw new Exception('View already exist!');
 
             fopen($viewFile, 'w');

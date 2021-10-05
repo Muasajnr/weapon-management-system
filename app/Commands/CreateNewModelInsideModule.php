@@ -63,7 +63,7 @@ class CreateNewModelInsideModule extends BaseCommand
         try {
             if (!is_dir($baseModulePath)) throw new \Exception('Module not found!');
 
-            $this->call('make:model', ['App/Modules/'.$moduleName.'/Models//'.$modelName]);
+            $this->call('make:model', ['App/Modules/'.$moduleName.'/Models/'.$modelName]);
         } catch (\Exception $e) {
             CLI::write(CLI::color($e->getMessage(), 'red'));
         }

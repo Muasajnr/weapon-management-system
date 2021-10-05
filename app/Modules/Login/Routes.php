@@ -1,4 +1,4 @@
 <?php
 
 $namespace = '\App\Modules\Login\Controllers\\';
-$routes->get('/login', 'LoginController::login2');
+$routes->get('/login', $namespace.'IndexController::index');

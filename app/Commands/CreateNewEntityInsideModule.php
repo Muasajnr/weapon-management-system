@@ -63,7 +63,7 @@ class CreateNewEntityInsideModule extends BaseCommand
         try {
             if (!is_dir($baseModulePath)) throw new \Exception('Module not found!');
 
-            $this->call('make:entity', ['App/Modules/'.$moduleName.'/Entities//'.$entityName]);
+            $this->call('make:entity', ['App/Modules/'.$moduleName.'/Entities/'.$entityName]);
         } catch (\Exception $e) {
             CLI::write(CLI::color($e->getMessage(), 'red'));
         }
