@@ -13,7 +13,7 @@ class UserModel extends ApiModel
     protected $allowedFields        = ['fullname', 'username', 'email', 'password', 'level'];
 
     // Datatables
-    protected $columnOrder          = ['fullname', 'username', 'email', 'password', 'level'];
+    protected $columnOrder          = [null, null, 'fullname', 'username', 'email', 'password', 'level', 'last_login', 'created_at', null];
     protected $columnSearch         = ['fullname', 'username', 'email', 'password', 'level'];
 
 
