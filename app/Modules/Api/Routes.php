@@ -7,6 +7,8 @@ $routes->group('api', ['namespace' => '\App\Modules\Api\Controllers\\'], functio
 
     /** dashboard */
     $routes->group('dashboard', function($routes) {
+        /**dashboard data */
+
         /**users */
         $routes->group('users', function($routes) {
             /** get operation */
