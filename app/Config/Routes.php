@@ -2,6 +2,8 @@
 
 namespace Config;
 
+use Exception;
+
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
@@ -29,11 +31,24 @@ $routes->setAutoRoute(true);
  * --------------------------------------------------------------------
  */
 
+if (!is_cli()) {
+    $router = service('router');
+
+    $module = $router->controllerName();
+    $routes->get('/', '\App\Modules\\' . $module . '\Controllers\\' . $module . 'Controller::index');
+
+    $uri = service('uri');
+    $module = ucfirst(strtolower($uri->getSegment(1)));
+
+    if (empty($module))
+        require_once(ROOTPATH.'app/Modules/Home/Routes.php');
+    else
+        require_once(ROOTPATH.'app/Modules/' . $module. '/Routes.php');
+}
+
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
-$routes->get('/login', 'LoginController::login2');
-// $routes->get('/login2', 'LoginController::login2');
+// $routes->get('/', 'Home::index');
 
 /** restful api */
 $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) {

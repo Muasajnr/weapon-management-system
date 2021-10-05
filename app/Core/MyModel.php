@@ -32,7 +32,7 @@ class MyModel extends Model {
 
     // Callbacks
     protected $allowCallbacks       = true;
-    protected $beforeInsert         = [];
+    protected $beforeInsert         = ['setupCommonFields'];
     protected $afterInsert          = [];
     protected $beforeUpdate         = [];
     protected $afterUpdate          = [];
@@ -44,6 +44,34 @@ class MyModel extends Model {
     public function __construct()
     {
         parent::__construct();
+
+        array_push($this->allowedFields, [
+            'created_at',
+            'sys_created_user',
+            'updated_at',
+            'sys_updated_user',
+            'deleted_at',
+            'sys_deleted_user',
+            'sys_purged_user'
+        ]);
+    }
+
+    protected function setupCommonFields(array $data)
+    {
+        $currentTime = Time::now();
+        $currentUser  = $data['data']['username'];
+
+        $data['data']['created_at'] = $currentTime->toDateTimeString();
+        $data['data']['sys_created_user'] = $currentUser;
+        $data['data']['updated_at'] = $currentTime->toDateTimeString();
+        $data['data']['sys_updated_user'] = $currentUser;
+        $data['data']['deleted_at'] = null;
+        $data['data']['sys_deleted_user'] = $currentUser;
+        $data['data']['sys_purged_user'] = $currentUser;
+
+        unset($data['data']['username']);
+
+        return $data;
     }
 
     /**

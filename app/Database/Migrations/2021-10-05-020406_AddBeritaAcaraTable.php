@@ -9,7 +9,7 @@ class AddBeritaAcaraTable extends Migration
     private $tableName = 'berita_acara';
 
     public function up()
-    {
+    {   
         $this->db->disableForeignKeyChecks();
 
         $fields = [
