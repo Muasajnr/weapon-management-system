@@ -24,6 +24,7 @@ class AddSaranaKeamananTable extends Migration
             'kondisi'           => ['type' => 'enum("baik", "rusak")', 'default' => 'baik', 'null' => true],
             'keterangan'        => ['type' => 'text', 'null' => true],
             'qrcode_secret'     => ['type' => 'varchar', 'constraint' => 100, 'null' => true],
+            //--- common fields
             'created_at'        => ['type' => 'datetime', 'null' => true],
             'sys_created_user'  => ['type' => 'varchar', 'constraint' => 50, 'null' => true],
             'updated_at'        => ['type' => 'datetime', 'null' => true],
