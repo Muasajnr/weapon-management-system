@@ -7,7 +7,7 @@ $routes->group('api', ['namespace' => '\App\Modules\Api\Controllers\\'], functio
 
     /** dashboard */
     $routes->group('dashboard', function($routes) {
-        /** users */
+        /**users */
         $routes->group('users', function($routes) {
             /** get operation */
             $routes->get('/', 'ApiUserController::index');
@@ -26,6 +26,49 @@ $routes->group('api', ['namespace' => '\App\Modules\Api\Controllers\\'], functio
             /** purge operation */
             $routes->delete('(:segment)/purge', 'ApiUserController::purge/$1');
             $routes->delete('purge/multiple', 'ApiUserController::purgeMultiple');
+        });
+        /**berita acara */
+        $routes->group('beritaacara', function($routes) {
+            
+        });
+        /**master data */
+        $routes->group('master', function($routes) {
+            /**jenis inventaris*/
+            $routes->group('jenisinventaris', function($routes) {
+                
+            });
+            /**jenis sarana */
+            $routes->group('jenissarana', function($routes) {
+                
+            });
+            /**merk sarana */
+            $routes->group('merksarana', function($routes) {
+                
+            });
+        });
+        /**sarana keamanan */
+        $routes->group('saranakeamanan', function($routes) {
+
+        });
+        /**pinjam sarana */
+        $routes->group('pinjam', function($routes) {
+
+        });
+        /**kembalikan sarana */
+        $routes->group('kembalikan', function($routes) {
+
+        });
+        /**distribusi sarana */
+        $routes->group('distribusi', function($routes) {
+                
+        });
+        /**laporan */
+        $routes->group('laporan', function($routes) {
+                
+        });
+        /**stok */
+        $routes->group('stok', function($routes) {
+                
         });
     });
 });
