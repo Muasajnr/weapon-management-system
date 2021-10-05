@@ -52,9 +52,9 @@ if (!is_cli()) {
 
 /** restful api */
 $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) {
-    $routes->post('login', 'AuthController::handleLogin');
-    $routes->post('renew/token', 'AuthController::renewAccessToken');
-    $routes->post('logout', 'AuthController::handleLogout');
+    // $routes->post('login', 'AuthController::handleLogin');
+    // $routes->post('renew/token', 'AuthController::renewAccessToken');
+    // $routes->post('logout', 'AuthController::handleLogout');
 
     $routes->group('dashboard', function($routes) {
         // home
@@ -193,56 +193,56 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
 });
 
 /** dashboard routes */
-$routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard'], function($routes) {
-    $routes->get('/', 'IndexController::index');
-    $routes->get('home', 'IndexController::home', ['as' => 'home']);
+// $routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard'], function($routes) {
+//     // $routes->get('/', 'IndexController::index');
+//     // $routes->get('home', 'IndexController::home', ['as' => 'home']);
     
-    $routes->group('master', function($routes) {
-        $routes->get('/', 'IndexController::master', ['as' => 'master']);
-        $routes->get('jenis-inventaris', 'IndexController::inventory_types', ['as' => 'inventory_types']);
-        $routes->get('jenis-senjata-api', 'IndexController::firearms_types', ['as' => 'firearms_types']);
-        $routes->get('merk-senjata-api', 'IndexController::firearms_brands', ['as' => 'firearms_brands']);
-    });
+//     $routes->group('master', function($routes) {
+//         $routes->get('/', 'IndexController::master', ['as' => 'master']);
+//         $routes->get('jenis-inventaris', 'IndexController::inventory_types', ['as' => 'inventory_types']);
+//         $routes->get('jenis-senjata-api', 'IndexController::firearms_types', ['as' => 'firearms_types']);
+//         $routes->get('merk-senjata-api', 'IndexController::firearms_brands', ['as' => 'firearms_brands']);
+//     });
 
-    $routes->get('stok', 'IndexController::stocks', ['as' => 'stocks']);
+//     $routes->get('stok', 'IndexController::stocks', ['as' => 'stocks']);
 
-    $routes->group('senjata-api', function($routes) {
-        $routes->get('/', 'IndexController::firearms', ['as' => 'firearms']);
-        $routes->get('create', 'IndexController::firearms_add', ['as' => 'firearms_add']);
-        $routes->get('(:segment)/edit', 'IndexController::firearms_edit/$1', ['as' => 'firearms_edit']);
-    });
+//     $routes->group('senjata-api', function($routes) {
+//         $routes->get('/', 'IndexController::firearms', ['as' => 'firearms']);
+//         $routes->get('create', 'IndexController::firearms_add', ['as' => 'firearms_add']);
+//         $routes->get('(:segment)/edit', 'IndexController::firearms_edit/$1', ['as' => 'firearms_edit']);
+//     });
 
-    $routes->group('sarana-keamanan', function($routes) {
-        $routes->get('tambah', 'SaranaKeamananController::tambah', ['as' => 'SK_tambah']);
-        $routes->get('senjata-api', 'SaranaKeamananController::senjata_api', ['as' => 'SK_senjata_api']);
-        $routes->get('non-organik', 'SaranaKeamananController::non_organik', ['as' => 'SK_non_organik']);
-        $routes->get('lainnya', 'SaranaKeamananController::lainnya', ['as' => 'SK_lainnya']);
-    });
+//     $routes->group('sarana-keamanan', function($routes) {
+//         $routes->get('tambah', 'SaranaKeamananController::tambah', ['as' => 'SK_tambah']);
+//         $routes->get('senjata-api', 'SaranaKeamananController::senjata_api', ['as' => 'SK_senjata_api']);
+//         $routes->get('non-organik', 'SaranaKeamananController::non_organik', ['as' => 'SK_non_organik']);
+//         $routes->get('lainnya', 'SaranaKeamananController::lainnya', ['as' => 'SK_lainnya']);
+//     });
     
-    $routes->group('peminjaman', function($routes) {
-        $routes->get('sedang-dipinjam', 'IndexController::borrowings_ongoing', ['as' => 'borrowings_ongoing']);
-        $routes->get('histori', 'IndexController::borrowings_history', ['as' => 'borrowings_history']);
-        $routes->get('create', 'IndexController::borrowings_add', ['as' => 'borrowings_add']);
-        $routes->get('(:segment)/edit', 'IndexController::borrowings_edit/$1', ['as' => 'borrowings_edit']);
-    });
+//     $routes->group('peminjaman', function($routes) {
+//         $routes->get('sedang-dipinjam', 'IndexController::borrowings_ongoing', ['as' => 'borrowings_ongoing']);
+//         $routes->get('histori', 'IndexController::borrowings_history', ['as' => 'borrowings_history']);
+//         $routes->get('create', 'IndexController::borrowings_add', ['as' => 'borrowings_add']);
+//         $routes->get('(:segment)/edit', 'IndexController::borrowings_edit/$1', ['as' => 'borrowings_edit']);
+//     });
 
-    $routes->group('pengembalian', function($routes) {
-        $routes->get('/', 'IndexController::returnings', ['as' => 'returnings']);
-        $routes->get('create', 'IndexController::returnings_add', ['as' => 'returnings_add']);
-        $routes->get('(:segment)/edit', 'IndexController::returnings_edit/$1', ['as' => 'returnings_edit']);
-    });
+//     $routes->group('pengembalian', function($routes) {
+//         $routes->get('/', 'IndexController::returnings', ['as' => 'returnings']);
+//         $routes->get('create', 'IndexController::returnings_add', ['as' => 'returnings_add']);
+//         $routes->get('(:segment)/edit', 'IndexController::returnings_edit/$1', ['as' => 'returnings_edit']);
+//     });
 
-    $routes->group('berita-acara', function($routes) {
-        $routes->get('/', 'IndexController::documents', ['as' => 'documents']);
-        $routes->get('create', 'IndexController::documents_add', ['as' => 'documents_add']);
-        $routes->get('(:segment)/edit', 'IndexController::documents_edit/$1', ['as' => 'documents_edit']);
-        $routes->get('(:segment)/show', 'IndexController::documents_show/$1', ['as' => 'documents_show']);
-    });
+//     $routes->group('berita-acara', function($routes) {
+//         $routes->get('/', 'IndexController::documents', ['as' => 'documents']);
+//         $routes->get('create', 'IndexController::documents_add', ['as' => 'documents_add']);
+//         $routes->get('(:segment)/edit', 'IndexController::documents_edit/$1', ['as' => 'documents_edit']);
+//         $routes->get('(:segment)/show', 'IndexController::documents_show/$1', ['as' => 'documents_show']);
+//     });
 
-    $routes->get('laporan', 'IndexController::reports', ['as' => 'reports']);
+//     $routes->get('laporan', 'IndexController::reports', ['as' => 'reports']);
     
-    $routes->get('users', 'IndexController::users', ['as' => 'users']);
-});
+//     $routes->get('users', 'IndexController::users', ['as' => 'users']);
+// });
 
 $routes->group('test', ['namespace' => 'App\Controllers\TestCIFeatures'], function($routes) {
     $routes->get('test_time_now', 'OnlyTest::testTimeNow');

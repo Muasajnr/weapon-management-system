@@ -11,6 +11,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="<?=site_url('assets/css/login.css')?>">
+    <?=$this->renderSection('custom_css')?>
     <!-- JS Header Constants -->
     <script src="<?=site_url('assets/js/constants.js')?>"></script>
     <!-- JS Header Global Helper -->

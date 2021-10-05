@@ -9,7 +9,8 @@ use App\Models\FirearmModel;
 class IndexController extends BaseController
 {
     public function index() {
-        return redirect()->to('/dashboard/home');
+        print_r('hello');
+        // return redirect()->to('/dashboard/home');
     }
 
     public function home()
