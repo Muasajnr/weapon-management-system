@@ -60,7 +60,8 @@ class ApiModel extends Model
         $data['data']['sys_updated_user'] = $currentUser;
         $data['data']['deleted_at'] = null;
         $data['data']['sys_deleted_user'] = null;
-        $data['data']['sys_purged_user'] = null;
+        $data['data']['restored_at'] = null;
+        $data['data']['sys_restored_user'] = null;
 
         return $data;
     }
@@ -75,7 +76,8 @@ class ApiModel extends Model
             'sys_updated_user'  => $this->loggedUsername,
             'deleted_at'        => null,
             'sys_deleted_user'  => null,
-            'sys_purged_user'   => null,
+            'restored_at'       => null,
+            'sys_restored_user' => null,
         ];
     }
 

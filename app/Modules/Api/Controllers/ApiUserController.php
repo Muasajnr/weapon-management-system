@@ -11,6 +11,41 @@ use CodeIgniter\HTTP\ResponseInterface;
 class ApiUserController extends ApiController
 {
 
+    public function __construct()
+    {
+        $this->rules = [
+            'fullname'  => 'required|string',
+            'username'  => 'required|string',
+            'email'  => 'required|string|valid_email',
+            'password'  => 'required|string',
+            'level'  => 'required|in_list[admin,user]'
+        ];
+        $this->messages = [
+            'fullname'  => [
+                'required'  => 'fullname tidak boleh kosong!',
+                'string'  => 'fullname harus berupa string!',
+            ],
+            'username'  => [
+                'required'  => 'username tidak boleh kosong!',
+                'string'  => 'username harus berupa string!',
+            ],
+            'email'  => [
+                'required'  => 'email tidak boleh kosong!',
+                'string'  => 'email harus berupa string!',
+                'valid_email'  => 'email yang dimasukkan tidak valid!',
+            ],
+            'password'  => [
+                'required'  => 'password tidak boleh kosong!',
+                'string'  => 'password harus berupa string!',
+            ],
+            'level'  => [
+                'required'  => 'level tidak boleh kosong!',
+                'string'  => 'level harus berupa string!',
+            ],
+        ];
+    }
+    
+
     /**
      * get all active user
      */
@@ -203,6 +238,17 @@ class ApiUserController extends ApiController
         ]);
     }
 
+    // restore a user
+    public function restore($id)
+    {
+        // restore operation
+    }
+    // restore multiple user
+    public function restoreMultiple()
+    {
+        // restore operation
+    }
+
     // purge user
     public function purge($id)
     {
@@ -236,55 +282,6 @@ class ApiUserController extends ApiController
             'success'   => ResponseInterface::HTTP_OK,
             'message'   => 'Data yang dipilih telah terhapus secara permanane!'
         ]);
-    }
-
-    private function getRules()
-    {
-        return [
-            'fullname'  => 'required|string',
-            'username'  => 'required|string',
-            'email'  => 'required|string|valid_email',
-            'password'  => 'required|string',
-            'level'  => 'required|in_list[admin,user]'
-        ];
-    }
-
-    private function getMessages()
-    {
-        return [
-            'fullname'  => [
-                'required'  => 'fullname tidak boleh kosong!',
-                'string'  => 'fullname harus berupa string!',
-            ],
-            'username'  => [
-                'required'  => 'username tidak boleh kosong!',
-                'string'  => 'username harus berupa string!',
-            ],
-            'email'  => [
-                'required'  => 'email tidak boleh kosong!',
-                'string'  => 'email harus berupa string!',
-                'valid_email'  => 'email yang dimasukkan tidak valid!',
-            ],
-            'password'  => [
-                'required'  => 'password tidak boleh kosong!',
-                'string'  => 'password harus berupa string!',
-            ],
-            'level'  => [
-                'required'  => 'level tidak boleh kosong!',
-                'string'  => 'level harus berupa string!',
-            ],
-        ];
-    }
-
-    private function validateData(RequestInterface $request) : array
-    {
-        $validation = Services::validation();
-        $validation->setRules($this->getRules(), $this->getMessages());
-        
-        return [
-            'is_valid'  => $validation->withRequest($request)->run(),
-            'errors'    => $validation->getErrors() ?? []
-        ];
     }
 
 }
