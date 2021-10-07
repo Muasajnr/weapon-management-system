@@ -3,6 +3,7 @@
 namespace App\Modules\Api\Controllers;
 
 use App\Controllers\BaseController;
+use App\Modules\Api\Entities\UserTokenEntity;
 use App\Modules\Api\Models\UserModel;
 use App\Modules\Api\Models\UserTokenModel;
 use CodeIgniter\API\ResponseTrait;
@@ -60,10 +61,10 @@ class ApiAuthController extends BaseController
                 if (!$is_updated) 
                     $this->fail('Terjadi kesalahan!', ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
             } else {
-                $user_token_new = new \App\Entities\UserTokenEntity();
+                $user_token_new = new UserTokenEntity();
                 $user_token_new->username = $userdata['username'];
                 $user_token_new->token = $jwt_refresh_token;
-                $user_token_model->save($user_token_new);
+                $user_token_model->insert($user_token_new);
             }
 
             $usermodel->updateLastLogin($userdata['id']);

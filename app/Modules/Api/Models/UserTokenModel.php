@@ -7,8 +7,17 @@ use App\Core\ApiModel;
 class UserTokenModel extends ApiModel
 {
     protected $table                = 'users_tokens';
-    protected $returnType           = 'App\Modules\Api\Entities\UserEntity';
+    protected $returnType           = 'array';
     protected $allowedFields        = ['username', 'token'];
+
+    // Dates
+    protected $useTimestamps        = false;
+    protected $dateFormat           = 'datetime';
+    protected $createdField         = '';
+    protected $updatedField         = '';
+    protected $deletedField         = '';
+
+    protected $beforeInsert         = [];
 
     // Datatables
     protected $columnOrder          = ['username', 'token'];
@@ -24,8 +33,11 @@ class UserTokenModel extends ApiModel
 
     public function checkUsername(string $username) : bool
     {
-        $result = $this->where('username', $username)->first();
-        return $result ? true : false;
+        // $result = $this->where('username', $username)->first();
+        $sql = 'SELECT COUNT(*) as count FROM '.$this->table.' WHERE username = ? LIMIT 1';
+        $result = $this->query($sql, [$username]);
+        // print_r($result->getRowArray());die();
+        return $result->getRowArray()['count'] > 0;
     }
 
     public function updateToken(string $username, string $token) : bool
@@ -33,14 +45,14 @@ class UserTokenModel extends ApiModel
         $this->where('username', $username)
                     ->set(['token' => $token])
                     ->update();
-        return $this->db->affectedRows() > 0 ? true : false;
+        return $this->db->affectedRows() > 0;
     }
 
     public function deleteToken(string $username) : bool
     {
         $this->where('username', $username)->delete();
 
-        return $this->db->affectedRows() > 0 ? true : false;
+        return $this->db->affectedRows() > 0;
     }
 
 }
