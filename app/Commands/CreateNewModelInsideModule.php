@@ -4,6 +4,7 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use Exception;
 
 class CreateNewModelInsideModule extends BaseCommand
 {
@@ -12,7 +13,7 @@ class CreateNewModelInsideModule extends BaseCommand
      *
      * @var string
      */
-    protected $group = 'ModulesGenerator';
+    protected $group = 'Modules';
 
     /**
      * The Command's Name
@@ -33,14 +34,17 @@ class CreateNewModelInsideModule extends BaseCommand
      *
      * @var string
      */
-    protected $usage = 'make:module:model [ModuleName] [ModelName]';
+    protected $usage = 'make:module:model [module_name] [model_name]';
 
     /**
      * The Command's Arguments
      *
      * @var array
      */
-    protected $arguments = [];
+    protected $arguments = [
+        'module_name'   => 'Module to store the model.',
+        'model_name'   => 'The model name.',
+    ];
 
     /**
      * The Command's Options
@@ -56,15 +60,17 @@ class CreateNewModelInsideModule extends BaseCommand
      */
     public function run(array $params)
     {
-        $moduleName = $params[0];
-        $modelName = $params[1];
-        $baseModulePath = ROOTPATH.'app/Modules/'.$moduleName;
-
         try {
-            if (!is_dir($baseModulePath)) throw new \Exception('Module not found!');
+            if (empty($params)) throw new Exception('No argument specified.');
+
+            $moduleName = $params[0];
+            $modelName = $params[1];
+            $baseModulePath = ROOTPATH.'app/Modules/'.$moduleName;
+
+            if (!is_dir($baseModulePath)) throw new Exception('Module not found!');
 
             $this->call('make:model', ['App/Modules/'.$moduleName.'/Models/'.$modelName]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             CLI::write(CLI::color($e->getMessage(), 'red'));
         }
     }

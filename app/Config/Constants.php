@@ -86,3 +86,5 @@ defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125); // highest auto
 defined('JWT_ACCESS_TOKEN')  || define('JWT_ACCESS_TOKEN', getenv('JWT_ACCESS_TOKEN'));
 defined('JWT_REFRESH_TOKEN')  || define('JWT_REFRESH_TOKEN', getenv('JWT_REFRESH_TOKEN'));
 defined('JWT_ACCESS_TOKEN_LIFETIME')  || define('JWT_ACCESS_TOKEN_LIFETIME', getenv('JWT_ACCESS_TOKEN_LIFETIME'));
+defined('API_PREFIX') || define('API_PREFIX', 'api/v1');
+defined('API_MODULE_PREFIX') || define('API_MODULE_PREFIX', 'APIs');

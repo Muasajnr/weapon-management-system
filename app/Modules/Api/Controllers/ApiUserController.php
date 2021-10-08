@@ -4,8 +4,6 @@ namespace App\Modules\Api\Controllers;
 
 use App\Core\ApiController;
 use App\Modules\Api\Models\UserModel;
-use CodeIgniter\Config\Services;
-use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class ApiUserController extends ApiController

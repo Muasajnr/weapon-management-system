@@ -4,6 +4,7 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use Exception;
 
 class CreateNewEntityInsideModule extends BaseCommand
 {
@@ -12,7 +13,7 @@ class CreateNewEntityInsideModule extends BaseCommand
      *
      * @var string
      */
-    protected $group = 'ModulesGenerator';
+    protected $group = 'Modules';
 
     /**
      * The Command's Name
@@ -33,14 +34,17 @@ class CreateNewEntityInsideModule extends BaseCommand
      *
      * @var string
      */
-    protected $usage = 'make:module:entity [ModuleName] [Entity]';
+    protected $usage = 'make:module:entity <module_name> <entity_name>';
 
     /**
      * The Command's Arguments
      *
      * @var array
      */
-    protected $arguments = [];
+    protected $arguments = [
+        'module_name'   => 'The module name to store the entity.',
+        'entity_name'   => 'Entity name.',
+    ];
 
     /**
      * The Command's Options
@@ -56,15 +60,17 @@ class CreateNewEntityInsideModule extends BaseCommand
      */
     public function run(array $params)
     {
-        $moduleName = $params[0];
-        $entityName = $params[1];
-        $baseModulePath = ROOTPATH.'app/Modules/'.$moduleName;
-
         try {
-            if (!is_dir($baseModulePath)) throw new \Exception('Module not found!');
+            if (empty($params)) throw new Exception('No argument specified.');
+
+            $moduleName = $params[0];
+            $entityName = $params[1];
+            $baseModulePath = ROOTPATH.'app/Modules/'.$moduleName;
+
+            if (!is_dir($baseModulePath)) throw new Exception('Module not found!');
 
             $this->call('make:entity', ['App/Modules/'.$moduleName.'/Entities/'.$entityName]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             CLI::write(CLI::color($e->getMessage(), 'red'));
         }
     }

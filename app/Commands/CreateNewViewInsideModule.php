@@ -13,7 +13,7 @@ class CreateNewViewInsideModule extends BaseCommand
      *
      * @var string
      */
-    protected $group = 'ModulesGenerator';
+    protected $group = 'Modules';
 
     /**
      * The Command's Name
@@ -34,14 +34,17 @@ class CreateNewViewInsideModule extends BaseCommand
      *
      * @var string
      */
-    protected $usage = 'make:module:view [ModuleName] [ViewName]';
+    protected $usage = 'make:module:view <module_name> <view_name>';
 
     /**
      * The Command's Arguments
      *
      * @var array
      */
-    protected $arguments = [];
+    protected $arguments = [
+        'module_name'   => 'The module name that we want to store the view.',
+        'view_name'     => 'The view name.',
+    ];
 
     /**
      * The Command's Options
@@ -57,11 +60,13 @@ class CreateNewViewInsideModule extends BaseCommand
      */
     public function run(array $params)
     {
-        $moduleName = $params[0];
-        $viewName = $params[1];
-        $baseModulePath = ROOTPATH.'app/Modules/'.$moduleName;
-
         try {
+            if (empty($params)) throw new Exception('No argument specified.');
+            
+            $moduleName = $params[0];
+            $viewName = $params[1];
+            $baseModulePath = ROOTPATH.'app/Modules/'.$moduleName;
+
             if (!is_dir($baseModulePath)) throw new Exception('Module not found!');
 
             $viewFile = ROOTPATH.'app/Modules/'.$moduleName.'/Views/'.$viewName.'.php';

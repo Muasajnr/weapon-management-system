@@ -13,7 +13,7 @@ class CreateNewModule extends BaseCommand
      *
      * @var string
      */
-    protected $group = 'ModulesGenerator';
+    protected $group = 'Modules';
 
     /**
      * The Command's Name
@@ -34,21 +34,29 @@ class CreateNewModule extends BaseCommand
      *
      * @var string
      */
-    protected $usage = 'make:module [ModuleName]';
+    protected $usage = 'make:module [module_name] [options]';
 
     /**
      * The Command's Arguments
      *
      * @var array
      */
-    protected $arguments = [];
+    protected $arguments = [
+        'module_name'   => 'Specify the module name.',
+        'options'       => 'Add options.'
+    ];
 
     /**
      * The Command's Options
      *
      * @var array
      */
-    protected $options = [];
+    protected $options = [
+        'no-controller' => 'Generate with no controllers directory.',
+        'no-model' => 'Generate with no models directory.',
+        'no-view' => 'Generate with no views directory.',
+        'no-entity' => 'Generate with no entities directory.',
+    ];
 
     /**
      * Actually execute a command.
@@ -57,17 +65,24 @@ class CreateNewModule extends BaseCommand
      */
     public function run(array $params)
     {
-        $moduleName = $params[0];
-
-        $baseModulePath = ROOTPATH.'app/Modules/'.$moduleName;
-
         try {
+            if (empty($params)) throw new Exception('No argument specified.');
+
+            $moduleName = $params[0];
+
+            $noController = in_array('no-controller', $params);
+            $noModel = in_array('no-model', $params);
+            $noView = in_array('no-view', $params);
+            $noEntity = in_array('no-entity', $params);
+
+            $baseModulePath = ROOTPATH.'app/Modules/'.$moduleName;
+            
             if (is_dir($baseModulePath)) throw new Exception('Module already exist!');
 
-            if (!is_dir($baseModulePath.'/Controllers')) mkdir($baseModulePath.'/Controllers', 0777, true);
-            if (!is_dir($baseModulePath.'/Models')) mkdir($baseModulePath.'/Models', 0777, true);
-            if (!is_dir($baseModulePath.'/Views')) mkdir($baseModulePath.'/Views', 0777, true);
-            if (!is_dir($baseModulePath.'/Entities')) mkdir($baseModulePath.'/Entities', 0777, true);
+            if (!$noController && !is_dir($baseModulePath.'/Controllers')) mkdir($baseModulePath.'/Controllers', 0777, true);
+            if (!$noModel && !is_dir($baseModulePath.'/Models')) mkdir($baseModulePath.'/Models', 0777, true);
+            if (!$noView && !is_dir($baseModulePath.'/Views')) mkdir($baseModulePath.'/Views', 0777, true);
+            if (!$noEntity && !is_dir($baseModulePath.'/Entities')) mkdir($baseModulePath.'/Entities', 0777, true);
 
             fopen($baseModulePath.'/Routes.php', "w");
 
@@ -75,5 +90,10 @@ class CreateNewModule extends BaseCommand
         } catch (\Exception $e) {
             CLI::write(CLI::color($e->getMessage(), 'red'));
         }
+    }
+
+    private function getOptions(array $params)
+    {
+        
     }
 }

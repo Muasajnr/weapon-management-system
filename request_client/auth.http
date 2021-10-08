@@ -1,4 +1,6 @@
-post http://inventory-barang.myprojects.com/api/login
+@base_url = http://iramadibatu.myprojects.com
+
+post {{base_url}}/api/v1/login
 Content-Type: application/json
 
 {
@@ -8,24 +10,18 @@ Content-Type: application/json
 
 ###
 
-post http://inventory-barang.myprojects.com/api/renew/token
+post {{base_url}}/api/v1/token/renew
 Content-Type: application/json
 
 {
-    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0yIiwiYXVkIjoiVGhlX0F1ZDIiLCJpYXQiOjE2MzI1NTcyNzEsImRhdGEiOnsidXNlcm5hbWUiOiJ0ZXN0dXNlcjIifX0.-OpvWz0bRZitqsHXgNnW3AY6fYIJCD1uKldmxGnVVb8"
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0yIiwiYXVkIjoiVGhlX0F1ZDIiLCJpYXQiOjE2MzM2OTE5NTcsImRhdGEiOnsidXNlcm5hbWUiOiJ0ZXN0dXNlcjE4In19.CqekAiXFZrcd_UV7f36FapHRZLaFYZ0d1s6r6bdQ1O0"
 }
 
 ###
 
-post http://inventory-barang.myprojects.com/api/logout
+post {{base_url}}/api/v1/logout
 Content-Type: application/json
 
 {
-    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0yIiwiYXVkIjoiVGhlX0F1ZDIiLCJpYXQiOjE2MzI1NTcyNzEsImRhdGEiOnsidXNlcm5hbWUiOiJ0ZXN0dXNlcjIifX0.-OpvWz0bRZitqsHXgNnW3AY6fYIJCD1uKldmxGnVVb8"
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0yIiwiYXVkIjoiVGhlX0F1ZDIiLCJpYXQiOjE2MzM2OTI1MzQsImRhdGEiOnsidXNlcm5hbWUiOiJ0ZXN0dXNlcjE4In19.TpC6NGKY5o09lhv9myFL_f50A4eDw7iEAlWjvby4H7c"
 }
-
-###
-get http://inventory-barang.myprojects.com/api/dashboard
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzI1OTIyOTMsIm5iZiI6MTYzMjU5MjMwMywiZXhwIjoxNjMyNTk1ODkzLCJkYXRhIjp7ImlkIjoiMiIsImZ1bGxuYW1lIjoiVGVzdCBVc2VyIDIiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsImVtYWlsIjoidGVzdDJAZXhhbXBsZS5jb20iLCJsZXZlbCI6InVzZXIifX0.-Ooa_2Mza6WH7hmv4Z7Jj7bXqI2EDJqm6dunrW_OTpE
-
-###

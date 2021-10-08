@@ -1,7 +1,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="<?=route_to('dashboard')?>" class="brand-link">
     <img src="<?=site_url('assets/images/logo3.png')?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light"><strong>IRAMADIBATU</strong></span>
     </a>
@@ -9,14 +9,14 @@
     <!-- Sidebar -->
     <div class="sidebar">
     <!-- Sidebar user panel (optional) -->
-    <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-        <img src="<?=site_url('themes/AdminLTE/dist/img/user2-160x160.jpg')?>" class="img-circle elevation-2" alt="User Image">
+            <img src="<?=site_url('themes/AdminLTE/dist/img/user2-160x160.jpg')?>" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-        <a href="#" class="d-block">Alexander Pierce</a>
+            <a href="#" class="d-block">Alexander Pierce</a>
         </div>
-    </div> -->
+    </div>
 
     <!-- SidebarSearch Form -->
     <!-- <div class="form-inline">
@@ -36,7 +36,7 @@
         <!-- Add icons to the links using the .nav-icon class
             with font-awesome or any other icon font library -->
             <li class="nav-item">
-                <a href="<?=route_to('home')?>" class="nav-link <?=service('uri')->getSegment(2) == 'home' ? 'active' : ''?>">
+                <a href="<?=route_to('dashboard')?>" class="nav-link <?=service('uri')->getSegment(2) == '' ? 'active' : ''?>">
                 <i class="fas fa-home nav-icon"></i>
                     <p>Dashboard</p>
                 </a>
@@ -51,39 +51,39 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="<?=route_to('inventory_types')?>" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? (service('uri')->getSegment(3) == 'jenis-inventaris' ? 'active' : '') : ''?>">
+                        <a href="<?=route_to('jenis_inventaris')?>" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? (service('uri')->getSegment(3) == 'jenis_inventaris' ? 'active' : '') : ''?>">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Data Jenis Inventaris</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?=route_to('firearms_types')?>" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? (service('uri')->getSegment(3) == 'jenis-senjata-api' ? 'active' : '') : ''?>">
+                        <a href="<?=route_to('jenis_sarana')?>" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? (service('uri')->getSegment(3) == 'jenis_sarana' ? 'active' : '') : ''?>">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Data Jenis Sarana</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?=route_to('firearms_brands')?>" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? (service('uri')->getSegment(3) == 'merk-senjata-api' ? 'active' : '') : ''?>">
+                        <a href="<?=route_to('merk_sarana')?>" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? (service('uri')->getSegment(3) == 'merk_sarana' ? 'active' : '') : ''?>">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Data Merk</p>
+                            <p>Data Merk Sarana</p>
                         </a>
                     </li>
                 </ul>
             </li>
             <li class="nav-item">
-                <a href="<?=route_to('stocks')?>" class="nav-link <?=service('uri')->getSegment(2) == 'stok' ? 'active' : ''?>">
+                <a href="<?=route_to('stok')?>" class="nav-link <?=service('uri')->getSegment(2) == 'stok' ? 'active' : ''?>">
                     <i class="fas fa-boxes nav-icon"></i>
-                    <p>Data Stok Senjata</p>
+                    <p>Data Stok</p>
                 </a>
             </li>
             <!-- <li class="nav-item">
                 <a href="<?=route_to('firearms')?>" class="nav-link <?=service('uri')->getSegment(2) == 'senjata-api' ? 'active' : ''?>">
                     <i class="fas fa-box nav-icon"></i>
-                    <p>Data Senjata Api</p>
+                    <p>Daeta Senjata Api</p>
                 </a>
             </li> -->
-            <li class="nav-item <?=service('uri')->getSegment(2) == 'sarana-keamanan' ? 'menu-open' : ''?>">
-                <a href="#" class="nav-link <?=service('uri')->getSegment(2) == 'sarana-keamanan' ? 'active' : ''?>">
+            <li class="nav-item <?=service('uri')->getSegment(2) == 'sarana_keamanan' ? 'menu-open' : ''?>">
+                <a href="#" class="nav-link <?=service('uri')->getSegment(2) == 'sarana_keamanan' ? 'active' : ''?>">
                     <i class="nav-icon fas fa-box"></i>
                     <p>
                         Sarana Keamanan
@@ -91,26 +91,20 @@
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
-                    <!-- <li class="nav-item">
-                        <a href="<?=route_to('SK_tambah')?>" class="nav-link active-btn">
-                            <i class="fas fa-plus nav-icon"></i>
-                            <p>Tambah Data</p>
-                        </a>
-                    </li> -->
                     <li class="nav-item">
-                        <a href="<?=route_to('senjata-api')?>" class="nav-link <?=service('uri')->getSegment(2) == 'sarana-keamanan' ? (service('uri')->getSegment(3) == 'senjata-api' ? 'active' : '') : ''?>">
+                        <a href="<?=route_to('senjata_api')?>" class="nav-link <?=service('uri')->getSegment(2) == 'sarana_keamanan' ? (service('uri')->getSegment(3) == 'senjata_api' ? 'active' : '') : ''?>">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Senjata Api</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?=route_to('non-organik')?>" class="nav-link <?=service('uri')->getSegment(2) == 'sarana-keamanan' ? (service('uri')->getSegment(3) == 'non-organik' ? 'active' : '') : ''?>">
+                        <a href="<?=route_to('non_organik')?>" class="nav-link <?=service('uri')->getSegment(2) == 'sarana_keamanan' ? (service('uri')->getSegment(3) == 'non_organik' ? 'active' : '') : ''?>">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Non Organik</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?=route_to('lainnya')?>" class="nav-link <?=service('uri')->getSegment(2) == 'sarana-kemanan' ? (service('uri')->getSegment(3) == 'lainnya' ? 'active' : '') : ''?>">
+                        <a href="<?=route_to('lainnya')?>" class="nav-link <?=service('uri')->getSegment(2) == 'sarana_keamanan' ? (service('uri')->getSegment(3) == 'lainnya' ? 'active' : '') : ''?>">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Lainnya</p>
                         </a>
@@ -123,43 +117,43 @@
                     <p>Peminjaman Senjata</p>
                 </a>
             </li> -->
-            <li class="nav-item <?=service('uri')->getSegment(2) == 'peminjaman' ? 'menu-open' : ''?>">
-                <a href="#" class="nav-link <?=service('uri')->getSegment(2) == 'peminjaman' ? 'active' : ''?>">
+            <li class="nav-item <?=service('uri')->getSegment(2) == 'bon_pinjam_sarana' ? 'menu-open' : ''?>">
+                <a href="#" class="nav-link <?=service('uri')->getSegment(2) == 'bon_pinjam_sarana' ? 'active' : ''?>">
                     <i class="nav-icon fas fa-desktop"></i>
                     <p>
-                        Peminjaman Senjata
+                        Bon Pinjam Sarana
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="<?=route_to('borrowings_ongoing')?>" class="nav-link <?=service('uri')->getSegment(2) == 'peminjaman' ? (service('uri')->getSegment(3) == 'sedang-dipinjam' ? 'active' : '') : ''?>">
+                        <a href="<?=route_to('pinjam')?>" class="nav-link <?=service('uri')->getSegment(2) == 'bon_pinjam_sarana' ? (service('uri')->getSegment(3) == 'pinjam' ? 'active' : '') : ''?>">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Sedang dipinjam</p>
+                            <p>Pinjam</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?=route_to('borrowings_history')?>" class="nav-link <?=service('uri')->getSegment(2) == 'peminjaman' ? (service('uri')->getSegment(3) == 'histori' ? 'active' : '') : ''?>">
+                        <a href="<?=route_to('kembalikan')?>" class="nav-link <?=service('uri')->getSegment(2) == 'bon_pinjam_sarana' ? (service('uri')->getSegment(3) == 'kembalikan' ? 'active' : '') : ''?>">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Histori</p>
+                            <p>Kembalikan</p>
                         </a>
                     </li>
                 </ul>
             </li>
             <li class="nav-item">
-                <a href="<?=route_to('returnings')?>" class="nav-link <?=service('uri')->getSegment(2) == 'pengembalian' ? 'active' : ''?>">
+                <a href="<?=route_to('distribusi')?>" class="nav-link <?=service('uri')->getSegment(2) == 'distribusi' ? 'active' : ''?>">
                     <i class="fas fa-undo nav-icon"></i>
-                    <p>Pengembalian Senjata</p>
+                    <p>Distribusi Sarana</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="<?=route_to('documents')?>" class="nav-link <?=service('uri')->getSegment(2) == 'berita-acara' ? 'active' : ''?>">
+                <a href="<?=route_to('berita_acara')?>" class="nav-link <?=service('uri')->getSegment(2) == 'berita_acara' ? 'active' : ''?>">
                     <i class="fas fa-file-signature nav-icon"></i>
                     <p>Berita Acara</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="<?=route_to('reports')?>" class="nav-link <?=service('uri')->getSegment(2) == 'laporan' ? 'active' : ''?>">
+                <a href="<?=route_to('laporan')?>" class="nav-link <?=service('uri')->getSegment(2) == 'laporan' ? 'active' : ''?>">
                     <i class="fas fa-chart-line nav-icon"></i>
                     <p>Laporan</p>
                 </a>

@@ -3,7 +3,6 @@
 use App\Models\ApiAuthFilterLogModel;
 use Firebase\JWT\JWT;
 use App\Models\UserModel;
-use App\Models\UserTokenModel;
 use CodeIgniter\I18n\Time;
 use Config\Services;
 

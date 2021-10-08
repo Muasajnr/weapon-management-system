@@ -37,13 +37,19 @@ if (!is_cli()) {
     $module = $router->controllerName();
     $routes->get('/', '\App\Modules\\' . $module . '\Controllers\\' . $module . 'Controller::index');
 
-    $uri = service('uri');
-    $module = ucfirst(strtolower($uri->getSegment(1)));
+    helper('routes');
+    helper('common');
+    
+    $scannedRoutes = loadModulesRoutes(ROOTPATH.'app/Modules/');
+    foreach($scannedRoutes as $scannedRoute) {
+        $routePaths = explode('/', $scannedRoute);
 
-    if (empty($module))
-        require_once(ROOTPATH.'app/Modules/Home/Routes.php');
-    else
-        require_once(ROOTPATH.'app/Modules/' . $module. '/Routes.php');
+        unset($routePaths[0]);
+        unset($routePaths[count($routePaths)]);
+
+        $routeNamespace = '\App\\' . implode('\\', $routePaths) . '\\Controllers\\';
+        include $scannedRoute;
+    }
 }
 
 // We get a performance increase by specifying the default
@@ -244,9 +250,9 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
 //     $routes->get('users', 'IndexController::users', ['as' => 'users']);
 // });
 
-$routes->group('test', ['namespace' => 'App\Controllers\TestCIFeatures'], function($routes) {
-    $routes->get('test_time_now', 'OnlyTest::testTimeNow');
-});
+// $routes->group('test', ['namespace' => 'App\Controllers\TestCIFeatures'], function($routes) {
+//     $routes->get('test_time_now', 'OnlyTest::testTimeNow');
+// });
 /*
  * --------------------------------------------------------------------
  * Additional Routing

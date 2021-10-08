@@ -63,8 +63,8 @@ class Filters extends BaseConfig
     public $filters = [
         'auth_api'  => [
             'before'    => [
-                'api/dashboard/*',
-                'api/dashboard',
+                'api/v1/dashboard/*',
+                'api/v1/dashboard',
             ]
         ],
     ];

@@ -4,6 +4,7 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use Exception;
 
 class CreateNewControllerInsideModule extends BaseCommand
 {
@@ -12,7 +13,7 @@ class CreateNewControllerInsideModule extends BaseCommand
      *
      * @var string
      */
-    protected $group = 'ModulesGenerator';
+    protected $group = 'Modules';
 
     /**
      * The Command's Name
@@ -33,14 +34,17 @@ class CreateNewControllerInsideModule extends BaseCommand
      *
      * @var string
      */
-    protected $usage = 'make:module:controller [ModuleName] [ControllerName]';
+    protected $usage = 'make:module:controller <module_name> <controller_name>';
 
     /**
      * The Command's Arguments
      *
      * @var array
      */
-    protected $arguments = [];
+    protected $arguments = [
+        'module_name'    => 'Module name that we want to add the controller to.',
+        'controller_name'    => 'ControllerName is the controller name'
+    ];
 
     /**
      * The Command's Options
@@ -56,11 +60,13 @@ class CreateNewControllerInsideModule extends BaseCommand
      */
     public function run(array $params)
     {
-        $moduleName = $params[0];
-        $controllerName = $params[1];
-        $baseModulePath = ROOTPATH.'app/Modules/'.$moduleName;
-
         try {
+            if (empty($params)) throw new Exception('No arguments specified');
+            $moduleName = $params[0];
+            $controllerName = $params[1];
+
+            $baseModulePath = ROOTPATH.'app/Modules/'.$moduleName;
+
             if (!is_dir($baseModulePath)) throw new \Exception('Module not found!');
 
             $this->call('make:controller', ['App/Modules/'.$moduleName.'/Controllers/'.$controllerName]);

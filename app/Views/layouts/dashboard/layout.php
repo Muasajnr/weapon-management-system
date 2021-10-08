@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin - <?=$page_title?></title>
+    <title>IRAMADIBATU - <?=$page_title?></title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -46,6 +46,30 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0"><?=$page_header_title?></h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <?php foreach($pages_path as $key => $val): ?>
+                                <li class="breadcrumb-item <?=$val['active'] ? 'active' : ''?>">
+                                    <?php if(!$val['active']): ?>
+                                        <a href="<?=$val['url']?>"><?=ucwords($key)?></a>
+                                    <?php else: ?>
+                                        <?=ucwords($key)?>
+                                    <?php endif; ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
         <?=$this->renderSection('content')?>
     </div>
     <!-- /.content-wrapper -->
@@ -54,8 +78,8 @@
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->
         <div class="p-3">
-        <h5>Title</h5>
-        <p>Sidebar content</p>
+            <h5>Title</h5>
+            <p>Sidebar content</p>
         </div>
     </aside>
     <!-- /.control-sidebar -->
