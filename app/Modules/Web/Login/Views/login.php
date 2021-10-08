@@ -112,6 +112,7 @@ $(function(){
                     dataType: 'json',
                     data: loginData,
                     success: function(res) {
+                        console.log(res);
                         $('.login-loading').hide();
                         const resAccessToken = res.data.access_token;
                         const resRefreshToken = res.data.refresh_token;
@@ -142,7 +143,7 @@ $(function(){
                         $('.text-login-msg').show();
                         $('.text-login-msg').removeClass('text-success');
                         $('.text-login-msg').addClass('text-danger');
-                        $('.text-login-msg').text(err.responseJSON.messages.error);
+                        $('.text-login-msg').text(err.responseJSON.message);
                     }
                 });
             }, 1000);

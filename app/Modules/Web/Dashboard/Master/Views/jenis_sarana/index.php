@@ -2,9 +2,9 @@
 
 <?=$this->section('custom-css')?>
 <!-- DataTables -->
-<!-- <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')?>">
+<link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')?>">
 <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')?>">
-<link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')?>"> -->
+<link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')?>">
 <?=$this->endSection()?>
 
 <?=$this->section('content')?>
@@ -24,7 +24,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="data_jenis_inventaris" class="table table-bordered table-hover table-sm" width="100%">
+                        <table id="data_jenis_sarana" class="table table-bordered table-hover table-sm" width="100%">
                             <thead>
                                 <tr>
                                     <th><div class="text-center"><input id="checkAll" type="checkbox" name="multi_delete"></div></th>
@@ -53,4 +53,4 @@
 
 <?=$this->endSection()?>
 
-<?php //echo view($moduleViewPath.'pages/users/custom_js') ?>
+<?php echo view($moduleViewPath.'jenis_sarana/custom_js') ?>

@@ -1,0 +1,5 @@
+@base_url = http://iramadibatu.myprojects.com
+@active_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzM3MDE4NTYsIm5iZiI6MTYzMzcwMTg2NiwiZXhwIjoxNjMzNzA5MDU2LCJkYXRhIjp7ImlkIjoiMzMiLCJmdWxsbmFtZSI6InRlc3QgdXNlciAxOCIsInVzZXJuYW1lIjoidGVzdHVzZXIxOCIsImVtYWlsIjoidGVzdHVzZXIxOEBleGFtcGxlLmNvbSIsImxldmVsIjoiYWRtaW4ifX0.13BFqSGer7pC6PhXP99_r5p_1gwjNVlbTslwNvvv_tg
+
+get {{base_url}}/api/v1/dashboard/master
+Authorization: Bearer {{active_token}}
