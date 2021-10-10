@@ -27,5 +27,11 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
                 $routes->post('datatables', 'Master\Controllers\MerkSaranaController::datatables');
             });
         });
+
+        $routes->group('sarana_keamanan', function($routes) {
+            $routes->get('/', 'SaranaKeamanan\Controllers\DefaultController::index');
+
+            $routes->post('datatables/(:segment)', 'SaranaKeamanan\Controllers\DefaultController::datatables/$1');
+        });
     });
 });
