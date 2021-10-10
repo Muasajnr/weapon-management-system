@@ -87,7 +87,8 @@ class CreateNewModule extends BaseCommand
                 mkdir($baseModulePath.'/Entities', 0777, true);
             
             if (!in_array('no-route', $params))
-                fopen($routeBasePath.'/Routes.php', "w");
+                if (!file_exists($routeBasePath))
+                    fopen($routeBasePath.'/Routes.php', "w");
 
             CLI::write(CLI::color("Module created.", 'blue'));
         } catch (\Exception $e) {
