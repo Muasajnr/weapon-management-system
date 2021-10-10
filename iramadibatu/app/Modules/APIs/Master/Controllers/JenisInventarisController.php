@@ -18,6 +18,17 @@ class JenisInventarisController extends ApiController
         $this->JIModel = new JenisInventarisModel();
     }
 
+    public function index()
+    {
+        $allData = $this->JIModel->getAll();
+        return $this->response
+            ->setJSON([
+                'status'    => ResponseInterface::HTTP_OK,
+                'data'      => $allData
+            ])
+            ->setStatusCode(ResponseInterface::HTTP_OK);
+    }
+
     /**datatables */
     public function datatables()
     {

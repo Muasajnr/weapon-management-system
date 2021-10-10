@@ -164,6 +164,12 @@
                     <p>Data User</p>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="<?=route_to('qr_scanner')?>" class="nav-link <?=service('uri')->getSegment(2) == 'qr_scanner' ? 'active' : ''?>">
+                    <i class="fas fa-qrcode nav-icon"></i>
+                    <p>QR Scanner</p>
+                </a>
+            </li>
             <!-- <li class="nav-item">
                 <a href="#" class="nav-link">
                 <i class="fas fa-sign-out-alt nav-icon"></i>

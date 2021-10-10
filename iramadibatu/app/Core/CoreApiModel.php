@@ -154,6 +154,44 @@ class CoreApiModel extends Model
         return $this->defaultBuilder()->countAllResults();
     }
 
+    /**
+     * get all data
+     * 
+     * @param bool $history
+     * 
+     * @return array
+     */
+    public function getAll($history = false) : array
+    {
+        $this->defaultBuilder()->select('*');
+        if (!$history)
+            $this->defaultBuilder()->where('deleted_at', null);
+        else
+            $this->defaultBuilder()->where('deleted_at is not null');
+
+        return $this->defaultBuilder()
+                    ->get()
+                    ->getResultArray();
+    }
+
+    /**
+     * get one data by id
+     * 
+     * @param int $id
+     * 
+     * @return array
+     */
+    public function getOne($id) : array
+    {
+        $this->defaultBuilder()->select('*');
+        $this->defaultBuilder()->where('id', $id);
+        $this->defaultBuilder()->where('deleted_at', null);
+
+        return $this->defaultBuilder()
+                    ->get()
+                    ->getResultArray();
+    }
+
     public function isExist($id) : bool
     {
         $result = $this->defaultBuilder()
@@ -171,19 +209,20 @@ class CoreApiModel extends Model
      * create a new data
      * 
      * @param array $data
+     * @param bool $getId
      * 
      * @return bool
      */
-    public function createData(array $data)
+    public function createData(array $data, bool $getId = false)
     {
         $now = Time::now();
         $data['created_at']         = $now->toDateTimeString();
         $data['sys_created_user']   = $this->authenticatedUser;
         $data['updated_at']         = $now->toDateTimeString();
         $data['sys_updated_user']   = $this->authenticatedUser;
-
-        return $this->defaultBuilder()
-                    ->insert($data);
+        
+        $result = $this->defaultBuilder()->insert($data);
+        return $getId ? $this->db->insertID() : $result;
     }
 
     /**
@@ -222,7 +261,10 @@ class CoreApiModel extends Model
      */
     public function updateData(int $id, array $data)
     {
-
+        $this->defaultBuilder()->set($data);
+        $this->defaultBuilder()->where('id', $id);
+        return $this->defaultBuilder()
+                    ->update();
     }
 
     /**

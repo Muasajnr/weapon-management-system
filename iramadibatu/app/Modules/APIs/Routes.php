@@ -32,6 +32,13 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
             $routes->get('/', 'SaranaKeamanan\Controllers\DefaultController::index');
 
             $routes->post('datatables/(:segment)', 'SaranaKeamanan\Controllers\DefaultController::datatables/$1');
+            $routes->post('create/(:segment)', 'SaranaKeamanan\Controllers\DefaultController::create/$1');
+
+            // $routes->put('(:id)/update/(:id_jenis_inventaris)', 'SaranaKeamanan\Controllers\DefaultController::update/$1/$2');
+        });
+
+        $routes->group('berita_acara', function($routes) {
+            $routes->get('/', 'BeritaAcara\Controllers\DefaultController::index');
         });
     });
 });

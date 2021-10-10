@@ -16,6 +16,16 @@ class MerkSaranaController extends ApiController
         $this->MSModel   = new MerkSaranaModel();
     }
     
+    public function index()
+    {
+        $allData = $this->MSModel->getAll();
+        return $this->response
+            ->setJSON([
+                'status'    => ResponseInterface::HTTP_OK,
+                'data'      => $allData
+            ])
+            ->setStatusCode(ResponseInterface::HTTP_OK);
+    }
 
     /**datatables */
     public function datatables()

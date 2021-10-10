@@ -16,7 +16,17 @@ class JenisSaranaController extends ApiController
         parent::__construct();
         $this->JSModel   = new JenisSaranaModel();
     }
-    
+
+    public function index()
+    {
+        $allData = $this->JSModel->getAll();
+        return $this->response
+            ->setJSON([
+                'status'    => ResponseInterface::HTTP_OK,
+                'data'      => $allData
+            ])
+            ->setStatusCode(ResponseInterface::HTTP_OK);
+    }
 
     /**datatables */
     public function datatables()
