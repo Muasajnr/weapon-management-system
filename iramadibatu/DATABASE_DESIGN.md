@@ -1,0 +1,69 @@
+# Database Design
+
+## Tables
+- inventory_types
+    - id
+    - name
+    - created_at
+    - updated_at
+    - deleted_at
+- firearms_types
+    - id
+    - name
+    - created_at
+    - updated_at
+    - deleted_at
+- firearms_brands
+    - id
+    - name
+    - created_at
+    - updated_at
+    - deleted_at
+- firearms
+    - id
+    - inventory_type_id
+    - firearms_type_id
+    - firearms_brand_id
+    - firearms_number
+    - bpsa_number
+    - condition [enum(good, bad)]
+    - description
+    - created_at
+    - updated_at
+    - deleted_at
+- borrowings
+    - id
+    - firearms_id
+    - document_id
+    - desc
+    - created_at
+    - updated_at
+    - deleted_at
+- documents
+    - id
+    - doc_name
+    - doc_number
+    - doc_date
+    - doc_image
+    - desc
+    - created_at
+    - updated_at
+    - deleted_at
+- returnings
+    - id
+    - borrowing_id
+    - document_id
+    - desc
+    - created_at
+    - updated_at
+    - deleted_at
+- users
+    - id
+    - fullname
+    - username
+    - email
+    - password
+    - level [admin, user]
+    - created_at
+    - updated_at
+    - deleted_at
