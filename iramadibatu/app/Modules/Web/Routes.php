@@ -20,4 +20,11 @@ $routes->group('dashboard', ['namespace' => '\App\Modules\Web\\'], function($rou
         $routes->get('non_organik', $controllerPath.'DefaultController::nonOrganik', ['as' => 'non_organik']);
         $routes->get('lainnya', $controllerPath.'DefaultController::lainnya', ['as' => 'lainnya']);
     });
+
+    $routes->group('dashboard/bon_pinjam_sarana', function($routes) {
+        $controllerPath = 'Dashboard\BonPinjamSarana\Controllers\\';
+
+        $routes->get('pinjam', $controllerPath.'DefaultController::pinjam', ['as' => 'pinjam']);
+        $routes->get('kembalikan', $controllerPath.'DefaultController::kembalikan', ['as' => 'kembalikan']);
+    });
 });
