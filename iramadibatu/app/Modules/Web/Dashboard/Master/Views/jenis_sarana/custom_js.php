@@ -40,7 +40,7 @@ $(function() {
         "serverSide": true,
         "order": [],
         "ajax": function(data, callback, settings) {
-            const dataUrl = '<?=site_url('api/v1/dashboard/master/jenis_inventaris/datatables')?>';
+            const dataUrl = '<?=site_url('api/v1/dashboard/master/jenis_sarana/datatables')?>';
 
             $.ajax({
                 type: 'POST',

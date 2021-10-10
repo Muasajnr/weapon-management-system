@@ -85,12 +85,12 @@ class DefaultController extends ApiController
                 ])
                 ->setStatusCode(ResponseInterface::HTTP_OK);
         } catch(ApiAccessErrorException $e) {
-            $errOutput = $this->getErrorOutput($e, $this->request->getPath());
+            $errOutput = $this->getErrorOutput($e, $this->request);
             return $this->response
                 ->setJSON($errOutput)
                 ->setStatusCode($e->getCode());
         } catch(Exception $e) { 
-            $errOutput = $this->getErrorOutput($e, $this->request->getPath());
+            $errOutput = $this->getErrorOutput($e, $this->request);
             return $this->response
                 ->setJSON($errOutput)
                 ->setStatusCode($e->getCode());
@@ -133,11 +133,11 @@ class DefaultController extends ApiController
                 ],
             ])->setStatusCode(ResponseInterface::HTTP_OK);
         } catch(ApiAccessErrorException $e) {
-            $errOutput = $this->getErrorOutput($e, $this->request->getPath());
+            $errOutput = $this->getErrorOutput($e, $this->request);
             return $this->response->setJSON($errOutput)
                 ->setStatusCode($e->getCode());
         } catch(Exception $e) { 
-            $errOutput = $this->getErrorOutput($e, $this->request->getPath());
+            $errOutput = $this->getErrorOutput($e, $this->request);
             return $this->response->setJSON($errOutput)
                 ->setStatusCode($e->getCode());
         }
@@ -169,11 +169,11 @@ class DefaultController extends ApiController
             return $this->response
                 ->setStatusCode(ResponseInterface::HTTP_NO_CONTENT);
         } catch (ApiAccessErrorException $e) {
-            $errOutput = $this->getErrorOutput($e, $this->request->getPath());
+            $errOutput = $this->getErrorOutput($e, $this->request);
             return $this->response->setJSON($errOutput)
                 ->setStatusCode($e->getCode());
         } catch (Exception $e) {
-            $errOutput = $this->getErrorOutput($e, $this->request->getPath());
+            $errOutput = $this->getErrorOutput($e, $this->request);
             return $this->response->setJSON($errOutput)
                 ->setStatusCode($e->getCode());
         }

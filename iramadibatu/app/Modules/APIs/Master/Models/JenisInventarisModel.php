@@ -26,7 +26,7 @@ class JenisInventarisModel extends CoreApiModel
     public function setActive(int $id, int $isActive) : bool
     {
         return $this->defaultBuilder()
-            ->set('is_active', 1)
+            ->set('is_active', $isActive)
             ->where('id', $id)
             ->update();
     }
