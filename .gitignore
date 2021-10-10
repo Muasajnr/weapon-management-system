@@ -32,7 +32,7 @@ $RECYCLE.BIN/
 
 # KDE directory preferences
 .directory
-
+iramadibatu
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
 
@@ -41,59 +41,59 @@ $RECYCLE.BIN/
 #-------------------------
 # These should never be under version control,
 # as it poses a security risk.
-.env
-.vagrant
-Vagrantfile
+iramadibatu/.env
+iramadibatu/.vagrant
+iramadibatu/Vagrantfile
 
 #-------------------------
 # Temporary Files
 #-------------------------
-writable/cache/*
-!writable/cache/index.html
+iramadibatu/writable/cache/*
+iramadibatu/!writable/cache/index.html
 
-writable/logs/*
-!writable/logs/index.html
+iramadibatu/writable/logs/*
+iramadibatu/!writable/logs/index.html
 
-writable/session/*
-!writable/session/index.html
+iramadibatu/writable/session/*
+iramadibatu/!writable/session/index.html
 
-writable/uploads/*
-!writable/uploads/index.html
+iramadibatu/writable/uploads/*
+iramadibatu/!writable/uploads/index.html
 
-writable/debugbar/*
+iramadibatu/writable/debugbar/*
 
-php_errors.log
+iramadibatu/php_errors.log
 
 #-------------------------
 # User Guide Temp Files
 #-------------------------
-user_guide_src/build/*
-user_guide_src/cilexer/build/*
-user_guide_src/cilexer/dist/*
-user_guide_src/cilexer/pycilexer.egg-info/*
+iramadibatu/user_guide_src/build/*
+iramadibatu/user_guide_src/cilexer/build/*
+iramadibatu/user_guide_src/cilexer/dist/*
+iramadibatu/user_guide_src/cilexer/pycilexer.egg-info/*
 
 #-------------------------
 # Test Files
 #-------------------------
-tests/coverage*
+iramadibatu/tests/coverage*
 
 # Don't save phpunit under version control.
-phpunit
+iramadibatu/phpunit
 
 #-------------------------
 # Composer
 #-------------------------
-vendor/
+iramadibatu/vendor/
 
 #-------------------------
 # IDE / Development Files
 #-------------------------
 
 # Modules Testing
-_modules/*
+iramadibatu/_modules/*
 
 # phpenv local config
-.php-version
+iramadibatu/.php-version
 
 # Jetbrains editors (PHPStorm, etc)
 .idea/
@@ -116,7 +116,7 @@ nb-configuration.xml
 *.sublime-workspace
 *.sublime-project
 .phpintel
-/api/
+api/
 
 # Visual Studio Code
 .vscode/

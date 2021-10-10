@@ -1,0 +1,90 @@
+@base_url = http://iramadibatu.myprojects.com
+@active_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzM3NzkwOTcsIm5iZiI6MTYzMzc3OTEwNywiZXhwIjoxNjMzNzg2Mjk3LCJkYXRhIjp7ImlkIjoiMzMiLCJmdWxsbmFtZSI6InRlc3QgdXNlciAxOCIsInVzZXJuYW1lIjoidGVzdHVzZXIxOCIsImVtYWlsIjoidGVzdHVzZXIxOEBleGFtcGxlLmNvbSIsImxldmVsIjoiYWRtaW4ifX0.FGuF2qY4ku0OO_BcDQwpnQ4luQVLUADugjcpJWmuJw0
+
+# create data
+post {{base_url}}/api/v1/dashboard/master/jenis_inventaris/create
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{
+    "name": "Jenis Inventaris 1",
+    "desc": "Desc of Jenis Inventaris 1",
+    "is_active": 1
+}
+
+###
+
+get {{base_url}}/api/v1/dashboard/master/jenis_inventaris/1
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+###
+
+post {{base_url}}/api/v1/dashboard/master/jenis_inventaris/create/multiple
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{
+    "data": [
+        {
+            "name": "Jenis Inventaris 1",
+            "desc": "Desc of Jenis Inventaris 1",
+            "is_active": 1
+        },
+        {
+            "name": "Jenis Inventaris 1",
+            "desc": "Desc of Jenis Inventaris 1",
+            "is_active": 1
+        },
+        {
+            "name": "Jenis Inventaris 1",
+            "desc": "Desc of Jenis Inventaris 1",
+            "is_active": 1
+        }
+    ]
+}
+
+###
+
+# update data
+put {{base_url}}/api/v1/dashboard/master/jenis_inventaris/3/update
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{
+    "name": "Jenis Inventaris 2",
+    "desc": "Desc of Jenis Inventaris 2",
+    "is_active": 0
+}
+
+# set active data
+put {{base_url}}/api/v1/dashboard/master/jenis_inventaris/1/set_active
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{
+    "is_active": 1
+}
+
+# delete data
+delete {{base_url}}/api/v1/dashboard/master/jenis_inventaris/1/delete
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+###
+
+# delete all data
+delete {{base_url}}/api/v1/dashboard/master/jenis_inventaris/delete/multiple
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{
+    "ids": []
+}
