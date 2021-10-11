@@ -2,7 +2,6 @@
 
 namespace App\Modules\Web\Dashboard\DistribusiSarana\Controllers;
 
-use App\Controllers\BaseController;
 use App\Core\WebController;
 
 class DefaultController extends WebController

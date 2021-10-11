@@ -39,6 +39,20 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
 
         $routes->group('berita_acara', function($routes) {
             $routes->get('/', 'BeritaAcara\Controllers\DefaultController::index');
+            $routes->post('datatables', 'BeritaAcara\Controllers\DefaultController::datatables');
+        });
+
+        $routes->group('bon_simpan_pinjam', function($routes) {
+            $routes->group('pinjam', function($routes) {
+                $routes->post('datatables', 'BonSimpanPinjam\Controllers\PinjamController::datatables');
+            });
+            $routes->group('kembalikan', function($routes) {
+                $routes->post('datatables', 'BonSimpanPinjam\Controllers\KembalikanController::datatables');
+            });
+        });
+
+        $routes->group('distribusi', function($routes) {
+            $routes->post('datatables', 'DistribusiSarana\Controllers\DefaultController::datatables');
         });
     });
 });

@@ -4,7 +4,7 @@ namespace App\Database\Migrations\Defaults\KembalikanSarana;
 
 use CodeIgniter\Database\Migration;
 
-class CreateTable extends Migration
+class CreateTableAgain extends Migration
 {
     public function up()
     {
@@ -15,7 +15,7 @@ class CreateTable extends Migration
                 'constraint'    => 9,
                 'null'  => true,
             ],
-            'id_sarana_keamanan'  => [
+            'id_pinjam_sarana'  => [
                 'type'  => 'int',
                 'constraint'    => 9,
                 'null'  => true,
@@ -64,7 +64,7 @@ class CreateTable extends Migration
         ]);
 
         $this->forge->addForeignKey('id_berita_acara', 'berita_acara', 'id');
-        $this->forge->addForeignKey('id_sarana_keamanan', 'sarana_keamanan', 'id');
+        $this->forge->addForeignKey('id_pinjam_sarana', 'pinjam_sarana', 'id');
 
         $this->forge->createTable('kembalikan_sarana');
     }

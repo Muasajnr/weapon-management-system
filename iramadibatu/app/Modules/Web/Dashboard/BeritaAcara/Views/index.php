@@ -2,9 +2,9 @@
 
 <?=$this->section('custom-css')?>
 <!-- DataTables -->
-<!-- <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')?>">
+<link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')?>">
 <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')?>">
-<link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')?>"> -->
+<link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')?>">
 <?=$this->endSection()?>
 
 <?=$this->section('content')?>
@@ -15,7 +15,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#modal-add-user">
+                        <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#modal-add-berita-acara">
                             <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Data
                         </button>
                         <button type="button" class="btn btn-danger btn-sm" id="btn-delete-multiple">
@@ -24,14 +24,16 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="data_jenis_inventaris" class="table table-bordered table-hover table-sm" width="100%">
+                        <table id="data-berita-acara" class="table table-bordered table-hover table-sm" width="100%">
                             <thead>
                                 <tr>
                                     <th><div class="text-center"><input id="checkAll" type="checkbox" name="multi_delete"></div></th>
                                     <th>No.</th>
-                                    <th>Nama</th>
-                                    <th>Deskripsi</th>
-                                    <th>Status</th>
+                                    <th>Judul</th>
+                                    <th>Nomor</th>
+                                    <th>Tanggal</th>
+                                    <th>Pihak 1</th>
+                                    <th>Pihak 2</th>
                                     <th>Tanggal Dibuat</th>
                                     <th>Actions</th>
                                 </tr>
@@ -53,4 +55,4 @@
 
 <?=$this->endSection()?>
 
-<?php //echo view($moduleViewPath.'pages/users/custom_js') ?>
+<?php echo view($moduleViewPath.'custom_js') ?>

@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Modules\APIs\BeritaAcara\Models;
+namespace App\Modules\APIs\BonSimpanPinjam\Models;
 
 use App\Core\CoreApiModel;
 
-class BeritaAcaraModel extends CoreApiModel
+class PinjamModel extends CoreApiModel
 {
+    protected $columnSearch = [];
+    protected $columnOrder = [];
     
     public function __construct()
     {
-        parent::__construct('berita_acara');
+        parent::__construct('pinjam_sarana');
     }
-    
+
     /**
      * get datatable for pinjam sarana
      * 
@@ -26,7 +28,15 @@ class BeritaAcaraModel extends CoreApiModel
 
         $this->defaultBuilder()->select(
             '
-            berita_acara.*,
+            pinjam_sarana.id as pinjam_sarana_id,
+            pinjam_sarana.jumlah as pinjam_sarana_jumlah,
+            pinjam_sarana.created_at as tanggal_pinjam,
+
+            sarana_keamanan.nomor_sarana as nomor_sarana,
+            jenis_sarana.name as nama_sarana,
+            merk_sarana.name as merk_sarana,
+
+            berita_acara.nomor as berita_acara_nomor,
 
             pihak_1.nama as pihak_1_nama,
             pihak_1.nip as pihak_1_nip,
@@ -35,6 +45,10 @@ class BeritaAcaraModel extends CoreApiModel
             '
         );
 
+        $this->defaultBuilder()->join('berita_acara', 'pinjam_sarana.id_berita_acara = berita_acara.id', 'left');
+        $this->defaultBuilder()->join('sarana_keamanan', 'pinjam_sarana.id_sarana_keamanan = sarana_keamanan.id', 'left');
+        $this->defaultBuilder()->join('jenis_sarana', 'sarana_keamanan.id_jenis_sarana = jenis_sarana.id', 'left');
+        $this->defaultBuilder()->join('merk_sarana', 'sarana_keamanan.id_merk_sarana = merk_sarana.id', 'left');
         $this->defaultBuilder()->join('penanggung_jawab as pihak_1', 'berita_acara.id_pihak_1 = pihak_1.id', 'left');
         $this->defaultBuilder()->join('penanggung_jawab as pihak_2', 'berita_acara.id_pihak_2 = pihak_2.id', 'left');
 
@@ -60,9 +74,9 @@ class BeritaAcaraModel extends CoreApiModel
             $this->defaultBuilder()->limit($dtParams['length'], $dtParams['start']);
 
         if (!$history)
-            $this->defaultBuilder()->where('berita_acara.deleted_at', null);
+            $this->defaultBuilder()->where('pinjam_sarana.deleted_at', null);
         else
-            $this->defaultBuilder()->where('berita_acara.deleted_at is not null');
+            $this->defaultBuilder()->where('pinjam_sarana.deleted_at is not null');
 
         $result = $this->defaultBuilder()->get();
         return $result->getResultArray();
@@ -99,9 +113,9 @@ class BeritaAcaraModel extends CoreApiModel
             $this->defaultBuilder()->orderBy($this->columnOrder[$dtParams['order']['0']['column']], $dtParams['order']['0']['dir']);
 
         if (!$history)
-            $this->defaultBuilder()->where('berita_acara.deleted_at', null);
+            $this->defaultBuilder()->where('pinjam_sarana.deleted_at', null);
         else
-            $this->defaultBuilder()->where('berita_acara.deleted_at is not null');
+            $this->defaultBuilder()->where('pinjam_sarana.deleted_at is not null');
     
 
         return $this->defaultBuilder()

@@ -21,10 +21,17 @@ $routes->group('dashboard', ['namespace' => '\App\Modules\Web\\'], function($rou
         $routes->get('lainnya', $controllerPath.'DefaultController::lainnya', ['as' => 'lainnya']);
     });
 
-    $routes->group('dashboard/bon_pinjam_sarana', function($routes) {
+    $routes->group('bon_pinjam_sarana', function($routes) {
         $controllerPath = 'Dashboard\BonPinjamSarana\Controllers\\';
 
         $routes->get('pinjam', $controllerPath.'DefaultController::pinjam', ['as' => 'pinjam']);
         $routes->get('kembalikan', $controllerPath.'DefaultController::kembalikan', ['as' => 'kembalikan']);
     });
+
+    $routes->get('distribusi', 'Dashboard\DistribusiSarana\Controllers\DefaultController::index', ['as' => 'distribusi']);
+    $routes->get('berita_acara', 'Dashboard\BeritaAcara\Controllers\DefaultController::index', ['as' => 'berita_acara']);
+    $routes->get('stok', 'Dashboard\Stok\Controllers\DefaultController::index', ['as' => 'stok']);
+    $routes->get('laporan', 'Dashboard\Laporan\Controllers\DefaultController::index', ['as' => 'laporan']);
+    $routes->get('users', 'Dashboard\Users\Controllers\DefaultController::index', ['as' => 'users']);
+    $routes->get('qr_scanner','Dashboard\QRScanner\Controllers\DefaultController::index', ['as' => 'qr_scanner']);
 });
