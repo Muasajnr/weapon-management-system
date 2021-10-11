@@ -15,7 +15,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#modal-add-user">
+                        <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#modal-add-merk-sarana">
                             <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Data
                         </button>
                         <button type="button" class="btn btn-danger btn-sm" id="btn-delete-multiple">
@@ -24,7 +24,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="data_merk_sarana" class="table table-bordered table-hover table-sm" width="100%">
+                        <table id="data-merk-sarana" class="table table-bordered table-hover table-sm" width="100%">
                             <thead>
                                 <tr>
                                     <th><div class="text-center"><input id="checkAll" type="checkbox" name="multi_delete"></div></th>
@@ -50,6 +50,10 @@
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+
+<?php echo view($moduleViewPath.'merk_sarana/add') ?>
+<?php echo view($moduleViewPath.'merk_sarana/show') ?>
+<?php echo view($moduleViewPath.'merk_sarana/edit') ?>
 
 <?=$this->endSection()?>
 
