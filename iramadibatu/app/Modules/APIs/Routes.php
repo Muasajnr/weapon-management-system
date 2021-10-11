@@ -54,5 +54,14 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
         $routes->group('distribusi', function($routes) {
             $routes->post('datatables', 'DistribusiSarana\Controllers\DefaultController::datatables');
         });
+
+        $routes->group('users', function($routes) {
+            $routes->get('/', 'Users\Controllers\UserController::index');
+            $routes->post('datatables', 'Users\Controllers\UserController::datatables');
+        });
+
+        $routes->group('stok', function($routes) {
+            $routes->post('datatables', 'Stok\Controllers\DefaultController::datatables');
+        });
     });
 });
