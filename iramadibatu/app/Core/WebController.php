@@ -30,7 +30,14 @@ class WebController extends BaseController
     protected function renderView(string $viewName, array $data = [])
     {
         $filePath = $this->currPath;
-        $arrPath = explode('\\', '\App\\'.strstr($filePath, 'Modules'));
+        $paths = explode('/', $filePath);
+        $arrPath = '';
+        // if linux
+        if (count($paths) > 1) {
+            $arrPath = explode('/', '/App//'.strstr($filePath, 'Modules'));
+        } else {
+            $arrPath = explode('\\', '\App\\'.strstr($filePath, 'Modules'));
+        }
 
         array_pop($arrPath);
         array_push($arrPath, 'Views');
