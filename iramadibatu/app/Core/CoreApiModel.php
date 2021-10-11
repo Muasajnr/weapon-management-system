@@ -189,7 +189,7 @@ class CoreApiModel extends Model
 
         return $this->defaultBuilder()
                     ->get()
-                    ->getResultArray();
+                    ->getRowArray();
     }
 
     public function isExist($id) : bool
@@ -259,7 +259,7 @@ class CoreApiModel extends Model
      * 
      * @return bool
      */
-    public function updateData(int $id, array $data)
+    public function updateData(int $id, array $data) : bool
     {
         $this->defaultBuilder()->set($data);
         $this->defaultBuilder()->where('id', $id);
@@ -272,11 +272,16 @@ class CoreApiModel extends Model
      * 
      * @param int id
      * 
-     * @return void
+     * @return bool
      */
-    public function deleteData(int $id)
+    public function deleteData(int $id) : bool
     {
-
+        $now = Time::now();
+        $this->defaultBuilder()->set('deleted_at', $now->toDateTimeString());
+        $this->defaultBuilder()->set('sys_deleted_user', $this->authenticatedUser);
+        $this->defaultBuilder()->where('id', $id);
+        return $this->defaultBuilder()
+                    ->update();
     }
 
     /** 
@@ -286,9 +291,19 @@ class CoreApiModel extends Model
      * 
      * @return bool
      */
-    public function deleteBatch(array $ids)
+    public function deleteMultipleData(array $ids)
     {
-
+        $softDeleteData = [];
+        $now = Time::now();
+        for($i = 0; $i < count($ids); $i++) {
+            array_push($softDeleteData, [
+                'id'    => $ids[$i],
+                'deleted_at'    => $now->toDateTimeString(),
+                'sys_deleted_user'  => $this->authenticatedUser,
+            ]);
+        }
+        return $this->defaultBuilder()
+                    ->updateBatch($softDeleteData, 'id');
     }
 
     /**
@@ -315,7 +330,7 @@ class CoreApiModel extends Model
 
     /**
      * purge data
-     * 
+     *  
      * @param int $id
      * 
      * @return bool

@@ -27,7 +27,7 @@ $(function() {
     });
 
     // handles datatable
-    const table = $('#data_jenis_inventaris').DataTable({
+    const table = $('#data-jenis-inventaris').DataTable({
         "responsive": true,
         "drawCallback": function(settings) {
             if ($('#checkAll').is(":checked")) {
@@ -100,7 +100,7 @@ $(function() {
         $('#form_added_data').append(`<tr><td class="text-center" colspan="5">tidak ada data.</td></tr>`);
     }
 
-    // add data
+    /** start of add stuff */
     let addedData = [];
 
     $('#form_added_data tbody').on('click', 'tr td button.btn-danger', function(e) {
@@ -121,14 +121,13 @@ $(function() {
                 $('#form_added_data').find('tbody').empty();
             }
             
-            let number = $('#form_added_data').find('tbody').children().length;
             const newData = {
-                "number": number,
                 "name": $(form).find('input#name').val(),
                 "desc": $(form).find('textarea#desc').val(),
-                "is_active": $(form).find('input#is_active').is(':checked')
+                "is_active": $(form).find('input#is_active').is(':checked') ? 1 : 0
             };
 
+            let number = $('#form_added_data').find('tbody').children().length;
             $('#form_added_data tbody').append(
                 `
                 <tr>
@@ -136,22 +135,23 @@ $(function() {
                     <td>${newData.name}</td>
                     <td>${newData.desc}</td>
                     <td>${newData.is_active ? 'Aktif' : 'Tidak Aktif'}</td>
-                    <td class="text-center"><button type="button" data-number="${number}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button></td>
+                    <td class="text-center"><button type="button" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button></td>
                 </tr>
                 `
             );
 
             addedData.push(newData);
 
-            console.log(addedData);
-            return;
+            // console.log(addedData);
+            // console.log(newData)
+            // return;
 
-            const createUrl = '<?=site_url('api/dashboard/inventory-types')?>';
+            const createUrl = '<?=site_url('api/v1/dashboard/master/jenis_inventaris')?>';
             $.ajax({
                 type: 'POST',
-                url: createNewInventoryTypeUrl,
+                url: createUrl,
                 dataType: 'json',
-                data: newInventoryType,
+                data: newData,
                 headers: {
                     'Authorization': 'Bearer ' + accessToken
                 },
@@ -166,7 +166,7 @@ $(function() {
                     });
 
                     setTimeout(() => {
-                        $('#modal-add-new-inventory-type').modal('toggle');
+                        $('#modal-add-jenis-inventaris').modal('toggle');
 
                         $(form).find('input#name').val('');
                         $(form).find('textarea#desc').val('');
@@ -236,6 +236,311 @@ $(function() {
 
         console.log('clicked');
     });
+    /** end of add stuff */
+
+    /** start of show stuff */
+    $('#modal-show-jenis-inventaris').on('hidden.bs.modal', function (e) {
+        $('#data-detail').html('');
+    })
+    $('#data-jenis-inventaris tbody').on('click', 'tr td button.btn-primary', function(e) {
+        e.preventDefault();
+
+        const rowData = table.row($(this).parent().parent()).data();
+        const itemId = parseInt($(rowData[1].substring(0, rowData[1].indexOf('>')+1)).val());
+        
+        $.ajax({
+            type: 'GET',
+            url: '<?=site_url('api/v1/dashboard/master/jenis_inventaris/')?>'+itemId,
+            dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            },
+            success: function(res) {
+                console.log(res);
+
+                if (res.data) {
+                    for (const [key, value] of Object.entries(res.data)) {
+                        // console.log(`${key}: ${value}`);
+                        $('#data-detail').append(
+                            `
+                            <dt class="col-sm-4">${key}</dt>
+                            <dd id="show-name" class="col-sm-8">${value == null ? '-' : value}</dd>
+                            `
+                        );
+                    }
+                }
+
+                $('#modal-show-jenis-inventaris').modal('toggle');
+            },
+            error: function(err) {
+                console.log(err);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Data gagal ditampilkan!',
+                    text: err.responseJSON.message,
+                    showConfirmButton: true,
+                    timer: 2000
+                });
+            }
+        });
+    });
+    /** end of show stuff */
+
+    /** start of edit stuff */
+    $('#data-jenis-inventaris tbody').on('click', 'tr td button.btn-info', function(e) {
+        e.preventDefault();
+
+        const itemId = $(this).data().itemId;
+        const rowData = table.row($(this).parent().parent()).data();
+
+        $('#edit-id').val(parseInt($(rowData[1].substring(0, rowData[1].indexOf('>')+1)).val()));
+        $('#edit-name').val(rowData[2]);
+        $('#edit-desc').val(rowData[3]);
+        $('#edit-is-active').prop('checked', $(rowData[4]).find('input').is(':checked'));
+
+        $('#modal-edit-jenis-inventaris').modal('toggle');
+    });
+
+    $('#data-jenis-inventaris tbody').on('change', 'tr input[type="checkbox"][name="is_active"]', function(e) {
+        e.preventDefault();
+        
+        const checkedValue = this.checked;
+        const $currChecked = $(this);
+
+        const itemId = $(this).data().itemId;
+
+        Swal.fire({
+            title: 'Anda yakin?',
+            text: `Anda akan mengubah data ini menjadi ${checkedValue ? 'Aktif' : 'Non-Aktif'}.`,
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya, ganti!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const updateUrl = '<?=site_url('api/v1/dashboard/master/jenis_inventaris/')?>' + itemId + '/set_status';
+
+                $.ajax({
+                    type: 'PUT',
+                    url: updateUrl,
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        "is_active": this.checked ? 1 : 0
+                    }),
+                    contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + accessToken,
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    success: function(res) {
+                        console.log(res);
+                        Swal.fire(
+                            'Terupdate!',
+                            'Status telah diperbaharui!',
+                            'success'
+                        )
+                        table.ajax.reload()
+                    },
+                    error: function(err) {
+                        console.log(err);
+                        $currChecked.prop('checked', !checkedValue);
+                        Swal.fire(
+                            'Gagal!',
+                            'Status gagal diubah!',
+                            'error'
+                        )
+                    }
+                })
+            } else {
+                $currChecked.prop('checked', !checkedValue);
+            }
+        });
+    });
+
+    $('#form-edit-jenis-inventaris').validate({
+        submitHandler: function(form, event) {
+            event.preventDefault();
+            const itemId = $(form).find('input#edit-id').val();
+            const updateData = {
+                "name": $(form).find('input#edit-name').val(),
+                "desc": $(form).find('textarea#edit-desc').val(),
+                "is_active": $(form).find('input#edit-is-active').is(':checked') ? 1 : 0
+            };
+            
+            const updateUrl = '<?=site_url('api/v1/dashboard/master/jenis_inventaris/')?>' + itemId + '/update';
+
+            $.ajax({
+                type: 'PUT',
+                url: updateUrl,
+                dataType: 'json',
+                data: JSON.stringify(updateData),
+                contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken,
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                success: function(res) {
+                    console.log(res);
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Data telah diubah!',
+                        showConfirmButton: true,
+                        timer: 2000
+                    });
+
+                    setTimeout(() => {
+                        $('#modal-edit-jenis-inventaris').modal('toggle');
+                        table.ajax.reload();
+                    }, 2000);
+                },
+                error: function(err) {
+                    console.log(err.responseJSON);
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Data gagal diubah!',
+                        text: err.responseJSON.message,
+                        showConfirmButton: true,
+                        timer: 2000
+                    });
+                }
+            })
+        },
+        rules: {
+            name: {
+                required: true
+            },
+            desc: {
+                required: true
+            }
+        },
+        messages: {
+            name: {
+                required: 'Nama tidak boleh kosong!'
+            },
+            desc: {
+                required: 'Deskripsi tidak boleh kosong!'
+            },
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+    /** end of edit stuff */
+
+    /** start of delete stuff */
+    $('#data-jenis-inventaris tbody').on('click', 'tr td button.btn-danger', function(e) {
+        e.preventDefault();
+
+        const itemId = $(this).data().itemId;
+
+        Swal.fire({
+            title: 'Anda yakin?',
+            text: `Anda akan menghapus data ini.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const deleteUrl = '<?=site_url('api/v1/dashboard/master/jenis_inventaris/')?>' + itemId + '/delete';
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: deleteUrl,
+                    headers: {
+                        'Authorization': 'Bearer ' + accessToken
+                    },
+                    success: function(res) {
+                        console.log(res);
+                        Swal.fire(
+                            'Terhapus!',
+                            'Data telah terhapus!',
+                            'success'
+                        )
+                        table.ajax.reload();
+                    },
+                    error: function(err) {
+                        console.log(err.responseJSON);
+                        Swal.fire(
+                            'Gagal!',
+                            'Data gagal terhapus!',
+                            'error'
+                        )
+                    }
+                })
+            }
+        });
+    });
+
+    $('#btn-delete-multiple').click(function(e) {
+        e.preventDefault();
+
+        const selectedRows = $('.multi_delete:checked');
+        
+        if (selectedRows.length > 0) {
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: `Anda akan menghapus ke-${selectedRows.length} data ini.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Iya, hapus semua!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const deleteUrl = '<?=site_url('api/v1/dashboard/master/jenis_inventaris/delete/multiple')?>';
+                    const ids = [];
+
+                    selectedRows.each(function(index, item) {
+                        ids.push($(item).data().itemId);
+                    });
+
+                    const idsData = {"ids": ids};
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: deleteUrl,
+                        data: JSON.stringify(idsData),
+                        contentType: 'application/json',
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken
+                        },
+                        success: function(res) {
+                            console.log(res);
+                            Swal.fire(
+                                'Terhapus!',
+                                selectedRows.length + ' data telah terhapus!',
+                                'success'
+                            )
+                            table.ajax.reload();
+                        },
+                        error: function(err) {
+                            console.log(err.responseJSON);
+                            Swal.fire(
+                                'Gagal!',
+                                'Data menghapus '+selectedRows.length+' data!',
+                                'error'
+                            )
+                        }
+                    })
+                }
+            });
+        }
+    });
+    /** end of delete stuff */
 });
 </script>
 <?=$this->endSection()?>

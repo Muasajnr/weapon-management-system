@@ -29,6 +29,17 @@ class JenisInventarisController extends ApiController
             ->setStatusCode(ResponseInterface::HTTP_OK);
     }
 
+    public function get($id)
+    {
+        $data = $this->JIModel->getOne($id);
+        return $this->response
+            ->setJSON([
+                'status'    => ResponseInterface::HTTP_OK,
+                'data'      => $data
+            ])
+            ->setStatusCode(ResponseInterface::HTTP_OK);
+    }
+
     /**datatables */
     public function datatables()
     {
@@ -90,7 +101,7 @@ class JenisInventarisController extends ApiController
                 );
             
             $data = $this->request->getVar();
-            
+
             $this->JIModel->setAuthenticatedUser(
                 $this->request
                     ->header('Logged-User')
@@ -119,15 +130,14 @@ class JenisInventarisController extends ApiController
             $errOutput = $this->getErrorOutput($e, $this->request);
             return $this->response
                 ->setJSON($errOutput)
-                ->setStatusCode($e->getCode());
+                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
     /**update */
     public function update($id)
     {
-        try
-        {
+        try {
             if (!$this->request->isAJAX())
                 throw new ApiAccessErrorException(
                     'Invalid Request!', 
@@ -175,25 +185,21 @@ class JenisInventarisController extends ApiController
                     'message'   => 'Data telah diperbaharui!'
                 ])
                 ->setStatusCode(ResponseInterface::HTTP_OK);
-        } 
-        catch(ApiAccessErrorException $e)
-        {
+        } catch(ApiAccessErrorException $e) {
             $errOutput = $this->getErrorOutput($e, $this->request);
             return $this->response
                 ->setJSON($errOutput)
                 ->setStatusCode($e->getCode());
-        } 
-        catch(Exception $e) 
-        {
+        } catch(Exception $e) {
             $errOutput = $this->getErrorOutput($e, $this->request);
             return $this->response
                 ->setJSON($errOutput)
-                ->setStatusCode($e->getCode());
+                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
     /**set_active */
-    public function setActive($id)
+    public function setStatus($id)
     {
         try {
             if (!$this->request->isAJAX())
@@ -242,20 +248,95 @@ class JenisInventarisController extends ApiController
             $errOutput = $this->getErrorOutput($e, $this->request);
             return $this->response
                 ->setJSON($errOutput)
-                ->setStatusCode($e->getCode());
+                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
     /**delete */
     public function delete($id)
     {
+        try {
+            if (!$this->JIModel->isExist((int) $id))
+                throw new ApiAccessErrorException(
+                    'Not Found!', 
+                    ResponseInterface::HTTP_NOT_FOUND,
+                    $this->validator->getErrors()
+                );
 
+            $isDeleted = $this->JIModel->deleteData($id);
+            if (!$isDeleted)
+                throw new ApiAccessErrorException(
+                    'Terjadi kesalahan!', 
+                    ResponseInterface::HTTP_INTERNAL_SERVER_ERROR
+                );
+            
+            return $this->response
+                ->setJSON([
+                    'status'    => ResponseInterface::HTTP_OK,
+                    'message'   => 'Data telah dihapus!'
+                ])
+                ->setStatusCode(ResponseInterface::HTTP_OK);
+        } catch(ApiAccessErrorException $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode($e->getCode());
+        } catch(Exception $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**delete multiple */
-    public function deleteMultiple($id)
+    public function deleteMultiple()
     {
+        try {
+            if (!$this->request->isAJAX())
+                throw new ApiAccessErrorException(
+                    'Invalid Request!', 
+                    ResponseInterface::HTTP_BAD_REQUEST
+                );
+        
+            $rules      = ['ids' => 'required'];
+            $messages   = [
+                'ids' => ['required' => 'ids is required']
+            ];
+            
+            if (!$this->validate($rules, $messages))
+                throw new ApiAccessErrorException(
+                    'Validation Error!', 
+                    ResponseInterface::HTTP_UNPROCESSABLE_ENTITY,
+                    $this->validator->getErrors()
+                );
 
+            $ids = $this->request->getVar('ids');
+            
+            $affectedRows = $this->JIModel->deleteMultipleData($ids);
+            if ($affectedRows != count($ids))
+                throw new ApiAccessErrorException(
+                    'Terjadi kesalahan!', 
+                    ResponseInterface::HTTP_INTERNAL_SERVER_ERROR
+                );
+            
+            return $this->response
+                ->setJSON([
+                    'status'    => ResponseInterface::HTTP_OK,
+                    'message'   => 'Data telah dihapus!'
+                ])
+                ->setStatusCode(ResponseInterface::HTTP_OK);
+        } catch(ApiAccessErrorException $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode($e->getCode());
+        } catch(Exception $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**restore */

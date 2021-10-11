@@ -15,7 +15,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#modal_add_jenis_inventaris">
+                        <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#modal-add-jenis-inventaris">
                             <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Data
                         </button>
                         <button type="button" class="btn btn-danger btn-sm" id="btn-delete-multiple">
@@ -24,7 +24,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="data_jenis_inventaris" class="table table-bordered table-hover table-sm" width="100%">
+                        <table id="data-jenis-inventaris" class="table table-bordered table-hover table-sm" width="100%">
                             <thead>
                                 <tr>
                                     <th><div class="text-center"><input id="checkAll" type="checkbox" name="multi_delete"></div></th>
@@ -52,6 +52,8 @@
 <!-- /.content -->
 
 <?php echo view($moduleViewPath.'jenis_inventaris/add') ?>
+<?php echo view($moduleViewPath.'jenis_inventaris/show') ?> 
+<?php echo view($moduleViewPath.'jenis_inventaris/edit') ?> 
 
 <?=$this->endSection()?>
 

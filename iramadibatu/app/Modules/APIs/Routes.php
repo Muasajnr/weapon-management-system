@@ -11,8 +11,16 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
         $routes->group('master', function($routes) {
             $routes->group('jenis_inventaris', function($routes) {
                 $routes->get('/', 'Master\Controllers\JenisInventarisController::index');
-                
+                $routes->get('(:segment)', 'Master\Controllers\JenisInventarisController::get/$1');
+
                 $routes->post('datatables', 'Master\Controllers\JenisInventarisController::datatables');
+                $routes->post('/', 'Master\Controllers\JenisInventarisController::create');
+
+                $routes->put('(:segment)/update', 'Master\Controllers\JenisInventarisController::update/$1');
+                $routes->put('(:segment)/set_status', 'Master\Controllers\JenisInventarisController::setStatus/$1');
+
+                $routes->delete('(:segment)/delete', 'Master\Controllers\JenisInventarisController::delete/$1');
+                $routes->delete('delete/multiple', 'Master\Controllers\JenisInventarisController::deleteMultiple');
             });
             
             $routes->group('jenis_sarana', function($routes) {
