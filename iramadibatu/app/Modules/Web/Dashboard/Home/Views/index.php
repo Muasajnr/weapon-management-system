@@ -9,15 +9,15 @@
             <div class="col-lg-3 col-6">
                 <!-- small box -->
                 <div class="small-box bg-info">
-                <div class="inner">
-                    <h3>150</h3>
+                    <div class="inner">
+                        <h3>150</h3>
 
-                    <p>Stok Senjata Api</p>
-                </div>
+                        <p>Total Stok</p>
+                    </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="#" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -27,12 +27,12 @@
                     <div class="inner">
                         <h3>53</h3>
 
-                        <p>Total Senjata Api Dipinjam</p>
+                        <p>Total Dipinjam</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -42,12 +42,12 @@
                     <div class="inner">
                         <h3>44</h3>
 
-                        <p>Total Senjata Api Dikembalikan</p>
+                        <p>Total Didistribusi</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -62,17 +62,73 @@
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
         </div>
-        <div class="row justify-content-md-center">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card card-widget widget-user-2">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header bg-primary">
+                        <h3 style="margin-left: 0px;" class="widget-user-username">Total Stok</h3>
+                        <h5 style="margin-left: 0px;" class="widget-user-desc">Berdasarkan jenis sarana</h5>
+                    </div>
+                    <div class="card-footer p-0">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Projects<span class="float-right badge bg-primary">31</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Tasks <span class="float-right badge bg-info">5</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Completed Projects <span class="float-right badge bg-success">12</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Followers <span class="float-right badge bg-danger">842</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card card-widget widget-user-2">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header bg-success">
+                        <h3 style="margin-left: 0px;" class="widget-user-username">Total Dipinjam</h3>
+                        <h5 style="margin-left: 0px;" class="widget-user-desc">Berdasarkan jenis sarana</h5>
+                    </div>
+                    <div class="card-footer p-0">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    Projects <span class="float-right badge bg-primary">31</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    Tasks <span class="float-right badge bg-info">5</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    Completed Projects <span class="float-right badge bg-success">12</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    Followers <span class="float-right badge bg-danger">842</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-header border-0">
                         <div class="d-flex justify-content-between">
-                            <h3 class="card-title">Stok Berdasarkan Jenis Inventaris</h3>
+                            <h3 class="card-title">Stok Berdasarkan Jenis Sarana</h3>
                             <a href="javascript:void(0);">Lihat laporan</a>
                         </div>
                     </div>
@@ -82,241 +138,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header border-0">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="card-title">Stok Berdasarkan Jenis Senjata Api</h3>
-                            <a href="javascript:void(0);">Lihat laporan</a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="position-relative mb-4">
-                            <canvas id="chart-jenis-senpi" height="350"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /.card -->
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header border-0">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="card-title">Stok Berdasarkan Merk Senjata Api</h3>
-                            <a href="javascript:void(0);">Lihat laporan</a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="position-relative mb-4">
-                            <canvas id="chart-merk-senpi" height="350"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header border-transparent">
-                        <h3 class="card-title">Top 10 Senjata Api</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                        <table class="table m-0">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Stok</th>
-                                    <th>Nama</th>
-                                    <th>Deskripsi</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>2.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>3.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>4.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>5.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>5.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>5.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>5.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>5.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>5.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        </div>
-                        <!-- /.table-responsive -->
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer clearfix"></div>
-                    <!-- /.card-footer -->
-                </div>
-                <!-- /.card -->
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header border-transparent">
-                        <h3 class="card-title">Top 10 Senjata Api Paling Sering Dipinjam</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                        <table class="table m-0">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Stok</th>
-                                    <th>Nama</th>
-                                    <th>Deskripsi</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>2.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>3.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>4.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>5.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>5.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>5.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>5.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>5.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>5.</td>
-                                    <td>40</td>
-                                    <td>Pistol</td>
-                                    <td>Senjata api</td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        </div>
-                        <!-- /.table-responsive -->
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer clearfix"></div>
-                    <!-- /.card-footer -->
-                </div>
-                <!-- /.card -->
             </div>
         </div>
     </div><!-- /.container-fluid -->
