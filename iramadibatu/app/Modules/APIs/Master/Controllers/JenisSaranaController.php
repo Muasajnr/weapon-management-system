@@ -2,7 +2,6 @@
 
 namespace App\Modules\APIs\Master\Controllers;
 
-use App\Controllers\BaseController;
 use App\Core\ApiController;
 use App\Modules\APIs\Master\Models\JenisSaranaModel;
 use CodeIgniter\HTTP\ResponseInterface;

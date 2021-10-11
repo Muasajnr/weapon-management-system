@@ -25,47 +25,100 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
             
             $routes->group('jenis_sarana', function($routes) {
                 $routes->get('/', 'Master\Controllers\JenisSaranaController::index');
+                $routes->get('(:segment)', 'Master\Controllers\JenisInventarisController::get/$1');
 
                 $routes->post('datatables', 'Master\Controllers\JenisSaranaController::datatables');
+                $routes->post('/', 'Master\Controllers\JenisInventarisController::create');
+
+                $routes->put('(:segment)/update', 'Master\Controllers\JenisInventarisController::update/$1');
+                $routes->put('(:segment)/set_status', 'Master\Controllers\JenisInventarisController::setStatus/$1');
+
+                $routes->delete('(:segment)/delete', 'Master\Controllers\JenisInventarisController::delete/$1');
+                $routes->delete('delete/multiple', 'Master\Controllers\JenisInventarisController::deleteMultiple');
             });
 
             $routes->group('merk_sarana', function($routes) {
                 $routes->get('/', 'Master\Controllers\MerkSaranaController::index');
+                $routes->get('(:segment)', 'Master\Controllers\JenisInventarisController::get/$1');
 
                 $routes->post('datatables', 'Master\Controllers\MerkSaranaController::datatables');
+                $routes->post('/', 'Master\Controllers\JenisInventarisController::create');
+
+                $routes->put('(:segment)/update', 'Master\Controllers\JenisInventarisController::update/$1');
+                $routes->put('(:segment)/set_status', 'Master\Controllers\JenisInventarisController::setStatus/$1');
+
+                $routes->delete('(:segment)/delete', 'Master\Controllers\JenisInventarisController::delete/$1');
+                $routes->delete('delete/multiple', 'Master\Controllers\JenisInventarisController::deleteMultiple');
             });
         });
 
         $routes->group('sarana_keamanan', function($routes) {
             $routes->get('/', 'SaranaKeamanan\Controllers\DefaultController::index');
+            $routes->get('(:segment)', 'SaranaKeamanan\Controllers\JenisInventarisController::get/$1');
 
             $routes->post('datatables/(:segment)', 'SaranaKeamanan\Controllers\DefaultController::datatables/$1');
             $routes->post('create/(:segment)', 'SaranaKeamanan\Controllers\DefaultController::create/$1');
 
-            // $routes->put('(:id)/update/(:id_jenis_inventaris)', 'SaranaKeamanan\Controllers\DefaultController::update/$1/$2');
+            $routes->put('(:segment)/update', 'SaranaKeamanan\Controllers\DefaultController::update/$1');
+
+            $routes->delete('(:segment)/delete', 'SaranaKeamanan\Controllers\DefaultController::delete/$1');
+            $routes->delete('delete/multiple', 'SaranaKeamanan\Controllers\DefaultController::deleteMultiple');
         });
 
         $routes->group('berita_acara', function($routes) {
             $routes->get('/', 'BeritaAcara\Controllers\DefaultController::index');
+
             $routes->post('datatables', 'BeritaAcara\Controllers\DefaultController::datatables');
+            $routes->post('/', 'BeritaAcara\Controllers\DefaultController::create');
+
+            $routes->put('(:segment)/update', 'BeritaAcara\Controllers\DefaultController::update/$1');
+
+            $routes->delete('(:segment)/delete', 'BeritaAcara\Controllers\DefaultController::delete/$1');
+            $routes->delete('delete/multiple', 'BeritaAcara\Controllers\DefaultController::deleteMultiple');
         });
 
         $routes->group('bon_simpan_pinjam', function($routes) {
             $routes->group('pinjam', function($routes) {
                 $routes->post('datatables', 'BonSimpanPinjam\Controllers\PinjamController::datatables');
+                $routes->post('/', 'BonSimpanPinjam\Controllers\PinjamController::create');
+
+                $routes->put('(:segment)/update', 'BeritaAcara\Controllers\DefaultController::update/$1');
+
+                $routes->delete('(:segment)/delete', 'BeritaAcara\Controllers\DefaultController::delete/$1');
+                $routes->delete('delete/multiple', 'BeritaAcara\Controllers\DefaultController::deleteMultiple');
             });
+
             $routes->group('kembalikan', function($routes) {
                 $routes->post('datatables', 'BonSimpanPinjam\Controllers\KembalikanController::datatables');
+                $routes->post('/', 'BonSimpanPinjam\Controllers\KembalikanController::create');
+                
+                $routes->put('(:segment)/update', 'BonSimpanPinjam\Controllers\KembalikanController::update/$1');
+
+                $routes->delete('(:segment)/delete', 'BonSimpanPinjam\Controllers\KembalikanController::delete/$1');
+                $routes->delete('delete/multiple', 'BonSimpanPinjam\Controllers\KembalikanController::deleteMultiple');
             });
         });
 
         $routes->group('distribusi', function($routes) {
             $routes->post('datatables', 'DistribusiSarana\Controllers\DefaultController::datatables');
+            $routes->post('/', 'DistribusiSarana\Controllers\DefaultController::create');
+
+            $routes->put('(:segment)/update', 'DistribusiSarana\Controllers\DefaultController::update/$1');
+
+            $routes->delete('(:segment)/delete', 'DistribusiSarana\Controllers\DefaultController::delete/$1');
+            $routes->delete('delete/multiple', 'DistribusiSarana\Controllers\DefaultController::deleteMultiple');
         });
 
         $routes->group('users', function($routes) {
             $routes->get('/', 'Users\Controllers\UserController::index');
+
             $routes->post('datatables', 'Users\Controllers\UserController::datatables');
+            $routes->post('/', 'Users\Controllers\UserController::create');
+
+            $routes->put('(:segment)/update', 'Users\Controllers\UserController::update/$1');
+
+            $routes->delete('(:segment)/delete', 'Users\Controllers\UserController::delete/$1');
+            $routes->delete('delete/multiple', 'Users\Controllers\UserController::deleteMultiple');
         });
 
         $routes->group('stok', function($routes) {
