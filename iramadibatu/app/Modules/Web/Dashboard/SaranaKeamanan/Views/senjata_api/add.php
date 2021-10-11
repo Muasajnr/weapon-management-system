@@ -7,14 +7,14 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body pb-0">
+            <!-- <div class="modal-body pb-0">
                 <div class="card-body pb-0 pt-0 text-right">
                     <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                         <input type="checkbox" name="is_single_insert" class="custom-control-input" id="is_single_insert" disabled>
                         <label class="custom-control-label" for="is_single_insert">Single-Insert</label>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <form id="form-add-senjata-api">
                 <div class="modal-body pt-0">
                     <div class="card-body">
@@ -72,7 +72,7 @@
                     <!-- /.card-body -->
                 </div>
 
-                <div id="section-table-added" class="modal-body">
+                <!-- <div id="section-table-added" class="modal-body">
                     <div class="card">
                         <div class="card-header">
                             <div class="card-title">
@@ -95,11 +95,12 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                    <button id="btn-submit-all" type="button" class="btn btn-primary">Submit</button>
+                    <!-- <button id="btn-submit-all" type="button" class="btn btn-primary">Submit</button> -->
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>

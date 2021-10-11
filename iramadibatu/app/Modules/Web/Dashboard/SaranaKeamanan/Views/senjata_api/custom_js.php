@@ -394,19 +394,21 @@ $(function() {
         }
     });
 
-    $('#form-add-senjata-api').find('#section-table-added').hide();
-    $('#form-add-senjata-api').find('#btn-submit-all').hide();
-    $('input#is_single_insert').on('change', function(e) {
-        if ($(this).is(':checked')) {
-            $('#form-add-senjata-api').find('#section-table-added').show();
-            $('#form-add-senjata-api').find('#btn-submit-all').show();
-            $(this).next().text('Multi-Insert');
-        } else {
-            $('#form-add-senjata-api').find('#section-table-added').hide();
-            $('#form-add-senjata-api').find('#btn-submit-all').hide();
-            $(this).next().text('Single-Insert');
-        }
-    });
+    // $('#form-add-senjata-api').find('#section-table-added').hide();
+    // $('#form-add-senjata-api').find('#btn-submit-all').hide();
+    // $('input#is_single_insert').on('change', function(e) {
+    //     if ($(this).is(':checked')) {
+    //         $('#form-add-senjata-api').find('#section-table-added').show();
+    //         $('#form-add-senjata-api').find('#btn-submit-all').show();
+    //         $(this).next().text('Multi-Insert');
+    //     } else {
+    //         $('#form-add-senjata-api').find('#section-table-added').hide();
+    //         $('#form-add-senjata-api').find('#btn-submit-all').hide();
+    //         $(this).next().text('Single-Insert');
+    //     }
+    // });
+
+    
 });
 </script>
 
