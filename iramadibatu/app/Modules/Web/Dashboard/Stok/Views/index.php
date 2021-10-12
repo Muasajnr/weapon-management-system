@@ -29,7 +29,7 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Tipe Sarana</th>
-                                    <th>Jumlah Stok</th>
+                                    <th>Stok</th>
                                     <th>Sedang dipinjam</th>
                                     <th>Sudah didistrubsi</th>
                                     <th>Status</th>

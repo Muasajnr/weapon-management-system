@@ -74,6 +74,8 @@ class SaranaKeamananModel extends CoreApiModel
             $this->defaultBuilder()->where('sarana_keamanan.deleted_at is not null');
         
         $this->defaultBuilder()->where('sarana_keamanan.id_jenis_inventaris', $id > 3 ? 3 : $id);
+        $this->defaultBuilder()->where('jenis_sarana.deleted_at', null);
+        $this->defaultBuilder()->where('merk_sarana.deleted_at', null);
 
         $result = $this->defaultBuilder()->get();
         return $result->getResultArray();

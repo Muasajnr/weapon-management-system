@@ -70,6 +70,9 @@ class StokModel extends CoreApiModel
             $this->defaultBuilder()->where('sarana_keamanan.deleted_at is not null');
         }
 
+        $this->defaultBuilder()->where('jenis_sarana.deleted_at', null);
+        $this->defaultBuilder()->where('distribusi_sarana.deleted_at', null);
+
         $this->defaultBuilder()->groupBy('sarana_keamanan.id_jenis_sarana');
 
 
@@ -137,5 +140,104 @@ class StokModel extends CoreApiModel
         $this->defaultBuilder()->groupBy('sarana_keamanan.id_jenis_sarana');
         
         return $this->defaultBuilder()->countAllResults();
+    }
+
+    public function getStokData(int $id) : array
+    {
+        $this->defaultBuilder()->select(
+            '
+            jenis_sarana.name as nama,
+            jenis_inventaris.name as tipe,
+            merk_sarana.name as merk,
+            sarana_keamanan.nomor_sarana,
+            sarana_keamanan.nomor_bpsa,
+            sarana_keamanan.satuan,
+            sarana_keamanan.jumlah,
+            sarana_keamanan.keterangan,
+            '
+        );
+
+        $this->defaultBuilder()->join('jenis_sarana', 'jenis_sarana.id = sarana_keamanan.id_jenis_sarana', 'left');
+        $this->defaultBuilder()->join('jenis_inventaris', 'jenis_inventaris.id = sarana_keamanan.id_jenis_inventaris', 'left');
+        $this->defaultBuilder()->join('merk_sarana', 'merk_sarana.id = sarana_keamanan.id_merk_sarana', 'left');
+
+        $this->defaultBuilder()->where('sarana_keamanan.id_jenis_sarana', $id);
+        $this->defaultBuilder()->where('jenis_sarana.deleted_at', null);
+        $this->defaultBuilder()->where('sarana_keamanan.deleted_at', null);
+
+        $result = $this->defaultBuilder()->get();
+
+        return $result->getResultArray();
+    }
+
+    public function getStokDataByPinjam(int $id) : array
+    {
+        $myBuilder = $this->builder('pinjam_sarana');
+
+        $myBuilder->select(
+            '
+            jenis_sarana.name as nama,
+            jenis_inventaris.name as tipe,
+            merk_sarana.name as merk,
+            sarana_keamanan.nomor_sarana,
+            sarana_keamanan.nomor_bpsa,
+            sarana_keamanan.satuan,
+            sarana_keamanan.jumlah,
+            sarana_keamanan.keterangan,
+            '
+        );
+        $myBuilder->join('sarana_keamanan', 'sarana_keamanan.id = pinjam_sarana.id_sarana_keamanan', 'left');
+        $myBuilder->join('jenis_sarana', 'jenis_sarana.id = sarana_keamanan.id_jenis_sarana', 'left');
+        $myBuilder->join('jenis_inventaris', 'jenis_inventaris.id = sarana_keamanan.id_jenis_inventaris', 'left');
+        $myBuilder->join('merk_sarana', 'merk_sarana.id = sarana_keamanan.id_merk_sarana', 'left');
+
+        $myBuilder->where('sarana_keamanan.id_jenis_sarana', $id);
+        $myBuilder->where('jenis_sarana.deleted_at', null);
+        $myBuilder->where('sarana_keamanan.deleted_at', null);
+
+        $result = $myBuilder->get();
+
+        return $result->getResultArray();
+    }
+
+    public function getStokDataByDistribusi(int $id) : array
+    {
+        $myBuilder = $this->builder('distribusi_sarana');
+
+        $myBuilder->select(
+            '
+            jenis_sarana.name as nama,
+            jenis_inventaris.name as tipe,
+            merk_sarana.name as merk,
+            sarana_keamanan.nomor_sarana,
+            sarana_keamanan.nomor_bpsa,
+            sarana_keamanan.satuan,
+            sarana_keamanan.jumlah,
+            sarana_keamanan.keterangan,
+            '
+        );
+        $myBuilder->join('sarana_keamanan', 'sarana_keamanan.id = distribusi_sarana.id_sarana_keamanan', 'left');
+        $myBuilder->join('jenis_sarana', 'jenis_sarana.id = sarana_keamanan.id_jenis_sarana', 'left');
+        $myBuilder->join('jenis_inventaris', 'jenis_inventaris.id = sarana_keamanan.id_jenis_inventaris', 'left');
+        $myBuilder->join('merk_sarana', 'merk_sarana.id = sarana_keamanan.id_merk_sarana', 'left');
+
+        $myBuilder->where('sarana_keamanan.id_jenis_sarana', $id);
+        $myBuilder->where('jenis_sarana.deleted_at', null);
+        $myBuilder->where('sarana_keamanan.deleted_at', null);
+
+        $result = $myBuilder->get();
+
+        return $result->getResultArray();
+    }
+
+    public function checkJenisSarana($id)
+    {
+        $result = $this->builder('jenis_sarana')
+            ->selectCount('*', 'count')
+            ->where('id', $id)
+            ->get()
+            ->getRowArray();
+
+        return $result['count'] > 0;
     }
 }

@@ -54,6 +54,7 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
         $routes->group('sarana_keamanan', function($routes) {
             $routes->get('/', 'SaranaKeamanan\Controllers\DefaultController::index');
             $routes->get('(:segment)', 'SaranaKeamanan\Controllers\DefaultController::get/$1');
+            $routes->get('jenis_sarana/(:segment)', 'SaranaKeamanan\Controllers\DefaultController::getAllByJenisSarana/$1');
 
             $routes->post('datatables/(:segment)', 'SaranaKeamanan\Controllers\DefaultController::datatables/$1');
             $routes->post('create/(:segment)', 'SaranaKeamanan\Controllers\DefaultController::create/$1');
@@ -122,6 +123,7 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
 
         $routes->group('stok', function($routes) {
             $routes->post('datatables', 'Stok\Controllers\DefaultController::datatables');
+            $routes->get('sarana_keamanan', 'Stok\Controllers\DefaultController::getByJenisSarana');
         });
     });
 });

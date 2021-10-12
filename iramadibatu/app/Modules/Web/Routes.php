@@ -30,7 +30,10 @@ $routes->group('dashboard', ['namespace' => '\App\Modules\Web\\'], function($rou
 
     $routes->get('distribusi', 'Dashboard\DistribusiSarana\Controllers\DefaultController::index', ['as' => 'distribusi']);
     $routes->get('berita_acara', 'Dashboard\BeritaAcara\Controllers\DefaultController::index', ['as' => 'berita_acara']);
-    $routes->get('stok', 'Dashboard\Stok\Controllers\DefaultController::index', ['as' => 'stok']);
+    $routes->group('stok', function($routes) {
+        $routes->get('/', 'Dashboard\Stok\Controllers\DefaultController::index', ['as' => 'stok']);
+        $routes->get('(:segment)/detail', 'Dashboard\Stok\Controllers\DefaultController::show/$1', ['as' => 'stok_detail']);
+    });
     $routes->get('laporan', 'Dashboard\Laporan\Controllers\DefaultController::index', ['as' => 'laporan']);
     $routes->get('users', 'Dashboard\Users\Controllers\DefaultController::index', ['as' => 'users']);
     $routes->get('qr_scanner','Dashboard\QRScanner\Controllers\DefaultController::index', ['as' => 'qr_scanner']);

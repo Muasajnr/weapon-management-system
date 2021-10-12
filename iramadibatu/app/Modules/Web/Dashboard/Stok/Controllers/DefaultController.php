@@ -24,4 +24,14 @@ class DefaultController extends WebController
             ]
         ]);
     }
+
+    public function show($idJenisSarana)
+    {
+        $params = $this->request->getGet();
+        return $this->renderView('show', [
+            'page_title'    => 'Detail stok',
+            'id_jenis_sarana'   => $idJenisSarana,
+            'params'    => $params,
+        ]);
+    }
 }
