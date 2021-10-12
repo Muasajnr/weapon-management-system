@@ -20,8 +20,16 @@
 
 <script>
 $(function() {
+    $('#checkAll').click(function(e) {
+        if ($(this).is(":checked")) {
+            $('.multi_delete').prop('checked', true);
+        } else {
+            $('.multi_delete').prop('checked', false);
+        }
+    });
+    
     // handles datatable
-    const table = $('#data-users').DataTable({
+    const table = $('#data_users').DataTable({
         "responsive": true,
         "drawCallback": function(settings) {
             if ($('#checkAll').is(":checked")) {
@@ -97,6 +105,18 @@ $(function() {
             }
         ],
     });
+
+    /** start of add */
+
+    /** end of add */
+
+    /** start of edit */
+
+    /** end of edit */
+
+    /** start of delete */
+
+    /** end of delete */
 });
 </script>
 
