@@ -18,6 +18,7 @@
             <form id="form-edit-merk-sarana">
                 <div class="modal-body pt-0">
                     <div class="card-body">
+                        <input id="edit_id" type="hidden" name="edit_id">
                         <div class="form-group">
                             <label for="edit_name">Nama</label>
                             <input type="text" name="edit_name" class="form-control" id="edit_name" placeholder="Masukkan Nama...">

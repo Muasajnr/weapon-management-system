@@ -284,7 +284,7 @@ $(function() {
         $('#modal-edit-merk-sarana').modal('toggle');
     });
 
-    $('#data-jenis-sarana tbody').on('change', 'tr input[type="checkbox"][name="is_active"]', function(e) {
+    $('#data-merk-sarana tbody').on('change', 'tr input[type="checkbox"][name="is_active"]', function(e) {
         e.preventDefault();
         
         const checkedValue = this.checked;
@@ -344,11 +344,11 @@ $(function() {
     $('#form-edit-merk-sarana').validate({
         submitHandler: function(form, event) {
             event.preventDefault();
-            const itemId = $(form).find('input#edit-id').val();
+            const itemId = $(form).find('input#edit_id').val();
             const updateData = {
-                "name": $(form).find('input#edit-name').val(),
-                "desc": $(form).find('textarea#edit-desc').val(),
-                "is_active": $(form).find('input#edit-is-active').is(':checked') ? 1 : 0
+                "name": $(form).find('input#edit_name').val(),
+                "desc": $(form).find('textarea#edit_desc').val(),
+                "is_active": $(form).find('input#edit_is_active').is(':checked') ? 1 : 0
             };
             
             const updateUrl = '<?=site_url('api/v1/dashboard/master/merk_sarana/')?>' + itemId + '/update';
