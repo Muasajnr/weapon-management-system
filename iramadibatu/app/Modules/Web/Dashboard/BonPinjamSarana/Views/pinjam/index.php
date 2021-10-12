@@ -15,7 +15,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#modal-add-pinjam">
+                        <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#modal_add_pinjam">
                             <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Data
                         </button>
                         <button type="button" class="btn btn-danger btn-sm" id="btn-delete-multiple">
@@ -52,6 +52,9 @@
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+
+<?php echo view($moduleViewPath.'pinjam/add') ?>
+<?php echo view($moduleViewPath.'pinjam/edit') ?>
 
 <?=$this->endSection()?>
 

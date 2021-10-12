@@ -43,14 +43,14 @@ class DefaultController extends ApiController
 
             $row        = [];
             $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-item-id=\"".$item['id']."\"></div>";
-            $row[]      = "<input type=\"hidden\" value=\"".$item['id']."\">{$num}.";
+            $row[]      = "<div class=\"text-center\"><input type=\"hidden\" value=\"".$item['id']."\">{$num}.</div>";
             $row[]      = $item['nama'];
             $row[]      = $item['nomor'];
             $row[]      = $item['tanggal'];
-            $row[]      = "<strong>Nama : </strong>".$item['pihak_1_nama']."<br><strong>NIP : </strong>".$item['pihak_1_nip'];
-            $row[]      = "<strong>Nama : </strong>".$item['pihak_2_nama']."<br><strong>NIP : </strong>".$item['pihak_2_nip'];
+            $row[]      = $item['pihak_1_nama'] ?? '-'; // todo: show modal of pihak 1 detail
+            $row[]      = $item['pihak_2_nama'] ?? '-'; // show modal of pihak 2 detail
             $row[]      = $item['created_at'];
-            $row[]      = $this->buildActionButtons($item['id']);
+            $row[]      = $this->buildCustomActionButtons($item['id']);
 
             $resData[] = $row;
         }
@@ -63,6 +63,16 @@ class DefaultController extends ApiController
         return $this->response
             ->setJSON($output)
             ->setStatusCode(ResponseInterface::HTTP_OK);
+    }
+
+    private function buildCustomActionButtons(int $id)
+    {
+        $showUrl = site_url('dashboard/berita_acara/'.$id.'/detail');
+        return "<div class=\"text-center\">
+                    <a href=\"javascript:void(0)\" onclick=\"window.open('$showUrl', 'lihat_berita_acara', 'width=800, height=1200')\" class=\"btn btn-primary btn-sm mr-2\"><i class=\"fas fa-eye\"></i></a>
+                    <button type=\"button\" class=\"btn btn-info btn-sm mr-2\" data-item-id=\"$id\"><i class=\"fas fa-pencil-alt\"></i></button>
+                    <button type=\"button\" class=\"btn btn-danger btn-sm\" data-item-id=\"$id\"><i class=\"fas fa-trash\"></i></button>
+                </div>";
     }
 
 }

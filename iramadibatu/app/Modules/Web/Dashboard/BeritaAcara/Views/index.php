@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')?>">
 <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')?>">
 <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')?>">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')?>">
 <?=$this->endSection()?>
 
 <?=$this->section('content')?>
@@ -28,14 +30,14 @@
                             <thead>
                                 <tr>
                                     <th><div class="text-center"><input id="checkAll" type="checkbox" name="multi_delete"></div></th>
-                                    <th>No.</th>
-                                    <th>Judul</th>
+                                    <th class="text-center">No.</th>
                                     <th>Nomor</th>
+                                    <th>Judul</th>
                                     <th>Tanggal</th>
                                     <th>Pihak 1</th>
                                     <th>Pihak 2</th>
                                     <th>Tanggal Dibuat</th>
-                                    <th>Actions</th>
+                                    <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -52,6 +54,8 @@
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+
+<?php echo view($moduleViewPath.'add') ?>
 
 <?=$this->endSection()?>
 

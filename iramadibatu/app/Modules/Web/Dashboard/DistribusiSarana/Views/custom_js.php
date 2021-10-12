@@ -21,7 +21,7 @@
 <script>
 $(function() {
     // handles datatable
-    const table = $('#data-distribusi-sarana').DataTable({
+    const table = $('#data_distribusi_sarana').DataTable({
         "responsive": true,
         "drawCallback": function(settings) {
             if ($('#checkAll').is(":checked")) {

@@ -32,12 +32,12 @@ class PinjamController extends ApiController
             $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-item-id=\"".$item['pinjam_sarana_id']."\"></div>";
             $row[]      = "<input type=\"hidden\" value=\"".$item['pinjam_sarana_id']."\">{$num}.";
             $row[]      = $item['berita_acara_nomor'];
-            $row[]      = "<strong>Nama : </strong>".$item['pihak_1_nama']."<br><strong>NIP : </strong>".$item['pihak_1_nip'];
-            $row[]      = "<strong>Nama : </strong>".$item['pihak_2_nama']."<br><strong>NIP : </strong>".$item['pihak_2_nip'];
-            $row[]      = "<strong>Nomor : </strong>".$item['nomor_sarana']."<br><strong>Nama : </strong>".$item['nama_sarana']."<br><strong>Merk : </strong>".$item['merk_sarana'];
+            $row[]      = $item['pihak_1_nama'];
+            $row[]      = $item['pihak_2_nama'];
+            $row[]      = $item['nomor_sarana'].' - '.$item['nama_sarana'].' - '.$item['merk_sarana'];
             $row[]      = $item['pinjam_sarana_jumlah'];
             $row[]      = $item['tanggal_pinjam'];
-            $row[]      = $this->buildActionButtons($item['pinjam_sarana_id']);
+            $row[]      = $this->buildCustomActionButtons($item['pinjam_sarana_id']);
 
             $resData[] = $row;
         }
@@ -50,6 +50,16 @@ class PinjamController extends ApiController
         return $this->response
             ->setJSON($output)
             ->setStatusCode(ResponseInterface::HTTP_OK);
+    }
+
+    private function buildCustomActionButtons(int $id)
+    {
+        $showUrl = site_url('dashboard/pinjam_sarana/'.$id.'/detail');
+        return "<div class=\"text-center\">
+                    <a href=\"javascript:void(0)\" onclick=\"window.open('$showUrl', 'lihat_pinjam_sarana', 'width=800, height=1200')\" class=\"btn btn-primary btn-sm mr-2\"><i class=\"fas fa-eye\"></i></a>
+                    <button type=\"button\" class=\"btn btn-info btn-sm mr-2\" data-item-id=\"$id\"><i class=\"fas fa-pencil-alt\"></i></button>
+                    <button type=\"button\" class=\"btn btn-danger btn-sm\" data-item-id=\"$id\"><i class=\"fas fa-trash\"></i></button>
+                </div>";
     }
     
 }
