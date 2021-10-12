@@ -1,5 +1,4 @@
 <?php
-
 $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes) {
     $routes->post('login', 'Auth\Controllers\DefaultController::login');
     $routes->post('renew_token', 'Auth\Controllers\DefaultController::renewToken');
@@ -25,36 +24,36 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
             
             $routes->group('jenis_sarana', function($routes) {
                 $routes->get('/', 'Master\Controllers\JenisSaranaController::index');
-                $routes->get('(:segment)', 'Master\Controllers\JenisInventarisController::get/$1');
+                $routes->get('(:segment)', 'Master\Controllers\JenisSaranaController::get/$1');
 
                 $routes->post('datatables', 'Master\Controllers\JenisSaranaController::datatables');
-                $routes->post('/', 'Master\Controllers\JenisInventarisController::create');
+                $routes->post('/', 'Master\Controllers\JenisSaranaController::create');
 
-                $routes->put('(:segment)/update', 'Master\Controllers\JenisInventarisController::update/$1');
-                $routes->put('(:segment)/set_status', 'Master\Controllers\JenisInventarisController::setStatus/$1');
+                $routes->put('(:segment)/update', 'Master\Controllers\JenisSaranaController::update/$1');
+                $routes->put('(:segment)/set_status', 'Master\Controllers\JenisSaranaController::setStatus/$1');
 
-                $routes->delete('(:segment)/delete', 'Master\Controllers\JenisInventarisController::delete/$1');
-                $routes->delete('delete/multiple', 'Master\Controllers\JenisInventarisController::deleteMultiple');
+                $routes->delete('(:segment)/delete', 'Master\Controllers\JenisSaranaController::delete/$1');
+                $routes->delete('delete/multiple', 'Master\Controllers\JenisSaranaController::deleteMultiple');
             });
 
             $routes->group('merk_sarana', function($routes) {
                 $routes->get('/', 'Master\Controllers\MerkSaranaController::index');
-                $routes->get('(:segment)', 'Master\Controllers\JenisInventarisController::get/$1');
+                $routes->get('(:segment)', 'Master\Controllers\MerkSaranaController::get/$1');
 
                 $routes->post('datatables', 'Master\Controllers\MerkSaranaController::datatables');
-                $routes->post('/', 'Master\Controllers\JenisInventarisController::create');
+                $routes->post('/', 'Master\Controllers\MerkSaranaController::create');
 
-                $routes->put('(:segment)/update', 'Master\Controllers\JenisInventarisController::update/$1');
-                $routes->put('(:segment)/set_status', 'Master\Controllers\JenisInventarisController::setStatus/$1');
+                $routes->put('(:segment)/update', 'Master\Controllers\MerkSaranaController::update/$1');
+                $routes->put('(:segment)/set_status', 'Master\Controllers\MerkSaranaController::setStatus/$1');
 
-                $routes->delete('(:segment)/delete', 'Master\Controllers\JenisInventarisController::delete/$1');
-                $routes->delete('delete/multiple', 'Master\Controllers\JenisInventarisController::deleteMultiple');
+                $routes->delete('(:segment)/delete', 'Master\Controllers\MerkSaranaController::delete/$1');
+                $routes->delete('delete/multiple', 'Master\Controllers\MerkSaranaController::deleteMultiple');
             });
         });
 
         $routes->group('sarana_keamanan', function($routes) {
             $routes->get('/', 'SaranaKeamanan\Controllers\DefaultController::index');
-            $routes->get('(:segment)', 'SaranaKeamanan\Controllers\JenisInventarisController::get/$1');
+            $routes->get('(:segment)', 'SaranaKeamanan\Controllers\DefaultController::get/$1');
 
             $routes->post('datatables/(:segment)', 'SaranaKeamanan\Controllers\DefaultController::datatables/$1');
             $routes->post('create/(:segment)', 'SaranaKeamanan\Controllers\DefaultController::create/$1');

@@ -96,7 +96,10 @@ $(function() {
         ],
     });
 
-    /** start of add stuff */
+    /*************************************************
+    *             START OF HANDLE CREATE
+    *************************************************/
+
     // if ($('#form_added_data').find('tbody').children().length == 0) {
     //     $('#form_added_data').append(`<tr><td class="text-center" colspan="5">tidak ada data.</td></tr>`);
     // }
@@ -116,9 +119,9 @@ $(function() {
         submitHandler: function(form, event) {
             event.preventDefault();
 
-            if ($($('#form_added_data').find('tbody').children()[0]).children().length == 1) {
-                $('#form_added_data').find('tbody').empty();
-            }
+            // if ($($('#form_added_data').find('tbody').children()[0]).children().length == 1) {
+            //     $('#form_added_data').find('tbody').empty();
+            // }
             
             const newData = {
                 "name": $(form).find('input#name').val(),
@@ -126,20 +129,20 @@ $(function() {
                 "is_active": $(form).find('input#is_active').is(':checked') ? 1 : 0
             };
 
-            let number = $('#form_added_data').find('tbody').children().length;
-            $('#form_added_data tbody').append(
-                `
-                <tr>
-                    <td>${number+1}.</td>
-                    <td>${newData.name}</td>
-                    <td>${newData.desc}</td>
-                    <td>${newData.is_active ? 'Aktif' : 'Tidak Aktif'}</td>
-                    <td class="text-center"><button type="button" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button></td>
-                </tr>
-                `
-            );
+            // let number = $('#form_added_data').find('tbody').children().length;
+            // $('#form_added_data tbody').append(
+            //     `
+            //     <tr>
+            //         <td>${number+1}.</td>
+            //         <td>${newData.name}</td>
+            //         <td>${newData.desc}</td>
+            //         <td>${newData.is_active ? 'Aktif' : 'Tidak Aktif'}</td>
+            //         <td class="text-center"><button type="button" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button></td>
+            //     </tr>
+            //     `
+            // );
 
-            addedData.push(newData);
+            // addedData.push(newData);
 
             // console.log(addedData);
             // console.log(newData)
@@ -235,9 +238,16 @@ $(function() {
 
     //     console.log('clicked');
     // });
-    /** end of add stuff */
+    
+    /*************************************************
+    *             END OF HANDLE CREATE
+    *************************************************/
 
-    /** start of show stuff */
+
+
+    /*************************************************
+    *             START OF HANDLE SHOW
+    *************************************************/
     $('#modal-show-jenis-sarana').on('hidden.bs.modal', function (e) {
         $('#data-detail').html('');
     })
@@ -283,9 +293,15 @@ $(function() {
             }
         });
     });
-    /** end of show stuff */
+    /*************************************************
+    *             END OF HANDLE SHOW
+    *************************************************/
 
-    /** start of edit stuff */
+
+
+    /*************************************************
+    *             START OF HANDLE EDIT
+    *************************************************/
     $('#data-jenis-sarana tbody').on('click', 'tr td button.btn-info', function(e) {
         e.preventDefault();
 
@@ -360,11 +376,11 @@ $(function() {
     $('#form-edit-jenis-sarana').validate({
         submitHandler: function(form, event) {
             event.preventDefault();
-            const itemId = $(form).find('input#edit-id').val();
+            const itemId = $(form).find('input#edit_id').val();
             const updateData = {
-                "name": $(form).find('input#edit-name').val(),
-                "desc": $(form).find('textarea#edit-desc').val(),
-                "is_active": $(form).find('input#edit-is-active').is(':checked') ? 1 : 0
+                "name": $(form).find('input#edit_name').val(),
+                "desc": $(form).find('textarea#edit_desc').val(),
+                "is_active": $(form).find('input#edit_is_active').is(':checked') ? 1 : 0
             };
             
             const updateUrl = '<?=site_url('api/v1/dashboard/master/jenis_sarana/')?>' + itemId + '/update';
@@ -435,8 +451,13 @@ $(function() {
             $(element).removeClass('is-invalid');
         }
     });
-    /** end of edit stuff */
+    /*************************************************
+    *             END OF HANDLE EDIT
+    *************************************************/
 
+    /*************************************************
+    *             START OF HANDLE DELETE
+    *************************************************/
     /** start of delete stuff */
     $('#data-jenis-sarana tbody').on('click', 'tr td button.btn-danger', function(e) {
         e.preventDefault();
@@ -538,7 +559,9 @@ $(function() {
             });
         }
     });
-    /** end of delete stuff */
+    /*************************************************
+    *             END OF HANDLE DELETE
+    *************************************************/
 });
 </script>
 <?=$this->endSection()?>
