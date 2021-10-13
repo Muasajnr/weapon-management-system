@@ -111,6 +111,7 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
 
         $routes->group('users', function($routes) {
             $routes->get('/', 'Users\Controllers\UserController::index');
+            $routes->get('(:segment)', 'Users\Controllers\UserController::get/$1');
 
             $routes->post('datatables', 'Users\Controllers\UserController::datatables');
             $routes->post('/', 'Users\Controllers\UserController::create');

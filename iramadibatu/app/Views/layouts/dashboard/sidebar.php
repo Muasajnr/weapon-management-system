@@ -44,6 +44,7 @@
                     <p>Dashboard</p>
                 </a>
             </li>
+            <li class="nav-header text-primary">Master Data</li>
             <li class="nav-item <?=service('uri')->getSegment(2) == 'master' ? 'menu-open' : ''?>">
                 <a href="#" class="nav-link <?=service('uri')->getSegment(2) == 'master' ? 'active' : ''?>">
                     <i class="nav-icon fas fa-desktop"></i>
@@ -74,17 +75,12 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a href="<?=route_to('stok')?>" class="nav-link <?=service('uri')->getSegment(2) == 'stok' ? 'active' : ''?>">
-                    <i class="fas fa-boxes nav-icon"></i>
-                    <p>Data Stok</p>
+                <a href="<?=route_to('users')?>" class="nav-link <?=service('uri')->getSegment(2) == 'users' ? 'active' : ''?>">
+                    <i class="fas fa-users nav-icon"></i>
+                    <p>Data User</p>
                 </a>
             </li>
-            <!-- <li class="nav-item">
-                <a href="<?=route_to('firearms')?>" class="nav-link <?=service('uri')->getSegment(2) == 'senjata-api' ? 'active' : ''?>">
-                    <i class="fas fa-box nav-icon"></i>
-                    <p>Daeta Senjata Api</p>
-                </a>
-            </li> -->
+            <li class="nav-header text-success">Movement Sarana Kemanan</li>
             <li class="nav-item <?=service('uri')->getSegment(2) == 'sarana_keamanan' ? 'menu-open' : ''?>">
                 <a href="#" class="nav-link <?=service('uri')->getSegment(2) == 'sarana_keamanan' ? 'active' : ''?>">
                     <i class="nav-icon fas fa-box"></i>
@@ -114,12 +110,6 @@
                     </li>
                 </ul>
             </li>
-            <!-- <li class="nav-item">
-                <a href="<?=route_to('borrowings')?>" class="nav-link <?=service('uri')->getSegment(2) == 'peminjaman' ? 'active' : ''?>">
-                    <i class="fas fa-hand-holding nav-icon"></i>
-                    <p>Peminjaman Senjata</p>
-                </a>
-            </li> -->
             <li class="nav-item <?=service('uri')->getSegment(2) == 'bon_pinjam_sarana' ? 'menu-open' : ''?>">
                 <a href="#" class="nav-link <?=service('uri')->getSegment(2) == 'bon_pinjam_sarana' ? 'active' : ''?>">
                     <i class="nav-icon fas fa-desktop"></i>
@@ -155,18 +145,20 @@
                     <p>Berita Acara</p>
                 </a>
             </li>
+            <li class="nav-header text-warning">Perkembangan</li>
+            <li class="nav-item">
+                <a href="<?=route_to('stok')?>" class="nav-link <?=service('uri')->getSegment(2) == 'stok' ? 'active' : ''?>">
+                    <i class="fas fa-boxes nav-icon"></i>
+                    <p>Data Stok</p>
+                </a>
+            </li>
             <li class="nav-item">
                 <a href="<?=route_to('laporan')?>" class="nav-link <?=service('uri')->getSegment(2) == 'laporan' ? 'active' : ''?>">
                     <i class="fas fa-chart-line nav-icon"></i>
                     <p>Laporan</p>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="<?=route_to('users')?>" class="nav-link <?=service('uri')->getSegment(2) == 'users' ? 'active' : ''?>">
-                    <i class="fas fa-users nav-icon"></i>
-                    <p>Data User</p>
-                </a>
-            </li>
+            <li class="nav-header text-danger">Tools</li>
             <li class="nav-item">
                 <a href="<?=route_to('qr_scanner')?>" class="nav-link <?=service('uri')->getSegment(2) == 'qr_scanner' ? 'active' : ''?>">
                     <i class="fas fa-qrcode nav-icon"></i>
