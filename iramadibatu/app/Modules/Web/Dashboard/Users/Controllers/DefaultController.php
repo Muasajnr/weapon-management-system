@@ -6,6 +6,13 @@ use App\Core\WebController;
 
 class DefaultController extends WebController
 {
+    protected $contentIncludes = [
+        'datatable'             => true,
+        'sweetalert'            => true,
+        'select2'               => true,
+        'jquery_validation'     => true
+    ];
+
     public function __construct()
     {
         parent::__construct(dirname(__FILE__));

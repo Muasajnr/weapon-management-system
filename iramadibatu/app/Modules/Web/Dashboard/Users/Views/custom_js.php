@@ -1,23 +1,4 @@
 <?=$this->section('custom-js')?>
-
-<!-- DataTables  & Plugins -->
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables/jquery.dataTables.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/js/buttons.html5.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/js/buttons.print.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js')?>"></script>
-
-<!-- Select2 -->
-<script src="<?=site_url('themes/AdminLTE/plugins/select2/js/select2.full.min.js')?>"></script>
-
-<!-- jquery-validation -->
-<script src="<?=site_url('themes/AdminLTE/plugins/jquery-validation/jquery.validate.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/jquery-validation/additional-methods.min.js')?>"></script>
-
 <script>
 $(function() {
     $('#checkAll').click(function(e) {
@@ -108,6 +89,10 @@ $(function() {
             }
         ],
     });
+
+
+
+
 
     /*************************************************
     *             START OF HANDLE ADD
@@ -308,7 +293,7 @@ $(function() {
 
         const itemId = $(this).data().itemId;
         const rowData = table.row($(this).parent().parent()).data();
-        // console.log(rowData);
+        
         $('input#edit_id').val(parseInt($(rowData[1].substring(0, rowData[1].indexOf('>')+1)).val()));
         $('input#edit_fullname').val(rowData[2]);
         $('input#edit_username').val(rowData[3]);

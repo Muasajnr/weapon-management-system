@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IRAMADIBATU - <?=$page_title?></title>
+    <title>Iramadibatu - <?=$page_title?></title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -13,8 +13,20 @@
     <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/dist/css/adminlte.min.css')?>">
     <!-- pace-progress -->
     <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/pace-progress/themes/blue/pace-theme-flat-top.css')?>">
-    <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')?>">
+
+    <?php if ($contentIncludeData['sweetalert']): ?>
+        <!-- SweetAlert2 -->
+        <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')?>">
+    <?php endif; ?>
+
+    <?php if ($contentIncludeData['datatable']): ?>
+        <!-- DataTables -->
+        <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')?>">
+        <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')?>">
+        <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')?>">
+    <?php endif; ?>
+
+    <!-- Custom Style -->
     <style>
     [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active-btn,
     [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active-btn:focus,
@@ -23,8 +35,8 @@
         color: #343a40;
     }
     </style>
-    <!-- Custom Style -->
     <?=$this->renderSection('custom-css')?>
+
     <!-- JS Header Constants -->
     <script src="<?=site_url('assets/js/constants.js')?>"></script>
     <!-- JS Header Global Helper -->
@@ -46,31 +58,11 @@
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0"><?=$page_header_title?></h1>
-                        </div><!-- /.col -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <?php foreach($pages_path as $key => $val): ?>
-                                    <li class="breadcrumb-item <?=$val['active'] ? 'active' : ''?>">
-                                        <?php if(!$val['active']): ?>
-                                            <a href="<?=$val['url']?>"><?=ucwords($key)?></a>
-                                        <?php else: ?>
-                                            <?=ucwords($key)?>
-                                        <?php endif; ?>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ol>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content-header -->
+
+            <?=$this->include('layouts/dashboard/page_header')?>
+
             <?=$this->renderSection('content')?>
+            
         </div>
         <!-- /.content-wrapper -->
 
@@ -97,8 +89,23 @@
     <script src="<?=site_url('themes/AdminLTE/dist/js/adminlte.min.js')?>"></script>
     <!-- pace-progress -->
     <script src="<?=site_url('themes/AdminLTE/plugins/pace-progress/pace.min.js')?>"></script>
-    <!-- SweetAlert2 -->
-    <script src="<?=site_url('themes/AdminLTE/plugins/sweetalert2/sweetalert2.min.js')?>"></script>
+
+    <?php if ($contentIncludeData['sweetalert']): ?>
+        <?=$this->include('layouts/dashboard/content_inc/sweetalert_js.php')?>
+    <?php endif; ?>
+
+    <?php if ($contentIncludeData['datatable']): ?>
+        <?=$this->include('layouts/dashboard/content_inc/datatable_js.php')?>
+    <?php endif; ?>
+
+    <?php if ($contentIncludeData['select2']): ?>
+        <?=$this->include('layouts/dashboard/content_inc/select2_js.php')?>
+    <?php endif; ?>
+
+    <?php if ($contentIncludeData['jquery_validation']): ?>
+        <?=$this->include('layouts/dashboard/content_inc/jquery_validation_js.php')?>
+    <?php endif; ?>
+
     <!-- Custom JS -->
     <script>
     $(document).ajaxStart(function() {
