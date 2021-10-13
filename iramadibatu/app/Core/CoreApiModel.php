@@ -261,6 +261,9 @@ class CoreApiModel extends Model
      */
     public function updateData(int $id, array $data) : bool
     {
+        $now = Time::now();
+        $this->defaultBuilder()->set('updated_at', $now->toDateTimeString());
+        $this->defaultBuilder()->set('sys_updated_user', $this->authenticatedUser);
         $this->defaultBuilder()->set($data);
         $this->defaultBuilder()->where('id', $id);
         return $this->defaultBuilder()

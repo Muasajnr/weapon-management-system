@@ -17,4 +17,9 @@ class DefaultController extends WebController
     {
         return $this->renderView('login');
     }
+
+    public function login2()
+    {
+        return $this->renderView('login2');
+    }
 }

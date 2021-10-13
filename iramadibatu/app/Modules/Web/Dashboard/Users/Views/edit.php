@@ -12,35 +12,20 @@
                     <div class="card-body">
                         <input type="hidden" name="edit_id" id="edit_id">
                         <div class="form-group">
-                            <label for="edit_fullname">Nama Lengkap</label>
-                            <input type="text" name="edit_fullname" class="form-control" id="edit_fullname" placeholder="Nama Lengkap...">
+                            <label class="text-sm" for="edit_fullname">Nama Lengkap (<span class="text-danger">*</span>)</label>
+                            <input type="text" name="edit_fullname" class="form-control form-control-sm rounded-0" id="edit_fullname" placeholder="Nama Lengkap">
                         </div>
                         <div class="form-group">
-                            <label for="edit_username">Username</label>
-                            <input type="text" name="edit_username" class="form-control" id="edit_username" placeholder="Username...">
+                            <label class="text-sm" for="edit_username">Username (<span class="text-danger">*</span>)</label>
+                            <input type="text" name="edit_username" class="form-control form-control-sm" id="edit_username" placeholder="Username">
                         </div>
                         <div class="form-group">
-                            <label for="edit_email">Email</label>
-                            <input type="email" name="edit_email" class="form-control" id="edit_email" placeholder="Email...">
+                            <label class="text-sm" for="edit_email">Email (<span class="text-danger">*</span>)</label>
+                            <input type="email" name="edit_email" class="form-control form-control-sm" id="edit_email" placeholder="Email">
                         </div>
-                        <!-- <div class="form-group row">
-                            <div class="col-md-12">
-                                <label for="edit_password_lama">Password Lama</label>
-                                <input type="password" name="edit_password_lama" class="form-control" id="edit_password_lama" placeholder="Password Lama...">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="edit_password_baru">Password Baru</label>
-                                <input type="password" name="edit_password_baru" class="form-control" id="edit_password_baru" placeholder="Password Baru...">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="edit_repassword_baru">Konfirm Password Baru</label>
-                                <input type="password" name="edit_repassword_baru" class="form-control" id="edit_repassword_baru" placeholder="Konfirmasi Password Baru...">
-                            </div>
-                            <small class="form-text text-muted">Kosongkan apabila tidak ingin mengganti password.</small>
-                        </div> -->
                         <div class="form-group">
-                            <label for="edit_level">Level</label>
-                            <select class="form-control" name="edit_level" id="edit_level">
+                            <label class="text-sm" for="edit_level">Level (<span class="text-danger">*</span>)</label>
+                            <select class="form-control form-control-sm" name="edit_level" id="edit_level">
                                 <option value="admin">Admin</option>
                                 <option value="user">Reguler</option>
                             </select>

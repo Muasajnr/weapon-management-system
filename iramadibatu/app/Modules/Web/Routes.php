@@ -1,6 +1,8 @@
 <?php
 
 $routes->get('login', '\App\Modules\Web\Login\Controllers\DefaultController::login');
+$routes->get('login2', '\App\Modules\Web\Login\Controllers\DefaultController::login2');
+$routes->get('test_index2', '\App\Modules\Web\Dashboard\Users\Controllers\DefaultController::index2');
 
 $routes->group('dashboard', ['namespace' => '\App\Modules\Web\\'], function($routes) {
     $routes->get('/', 'Dashboard\Home\Controllers\DefaultController::index', ['as' => 'dashboard']);
@@ -35,6 +37,9 @@ $routes->group('dashboard', ['namespace' => '\App\Modules\Web\\'], function($rou
         $routes->get('(:segment)/detail', 'Dashboard\Stok\Controllers\DefaultController::show/$1', ['as' => 'stok_detail']);
     });
     $routes->get('laporan', 'Dashboard\Laporan\Controllers\DefaultController::index', ['as' => 'laporan']);
+
     $routes->get('users', 'Dashboard\Users\Controllers\DefaultController::index', ['as' => 'users']);
+    // $routes->get('test_index2', 'Dashboard\Users\Controllers\DefaultController::index2', ['as' => 'text_index2']);
+
     $routes->get('qr_scanner','Dashboard\QRScanner\Controllers\DefaultController::index', ['as' => 'qr_scanner']);
 });

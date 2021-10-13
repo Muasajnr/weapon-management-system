@@ -25,53 +25,28 @@
                     <div class="card-body">
                         <form class="form-horizontal">
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 offset-sm-2 col-form-label">Nama Lengkap : </label>
+                                <label for="searchQuery" class="col-sm-2 offset-sm-2 col-form-label">Keyword : </label>
                                 <div class="col-sm-8">
-                                    <input type="email" class="form-control" id="inputEmail3" placeholder="Nama Lengkap">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 offset-sm-2 col-form-label">Username : </label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputEmail3" placeholder="Username">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-2 offset-sm-2 col-form-label">Email : </label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputPassword3" placeholder="Email">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-2 offset-sm-2 col-form-label">Level : </label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" name="level" id="level">
-                                        <option value="0">-- Pilih --</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="reguler">Reguler</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="searchQuery" placeholder="Masukkan Keyword Pencarian...">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-2 offset-sm-2"></div>
                                 <div class="col-8">
-                                    <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Cari Data</button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <!-- /.card-footer -->
-                </form>
+                        </form>
                     </div>
                 </div>
             </div>
             <div class="col-12">
                 <div class="card card-outline card-primary">
                     <div class="card-header">
-                        <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#modal_add_user">
+                        <button type="button" class="btn btn-primary btn-xs mr-2" data-toggle="modal" data-target="#modal_add_user">
                             <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Data
                         </button>
-                        <button type="button" class="btn btn-danger btn-sm" id="btn-delete-multiple">
+                        <button type="button" class="btn btn-danger btn-xs" id="btn-delete-multiple">
                             <i class="fas fa-trash"></i>&nbsp;&nbsp;Hapus banyak
                         </button>
                     </div>

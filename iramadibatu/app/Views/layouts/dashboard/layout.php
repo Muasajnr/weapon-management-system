@@ -38,64 +38,55 @@
     </script>
 </head>
 <body class="hold-transition sidebar-mini">
-<div class="wrapper">
+    <div class="wrapper">
 
-    <?=$this->include('layouts/dashboard/nav')?>
+        <?=$this->include('layouts/dashboard/nav')?>
+        
+        <?=$this->include('layouts/dashboard/sidebar')?>
 
-    <?=$this->include('layouts/dashboard/sidebar')?>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0"><?=$page_header_title?></h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <?php foreach($pages_path as $key => $val): ?>
-                                <li class="breadcrumb-item <?=$val['active'] ? 'active' : ''?>">
-                                    <?php if(!$val['active']): ?>
-                                        <a href="<?=$val['url']?>"><?=ucwords($key)?></a>
-                                    <?php else: ?>
-                                        <?=ucwords($key)?>
-                                    <?php endif; ?>
-                                </li>
-                            <?php endforeach; ?>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0"><?=$page_header_title?></h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <?php foreach($pages_path as $key => $val): ?>
+                                    <li class="breadcrumb-item <?=$val['active'] ? 'active' : ''?>">
+                                        <?php if(!$val['active']): ?>
+                                            <a href="<?=$val['url']?>"><?=ucwords($key)?></a>
+                                        <?php else: ?>
+                                            <?=ucwords($key)?>
+                                        <?php endif; ?>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <?=$this->renderSection('content')?>
         </div>
-        <!-- /.content-header -->
-        <?=$this->renderSection('content')?>
+        <!-- /.content-wrapper -->
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+
+        <?=$this->include('layouts/dashboard/footer')?>
     </div>
-    <!-- /.content-wrapper -->
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-        <div class="p-3">
-            <h5>Title</h5>
-            <p>Sidebar content</p>
-        </div>
-    </aside>
-    <!-- /.control-sidebar -->
-
-    <!-- Main Footer -->
-    <footer class="main-footer">
-        <!-- To the right -->
-        <div class="float-right d-none d-sm-inline">
-            Iramadibatu
-        </div>
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">iramadibatu.com</a>.</strong> All rights reserved.
-    </footer>
-</div>
-<!-- ./wrapper -->
-
+    <!-- ./wrapper -->
     <!-- REQUIRED SCRIPTS -->
 
     <!-- jQuery -->

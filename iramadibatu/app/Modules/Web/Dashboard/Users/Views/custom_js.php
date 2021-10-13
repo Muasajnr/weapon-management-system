@@ -109,7 +109,9 @@ $(function() {
         ],
     });
 
-    /** start of add */
+    /*************************************************
+    *             START OF HANDLE ADD
+    *************************************************/
     $('#form_add_user').validate({
         submitHandler: function(form, event) {
             event.preventDefault();
@@ -199,7 +201,12 @@ $(function() {
             $(element).removeClass('is-invalid');
         }
     });
-    /** end of add */
+    /*************************************************
+    *             END OF HANDLE ADD
+    *************************************************/
+
+
+
 
     /*************************************************
     *             START OF HANDLE SHOW
@@ -268,9 +275,7 @@ $(function() {
 
         const rowData = table.row($(this).parent().parent()).data();
         const itemId = parseInt($(rowData[1].substring(0, rowData[1].indexOf('>')+1)).val());
-        console.log(itemId);
 
-        $('#modal_edit_password_user').modal('toggle');
         // $.ajax({
         //     type: 'GET',
         //     url: '<?=site_url('api/v1/dashboard/users/')?>'+itemId+'/change_password',
@@ -281,14 +286,14 @@ $(function() {
         //     success: function(res) {
         //         console.log(res);
 
-        //         $('#modal-show-jenis-sarana').modal('toggle');
+        //         $('#modal_edit_password_user').modal('toggle');
         //     },
         //     error: function(err) {
         //         console.log(err);
 
         //         Swal.fire({
         //             icon: 'error',
-        //             title: 'Data gagal ditampilkan!',
+        //             title: 'Gagal ditampilkan!',
         //             text: err.responseJSON.message,
         //             showConfirmButton: true,
         //             timer: 2000
@@ -303,15 +308,93 @@ $(function() {
 
         const itemId = $(this).data().itemId;
         const rowData = table.row($(this).parent().parent()).data();
-
-        // $('#edit_id').val(parseInt($(rowData[1].substring(0, rowData[1].indexOf('>')+1)).val()));
-        // $('#edit_name').val(rowData[2]);
-        // $('#edit_desc').val(rowData[3]);
-        // $('#edit_is_active').prop('checked', $(rowData[4]).find('input').is(':checked'));
+        // console.log(rowData);
+        $('input#edit_id').val(parseInt($(rowData[1].substring(0, rowData[1].indexOf('>')+1)).val()));
+        $('input#edit_fullname').val(rowData[2]);
+        $('input#edit_username').val(rowData[3]);
+        $('input#edit_email').val(rowData[4]);
+        $('select#edit_level').val(rowData[5].substring(rowData[5].indexOf('>')+1));
 
         $('#modal_edit_user').modal('toggle');
     });
 
+    $('#form-edit-merk-sarana').validate({
+        submitHandler: function(form, event) {
+            event.preventDefault();
+            const itemId = $(form).find('input#edit_id').val();
+            const updateData = {
+                "fullname": $(form).find('input#edit_fullname').val(),
+                "username": $(form).find('input#edit_username').val(),
+                "email": $(form).find('input#edit_email').val(),
+                "level": $(form).find('select#edit_level option:selected').val()
+            };
+            
+            const updateUrl = '<?=site_url('api/v1/dashboard/users/')?>' + itemId + '/update';
+
+            $.ajax({
+                type: 'PUT',
+                url: updateUrl,
+                dataType: 'json',
+                data: JSON.stringify(updateData),
+                contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken,
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                success: function(res) {
+                    console.log(res);
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Data telah diubah!',
+                        showConfirmButton: true,
+                        timer: 2000
+                    });
+
+                    setTimeout(() => {
+                        $('#modal_edit_user').modal('toggle');
+                        table.ajax.reload();
+                    }, 2000);
+                },
+                error: function(err) {
+                    console.log(err.responseJSON);
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Data gagal diubah!',
+                        text: err.responseJSON.message,
+                        showConfirmButton: true,
+                        timer: 2000
+                    });
+                }
+            })
+        },
+        rules: {
+            fullname: {
+                required: true
+            },
+            username: {
+                required: true
+            },
+            email: {
+                required: true
+            },
+            level: {
+                required: true
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
     /** handle form edit submission */
 
     /*************************************************

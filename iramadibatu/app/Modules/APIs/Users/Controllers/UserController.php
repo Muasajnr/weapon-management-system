@@ -168,9 +168,6 @@ class UserController extends ApiController
             );
 
             $data = $this->request->getVar();
-            if (isset($data['password']))
-                $data['password']   = password_hash($data['password'], PASSWORD_BCRYPT);
-            
             $isUpdated = $this->userModel->updateData($id, (array) $data);
             if (!$isUpdated)
                 throw new ApiAccessErrorException(
