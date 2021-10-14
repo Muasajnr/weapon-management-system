@@ -327,7 +327,8 @@ $(function() {
                     type: 'DELETE',
                     url: `${baseUrl}/${itemId}/delete`,
                     headers: {
-                        'Authorization': 'Bearer ' + accessToken
+                        'Authorization': 'Bearer ' + accessToken,
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
                     success: function(res) {
                         console.log(res);
@@ -391,7 +392,8 @@ $(function() {
                         data: JSON.stringify(idsData),
                         contentType: 'application/json',
                         headers: {
-                            'Authorization': 'Bearer ' + accessToken
+                            'Authorization': 'Bearer ' + accessToken,
+                            'X-Requested-With': 'XMLHttpRequest'
                         },
                         success: function(res) {
                             console.log(res);

@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-add-merk-sarana">
+<div class="modal fade" id="modal_add_merk_sarana">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div> -->
-            <form id="form-add-merk-sarana">
+            <form id="form_add_merk_sarana">
                 <div class="modal-body pt-0">
                     <div class="card-body">
                         <div class="form-group">
