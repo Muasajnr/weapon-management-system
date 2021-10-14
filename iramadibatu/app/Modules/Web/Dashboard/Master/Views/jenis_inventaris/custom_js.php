@@ -12,15 +12,6 @@ $(function() {
         { "targets": 6, "orderable": false, }
     ];
 
-    // checkAll
-    $('#checkAll').click(function(e) {
-        if ($(this).is(":checked")) {
-            $('.multi_delete').prop('checked', true);
-        } else {
-            $('.multi_delete').prop('checked', false);
-        }
-    });
-
     // handles datatable
     const table = $('#data_jenis_inventaris').DataTable({
         "dom": 'lrtip',
@@ -58,80 +49,17 @@ $(function() {
             });
         }
     });
-
-    // if ($('#form_added_data').find('tbody').children().length == 0) {
-    //     $('#form_added_data').append(`<tr><td class="text-center" colspan="5">tidak ada data.</td></tr>`);
-    // }
-
-    /** start of add stuff */
-    // let addedData = [];
-
-    // $('#form_added_data tbody').on('click', 'tr td button.btn-danger', function(e) {
-    //     e.preventDefault();
-
-    //     if ($(this).parent().parent().parent().children().length == 1) {
-    //         $(this).parent().parent().parent().append(`<tr><td class="text-center" colspan="5">tidak ada data.</td></tr>`);
-    //     }
-
-    //     $(this).parent().parent().remove();
-    // });
-
     
-
-    // $('#form_add_jenis_inventaris').find('#section-table-added').hide();
-    // $('#form_add_jenis_inventaris').find('#btn-submit-all').hide();
-    // $('input#is_single_insert').on('change', function(e) {
-    //     if ($(this).is(':checked')) {
-    //         $('#form_add_jenis_inventaris').find('#section-table-added').show();
-    //         $('#form_add_jenis_inventaris').find('#btn-submit-all').show();
-    //         $(this).next().text('Multi-Insert');
-    //     } else {
-    //         $('#form_add_jenis_inventaris').find('#section-table-added').hide();
-    //         $('#form_add_jenis_inventaris').find('#btn-submit-all').hide();
-    //         $(this).next().text('Single-Insert');
-    //     }
-    // });
-
-    // $('#btn-submit-all').click(function(e) {
-    //     e.preventDefault();
-
-    //     console.log('clicked');
-    // });
-    /** end of add stuff */
-
     // validate & submit new jenis_inventaris
     $('#form_add_jenis_inventaris').validate({
         submitHandler: function(form, event) {
             event.preventDefault();
-
-            // if ($($('#form_added_data').find('tbody').children()[0]).children().length == 1) {
-            //     $('#form_added_data').find('tbody').empty();
-            // }
             
             const newData = {
                 "name": $(form).find('input#name').val(),
                 "desc": $(form).find('textarea#desc').val(),
                 "is_active": $(form).find('input#is_active').is(':checked') ? 1 : 0
             };
-
-            // let number = $('#form_added_data').find('tbody').children().length;
-            // $('#form_added_data tbody').append(
-            //     `
-            //     <tr>
-            //         <td>${number+1}.</td>
-            //         <td>${newData.name}</td>
-            //         <td>${newData.desc}</td>
-            //         <td>${newData.is_active ? 'Aktif' : 'Tidak Aktif'}</td>
-            //         <td class="text-center"><button type="button" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button></td>
-            //     </tr>
-            //     `
-            // );
-
-            // addedData.push(newData);
-
-            // console.log(addedData);
-            // console.log(newData)
-            // return;
 
             $.ajax({
                 type: 'POST',
@@ -419,6 +347,15 @@ $(function() {
                 })
             }
         });
+    });
+
+    // check all rows
+    $('#checkAll').click(function(e) {
+        if ($(this).is(":checked")) {
+            $('.multi_delete').prop('checked', true);
+        } else {
+            $('.multi_delete').prop('checked', false);
+        }
     });
 
     // deleted selected rows
