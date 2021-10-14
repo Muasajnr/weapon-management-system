@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-edit-jenis-inventaris">
+<div class="modal fade" id="modal_edit_jenis_inventaris">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div> -->
-            <form id="form-edit-jenis-inventaris">
+            <form id="form_edit_jenis_inventaris">
                 <div class="modal-body pt-0">
                     <div class="card-body">
                         <input id="edit-id" type="hidden" name="edit_id">
