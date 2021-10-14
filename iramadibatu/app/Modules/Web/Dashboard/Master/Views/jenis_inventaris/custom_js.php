@@ -49,7 +49,7 @@ $(function() {
             });
         }
     });
-    
+
     // validate & submit new jenis_inventaris
     $('#form_add_jenis_inventaris').validate({
         submitHandler: function(form, event) {
@@ -80,7 +80,7 @@ $(function() {
                     });
 
                     setTimeout(() => {
-                        $('#modal-add-jenis-inventaris').modal('toggle');
+                        $('#modal_add_jenis_inventaris').modal('toggle');
 
                         $(form).find('input#name').val('');
                         $(form).find('textarea#desc').val('');
@@ -168,21 +168,6 @@ $(function() {
         });
     });
 
-    // set edit data to modal form when the button row clicked & open the modal 
-    $('#data-jenis-inventaris tbody').on('click', 'tr td button.btn-info', function(e) {
-        e.preventDefault();
-
-        const itemId = $(this).data().itemId;
-        const rowData = table.row($(this).parent().parent()).data();
-
-        $('#edit-id').val(parseInt($(rowData[1].substring(0, rowData[1].indexOf('>')+1)).val()));
-        $('#edit-name').val(rowData[2]);
-        $('#edit-desc').val(rowData[3]);
-        $('#edit-is-active').prop('checked', $(rowData[4]).find('input').is(':checked'));
-
-        $('#modal-edit-jenis-inventaris').modal('toggle');
-    });
-
     // change active status of the row
     $('#data_jenis_inventaris tbody').on('change', 'tr input[type="checkbox"][name="is_active"]', function(e) {
         e.preventDefault();
@@ -204,7 +189,7 @@ $(function() {
             if (result.isConfirmed) {
                 $.ajax({
                     type: 'PUT',
-                    url: `${baseApiUrl}/${itemId}/set_status'`,
+                    url: `${baseApiUrl}/${itemId}/set_status`,
                     dataType: 'json',
                     data: JSON.stringify({
                         "is_active": this.checked ? 1 : 0
@@ -237,6 +222,21 @@ $(function() {
                 $currChecked.prop('checked', !checkedValue);
             }
         });
+    });
+
+    // set edit data to modal form when the button row clicked & open the modal 
+    $('#data_jenis_inventaris tbody').on('click', 'tr td button.btn-info', function(e) {
+        e.preventDefault();
+
+        const itemId = $(this).data().itemId;
+        const rowData = table.row($(this).parent().parent()).data();
+
+        $('#edit-id').val(parseInt($(rowData[1].substring(0, rowData[1].indexOf('>')+1)).val()));
+        $('#edit-name').val(rowData[2]);
+        $('#edit-desc').val(rowData[3]);
+        $('#edit-is-active').prop('checked', $(rowData[4]).find('input').is(':checked'));
+
+        $('#modal_edit_jenis_inventaris').modal('toggle');
     });
 
     // validate & submit edit form data
@@ -323,7 +323,7 @@ $(function() {
             if (result.isConfirmed) {
                 $.ajax({
                     type: 'DELETE',
-                    url: `${baseApiUrl}/${itemId}/delete'`,
+                    url: `${baseApiUrl}/${itemId}/delete`,
                     headers: {
                         'Authorization': 'Bearer ' + accessToken
                     },
@@ -412,6 +412,17 @@ $(function() {
                     })
                 }
             });
+        }
+    });
+
+    // fitler data
+    $('#filter_data').submit(function(e) {
+        e.preventDefault();
+
+        let searchQuery = $('input#searchQuery').val();
+        
+        if (searchQuery !== '') {
+            table.search(searchQuery).draw();
         }
     });
 });

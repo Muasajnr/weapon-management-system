@@ -114,7 +114,7 @@ class UserController extends ApiController
             $row[]      = "<span class=\"badge badge-primary\">".$item['level'] ?? '-'."</span>";
             $row[]      = $item['last_login'] ?? '-';
             $row[]      = $item['created_at'] ?? '-';
-            $row[]      = $this->buildeCustomActions($item['id']);
+            $row[]      = $this->buildCustomButtonActions($item['id']);
 
             $resData[] = $row;
         }
@@ -341,7 +341,7 @@ class UserController extends ApiController
         }
     }
 
-    protected function buildeCustomActions($id)
+    protected function buildCustomButtonActions($id)
     {
         return "<div class=\"text-center\">
                     <button type=\"button\" class=\"btn btn-warning btn-xs mr-2\" data-item-id=\"$id\"><i class=\"fas fa-key mr-1\"></i>Ganti Password</button>

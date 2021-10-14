@@ -58,7 +58,7 @@ class JenisInventarisController extends ApiController
             $row[]      = $item['desc'];
             $row[]      = $this->buildStatusSwitch($item['id'], $item['is_active']);
             $row[]      = $item['created_at'];
-            $row[]      = $this->buildActionButtons($item['id']);
+            $row[]      = $this->buildCustomButtonActions($item['id']);
 
             $resData[] = $row;
         }
@@ -357,5 +357,14 @@ class JenisInventarisController extends ApiController
     public function purgeMultiple($id)
     {
 
+    }
+
+    protected function buildCustomButtonActions($id)
+    {
+        return "<div class=\"text-center\">
+                    <button type=\"button\" class=\"btn btn-primary btn-xs mr-2\" data-item-id=\"$id\"><i class=\"fas fa-eye mr-1\"></i>Detail</button>
+                    <button type=\"button\" class=\"btn btn-info btn-xs mr-2\" data-item-id=\"$id\"><i class=\"fas fa-pencil-alt mr-1\"></i>Edit</button>
+                    <button type=\"button\" class=\"btn btn-danger btn-xs\" data-item-id=\"$id\"><i class=\"fas fa-trash mr-1\"></i>Hapus</button>
+                </div>";
     }
 }
