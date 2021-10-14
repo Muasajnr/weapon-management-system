@@ -11,10 +11,10 @@
                 <div class="modal-body pt-0">
                     <div class="card-body">
                         <input type="hidden" name="edit_password_id" id="edit_password_id">
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="edit_password_lama">Password Lama</label>
                             <input type="password" name="edit_password_lama" class="form-control" id="edit_password_lama" placeholder="Password Lama...">
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <label for="edit_password_baru">Password Baru</label>
                             <input type="password" name="edit_password_baru" class="form-control" id="edit_password_baru" placeholder="Password Baru...">

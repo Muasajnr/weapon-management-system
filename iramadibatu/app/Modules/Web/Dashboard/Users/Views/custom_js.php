@@ -6,11 +6,11 @@ const datatableColumns = [
     { "targets": 0, "orderable": false, "searchable": false },
     { "targets": 1, "orderable": false, "searchable": false },
     { "targets": 2, "orderable": true, "searchable": true },
-    { "targets": 3, "orderable": false, "searchable": false },
-    { "targets": 4, "orderable": false, "searchable": false },
+    { "targets": 3, "orderable": true, "searchable": true },
+    { "targets": 4, "orderable": true, "searchable": true },
     { "targets": 5, "orderable": true, "searchable": true },
-    { "targets": 6, "orderable": false },
-    { "targets": 7, "orderable": false },
+    { "targets": 6, "orderable": true },
+    { "targets": 7, "orderable": true },
     { "targets": 8, "orderable": false }
 ];
 </script>
@@ -19,7 +19,8 @@ const datatableColumns = [
 $(function() {
     // handles datatable
     const table = $('#data_users').DataTable({
-        "searching": false,
+        "dom": 'lrtip',
+        "searching": true,
         "responsive": true,
         "pageLength": 25,
         "processing": true,
@@ -141,7 +142,7 @@ $(function() {
 
     // reset show modal when the model dismissed
     $('#modal_show_user').on('hidden.bs.modal', function (e) {
-        $('#data-detail').html('');
+        $('#data-detail tbody').html('');
     })
 
     // show detail modal when detail button clicked
@@ -159,16 +160,15 @@ $(function() {
                 'Authorization': 'Bearer ' + accessToken
             },
             success: function(res) {
-                console.log(res);
-
                 if (res.data) {
                     for (const [key, value] of Object.entries(res.data)) {
-                        // $('#data_detail').append(
-                        //     `
-                        //     <dt class="col-sm-4">${key}</dt>
-                        //     <dd id="show-name" class="col-sm-8">${value == null ? '-' : value}</dd>
-                        //     `
-                        // );
+                        console.log(key, value)
+                        $('#data_detail').append(
+                            `
+                            <dt class="col-sm-4">${key}</dt>
+                            <dd id="show-name" class="col-sm-8">${value == null ? '-' : value}</dd>
+                            `
+                        );
                     }
                 }
 
@@ -192,7 +192,80 @@ $(function() {
     $('#data_users tbody').on('click', 'tr td button.btn-warning', function(e) {
         e.preventDefault();
 
+        const rowData = table.row($(this).parent().parent()).data();
+        $('input#edit_password_id').val(parseInt($(rowData[1].substring(0, rowData[1].indexOf('>')+1)).val()));
+
         $('#modal_edit_password_user').modal('toggle');
+    });
+
+    // validate & submit edit password form
+    $('#form_edit_password_user').validate({
+        submitHandler: function(form, event) {
+            event.preventDefault();
+
+            const itemId = $(form).find('input#edit_password_id').val();
+
+            const updateData = {
+                "password": $(form).find('input#edit_password_baru').val(),
+                "confirm_password": $(form).find('input#edit_repassword_baru').val(),
+            };
+
+            $.ajax({
+                type: 'PUT',
+                url: baseApiUrl + '/' + itemId + '/update_password',
+                dataType: 'json',
+                data: JSON.stringify(updateData),
+                contentType: 'application/json',
+                headers: { 'Authorization': 'Bearer ' + accessToken, 'X-Requested-With': 'XMLHttpRequest' },
+                success: function(res) {
+                    console.log(res);
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Password telah diubah!',
+                        showConfirmButton: true,
+                        timer: 2000
+                    });
+
+                    setTimeout(() => {
+
+                        $('input#edit_password_baru').val('');
+                        $('input#edit_repassword_baru').val('');
+
+                        $('#modal_edit_password_user').modal('toggle');
+                        table.ajax.reload();
+                    }, 2000);
+                },
+                error: function(err) {
+                    console.log(err);
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Password gagal diubah!',
+                        text: err.responseJSON.message,
+                        showConfirmButton: true,
+                        timer: 2000
+                    });
+                }
+            });
+        },
+        rules: {
+            fullname: { required: true },
+            username: { required: true },
+            email: { required: true },
+            level: { required: true }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
     });
 
     // send edit data to modal edit after this button clicked
@@ -378,6 +451,17 @@ $(function() {
                     })
                 }
             });
+        }
+    });
+
+    // fitler data
+    $('#filter_data').submit(function(e) {
+        e.preventDefault();
+
+        let searchQuery = $('input#searchQuery').val();
+        
+        if (searchQuery !== '') {
+            table.search(searchQuery).draw();
         }
     });
 });

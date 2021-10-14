@@ -120,7 +120,7 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
             $routes->put('(:segment)/update_password', 'Users\Controllers\UserController::updatePassword/$1');
 
             $routes->delete('(:segment)/delete', 'Users\Controllers\UserController::delete/$1'); // works
-            $routes->delete('delete/multiple', 'Users\Controllers\UserController::deleteMultiple'); 
+            $routes->delete('delete/multiple', 'Users\Controllers\UserController::deleteMultiple'); // works
         });
 
         $routes->group('stok', function($routes) {

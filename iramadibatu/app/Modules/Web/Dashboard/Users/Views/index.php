@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form class="form-horizontal">
+                        <form id="filter_data" class="form-horizontal">
                             <div class="form-group row">
                                 <label for="searchQuery" class="col-sm-2 offset-sm-2 col-form-label">Keyword : </label>
                                 <div class="col-sm-8">
@@ -77,6 +77,7 @@
 <?php echo view($moduleViewPath.'add') ?>
 <?php echo view($moduleViewPath.'edit') ?>
 <?php echo view($moduleViewPath.'edit_password') ?>
+<?php echo view($moduleViewPath.'show') ?>
 
 <?=$this->endSection()?>
 

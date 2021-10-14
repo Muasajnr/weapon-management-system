@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-show-merk-sarana" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="modal_show_user" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <dl id="data-detail" class="row">
+                <dl id="data_detail" class="row">
                     <!-- <dt class="col-sm-4">Nama Inventaris</dt>
                     <dd id="show-name" class="col-sm-8"></dd>
 

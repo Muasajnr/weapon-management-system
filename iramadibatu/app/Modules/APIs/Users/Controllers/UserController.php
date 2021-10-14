@@ -28,12 +28,71 @@ class UserController extends ApiController
     public function get($id)
     {
         $data = $this->userModel->getOne($id);
+        unset($data['password']);
         return $this->response
             ->setJSON([
                 'status'    => ResponseInterface::HTTP_OK,
                 'data'      => $data
             ])
             ->setStatusCode(ResponseInterface::HTTP_OK);
+    }
+
+    public function updatePassword($id)
+    {
+        try {
+            if (!$this->request->isAJAX())
+                throw new ApiAccessErrorException(
+                    'Invalid Request!', 
+                    ResponseInterface::HTTP_BAD_REQUEST
+                );
+            
+            $rules = [
+                'password' => 'required',
+                'confirm_password' => 'required|matches[password]'
+            ];
+            
+            if (!$this->validate($rules))
+                throw new ApiAccessErrorException(
+                    'Validation Error!', 
+                    ResponseInterface::HTTP_UNPROCESSABLE_ENTITY,
+                    $this->validator->getErrors()
+                );
+            
+            $data = $this->request->getVar();
+            
+            $this->userModel->setAuthenticatedUser(
+                $this->request
+                    ->header('Logged-User')
+                    ->getValue()
+            );
+
+            $data = (array) $data;
+            unset($data['confirm_password']);
+    
+            $isUpdated = $this->userModel->updatePassword((int)$id, $data['password']);
+            if (!$isUpdated)
+                throw new ApiAccessErrorException(
+                    'Terjadi kesalahan!', 
+                    ResponseInterface::HTTP_INTERNAL_SERVER_ERROR
+                );
+    
+            return $this->response
+                ->setJSON([
+                    'status'    => ResponseInterface::HTTP_OK,
+                    'message'   => 'Password telah diubah!'
+                ])
+                ->setStatusCode(ResponseInterface::HTTP_OK);
+        } catch(ApiAccessErrorException $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode($e->getCode());
+        } catch(Exception $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function datatables()

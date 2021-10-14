@@ -11,12 +11,24 @@ class UserModel extends CoreApiModel
 {
     // Datatables
     protected $columnOrder          = [null, null, 'fullname', 'username', 'email', 'password', 'level', 'last_login', 'created_at', null];
-    protected $columnSearch         = ['fullname', 'username', 'email', 'password', 'level'];
-
+    protected $columnSearch         = ['fullname', 'username', 'email', 'level'];
 
     public function __construct()
     {
         parent::__construct('users');
+    }
+
+    public function updatePassword($id, $newPass) : bool {
+        $this->defaultBuilder()->set(
+            'password', password_hash($newPass, PASSWORD_BCRYPT)
+        );
+        $this->defaultBuilder()->set('updated_at', Time::now()->toDateTimeString());
+        $this->defaultBuilder()->set('sys_updated_user', $this->authenticatedUser);
+
+        $this->defaultBuilder()->where('id', $id);
+        $result = $this->defaultBuilder()->update();
+
+        return $result;
     }
 
     // public function checkUser(string $username) : ?array {
