@@ -6,7 +6,7 @@ use App\Core\WebController;
 
 class DefaultController extends WebController
 {
-
+    
     public function __construct()
     {
         parent::__construct(dirname(__FILE__));

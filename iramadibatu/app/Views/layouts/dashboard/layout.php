@@ -14,12 +14,12 @@
     <!-- pace-progress -->
     <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/pace-progress/themes/blue/pace-theme-flat-top.css')?>">
 
-    <?php if ($contentIncludeData['sweetalert']): ?>
+    <?php if (in_array('sweetalert', $contentIncludeData)): ?>
         <!-- SweetAlert2 -->
         <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')?>">
     <?php endif; ?>
 
-    <?php if ($contentIncludeData['datatable']): ?>
+    <?php if (in_array('datatable', $contentIncludeData)): ?>
         <!-- DataTables -->
         <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')?>">
         <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')?>">
@@ -90,19 +90,19 @@
     <!-- pace-progress -->
     <script src="<?=site_url('themes/AdminLTE/plugins/pace-progress/pace.min.js')?>"></script>
 
-    <?php if ($contentIncludeData['sweetalert']): ?>
+    <?php if (in_array('sweetalert', $contentIncludeData)): ?>
         <?=$this->include('layouts/dashboard/content_inc/sweetalert_js.php')?>
     <?php endif; ?>
 
-    <?php if ($contentIncludeData['datatable']): ?>
+    <?php if (in_array('datatable', $contentIncludeData)): ?>
         <?=$this->include('layouts/dashboard/content_inc/datatable_js.php')?>
     <?php endif; ?>
 
-    <?php if ($contentIncludeData['select2']): ?>
+    <?php if (in_array('select2', $contentIncludeData)): ?>
         <?=$this->include('layouts/dashboard/content_inc/select2_js.php')?>
     <?php endif; ?>
 
-    <?php if ($contentIncludeData['jquery_validation']): ?>
+    <?php if (in_array('jquery_validation', $contentIncludeData)): ?>
         <?=$this->include('layouts/dashboard/content_inc/jquery_validation_js.php')?>
     <?php endif; ?>
 

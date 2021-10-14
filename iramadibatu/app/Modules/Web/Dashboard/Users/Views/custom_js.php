@@ -1,32 +1,32 @@
 <?=$this->section('custom-js')?>
+
+<script>
+const baseApiUrl = '<?=site_url('api/v1/dashboard/users')?>';
+const datatableColumns = [
+    { "targets": 0, "orderable": false, "searchable": false },
+    { "targets": 1, "orderable": false, "searchable": false },
+    { "targets": 2, "orderable": true, "searchable": true },
+    { "targets": 3, "orderable": false, "searchable": false },
+    { "targets": 4, "orderable": false, "searchable": false },
+    { "targets": 5, "orderable": true, "searchable": true },
+    { "targets": 6, "orderable": false },
+    { "targets": 7, "orderable": false },
+    { "targets": 8, "orderable": false }
+];
+</script>
+
 <script>
 $(function() {
-    $('#checkAll').click(function(e) {
-        if ($(this).is(":checked")) {
-            $('.multi_delete').prop('checked', true);
-        } else {
-            $('.multi_delete').prop('checked', false);
-        }
-    });
-    
     // handles datatable
     const table = $('#data_users').DataTable({
-        // "dom": '<"top"i>rt<"bottom"><"clear">',
         "searching": false,
         "responsive": true,
-        "drawCallback": function(settings) {
-            if ($('#checkAll').is(":checked")) {
-                $('.multi_delete').prop('checked', true);
-            } else {
-                $('.multi_delete').prop('checked', false);
-            }
-        },
         "pageLength": 25,
         "processing": true,
         "serverSide": true,
         "order": [],
-        "ajax": function(data, callback, settings) {
-            const dataUrl = '<?=site_url('api/v1/dashboard/users/datatables')?>';
+        "ajax": function (data, callback, settings) {
+            const dataUrl = baseApiUrl + '/datatables';
 
             $.ajax({
                 type: 'POST',
@@ -44,59 +44,26 @@ $(function() {
                 }
             });
         },
-        "columns": [
-            {
-                "targets": 0,
-                "orderable": false,
-                "searchable": false
-            },
-            {
-                "targets": 1,
-                "orderable": false,
-                "searchable": false
-            },
-            {
-                "targets": 2,
-                "orderable": true,
-                "searchable": true
-            },
-            {
-                "targets": 3,
-                "orderable": false,
-                "searchable": false
-            },
-            {
-                "targets": 4,
-                "orderable": false,
-                "searchable": false
-            },
-            {
-                "targets": 5,
-                "orderable": true,
-                "searchable": true,
-            },
-            {
-                "targets": 6,
-                "orderable": false,
-            },
-            {
-                "targets": 7,
-                "orderable": false,
-            },
-            {
-                "targets": 8,
-                "orderable": false,
+        "columns": datatableColumns,
+        "drawCallback": function(settings) {
+            if ($('#checkAll').is(":checked")) {
+                $('.multi_delete').prop('checked', true);
+            } else {
+                $('.multi_delete').prop('checked', false);
             }
-        ],
+        }
     });
 
+    // multi delete checkboxes
+    $('#checkAll').click(function(e) {
+        if ($(this).is(":checked")) {
+            $('.multi_delete').prop('checked', true);
+        } else {
+            $('.multi_delete').prop('checked', false);
+        }
+    });
 
-
-
-
-    /*************************************************
-    *             START OF HANDLE ADD
-    *************************************************/
+    // handle adding data
     $('#form_add_user').validate({
         submitHandler: function(form, event) {
             event.preventDefault();
@@ -108,16 +75,14 @@ $(function() {
                 "password": $(form).find('input#password').val(),
                 "level": $(form).find('select#level option:selected').val()
             };
-
-            const createUrl = '<?=site_url('api/v1/dashboard/users')?>';
+            
             $.ajax({
                 type: 'POST',
-                url: createUrl,
+                url: baseApiUrl,
                 dataType: 'json',
-                data: newData,
-                headers: {
-                    'Authorization': 'Bearer ' + accessToken
-                },
+                contentType: 'application/json',
+                data: JSON.stringify(newData),
+                headers: { 'Authorization': 'Bearer ' + accessToken, 'X-Requested-With': 'XMLHttpRequest' },
                 success: function(res) {
                     console.log(res);
 
@@ -154,25 +119,12 @@ $(function() {
             });
         },
         rules: { 
-            fullname: {
-                required: true
-            },
-            username: {
-                required: true
-            },
-            email: {
-                required: true
-            },
-            password: {
-                required: true
-            },
-            repassword: {
-                required: true,
-                equalTo: '#password'
-            },
-            level: {
-                required: true
-            },
+            fullname: { required: true },
+            username: { required: true },
+            email: { required: true },
+            password: { required: true },
+            repassword: { required: true, equalTo: '#password' },
+            level: { required: true },
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {
@@ -186,20 +138,14 @@ $(function() {
             $(element).removeClass('is-invalid');
         }
     });
-    /*************************************************
-    *             END OF HANDLE ADD
-    *************************************************/
 
-
-
-
-    /*************************************************
-    *             START OF HANDLE SHOW
-    *************************************************/
-    $('#modal-show-jenis-sarana').on('hidden.bs.modal', function (e) {
+    // reset show modal when the model dismissed
+    $('#modal_show_user').on('hidden.bs.modal', function (e) {
         $('#data-detail').html('');
     })
-    $('#data-jenis-sarana tbody').on('click', 'tr td button.btn-primary', function(e) {
+
+    // show detail modal when detail button clicked
+    $('#data_users tbody').on('click', 'tr td button.btn-primary', function(e) {
         e.preventDefault();
 
         const rowData = table.row($(this).parent().parent()).data();
@@ -207,7 +153,7 @@ $(function() {
         
         $.ajax({
             type: 'GET',
-            url: '<?=site_url('api/v1/dashboard/master/jenis_sarana/')?>'+itemId,
+            url: baseApiUrl+'/'+itemId,
             dataType: 'json',
             headers: {
                 'Authorization': 'Bearer ' + accessToken
@@ -217,16 +163,16 @@ $(function() {
 
                 if (res.data) {
                     for (const [key, value] of Object.entries(res.data)) {
-                        $('#data-detail').append(
-                            `
-                            <dt class="col-sm-4">${key}</dt>
-                            <dd id="show-name" class="col-sm-8">${value == null ? '-' : value}</dd>
-                            `
-                        );
+                        // $('#data_detail').append(
+                        //     `
+                        //     <dt class="col-sm-4">${key}</dt>
+                        //     <dd id="show-name" class="col-sm-8">${value == null ? '-' : value}</dd>
+                        //     `
+                        // );
                     }
                 }
 
-                $('#modal-show-jenis-sarana').modal('toggle');
+                $('#modal_show_user').modal('toggle');
             },
             error: function(err) {
                 console.log(err);
@@ -241,53 +187,15 @@ $(function() {
             }
         });
     });
-    /*************************************************
-    *             END OF HANDLE SHOW
-    *************************************************/
 
-
-
-
-
-
-    /*************************************************
-    *             START OF HANDLE EDIT
-    *************************************************/
-
-    /** edit password */
+    // show edit password modal when password edit button clicked
     $('#data_users tbody').on('click', 'tr td button.btn-warning', function(e) {
         e.preventDefault();
 
-        const rowData = table.row($(this).parent().parent()).data();
-        const itemId = parseInt($(rowData[1].substring(0, rowData[1].indexOf('>')+1)).val());
-
-        // $.ajax({
-        //     type: 'GET',
-        //     url: '<?=site_url('api/v1/dashboard/users/')?>'+itemId+'/change_password',
-        //     dataType: 'json',
-        //     headers: {
-        //         'Authorization': 'Bearer ' + accessToken
-        //     },
-        //     success: function(res) {
-        //         console.log(res);
-
-        //         $('#modal_edit_password_user').modal('toggle');
-        //     },
-        //     error: function(err) {
-        //         console.log(err);
-
-        //         Swal.fire({
-        //             icon: 'error',
-        //             title: 'Gagal ditampilkan!',
-        //             text: err.responseJSON.message,
-        //             showConfirmButton: true,
-        //             timer: 2000
-        //         });
-        //     }
-        // });
+        $('#modal_edit_password_user').modal('toggle');
     });
 
-    /** send edit data to modal edit after this button clicked*/
+    // send edit data to modal edit after this button clicked
     $('#data_users tbody').on('click', 'tr td button.btn-info', function(e) {
         e.preventDefault();
 
@@ -303,29 +211,27 @@ $(function() {
         $('#modal_edit_user').modal('toggle');
     });
 
-    $('#form-edit-merk-sarana').validate({
+    // validate & submit the edit form
+    $('#form_edit_user').validate({
         submitHandler: function(form, event) {
             event.preventDefault();
+
             const itemId = $(form).find('input#edit_id').val();
+
             const updateData = {
                 "fullname": $(form).find('input#edit_fullname').val(),
                 "username": $(form).find('input#edit_username').val(),
                 "email": $(form).find('input#edit_email').val(),
                 "level": $(form).find('select#edit_level option:selected').val()
             };
-            
-            const updateUrl = '<?=site_url('api/v1/dashboard/users/')?>' + itemId + '/update';
 
             $.ajax({
                 type: 'PUT',
-                url: updateUrl,
+                url: baseApiUrl + '/' + itemId + '/update',
                 dataType: 'json',
                 data: JSON.stringify(updateData),
                 contentType: 'application/json',
-                headers: {
-                    'Authorization': 'Bearer ' + accessToken,
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
+                headers: { 'Authorization': 'Bearer ' + accessToken, 'X-Requested-With': 'XMLHttpRequest' },
                 success: function(res) {
                     console.log(res);
 
@@ -355,18 +261,10 @@ $(function() {
             })
         },
         rules: {
-            fullname: {
-                required: true
-            },
-            username: {
-                required: true
-            },
-            email: {
-                required: true
-            },
-            level: {
-                required: true
-            }
+            fullname: { required: true },
+            username: { required: true },
+            email: { required: true },
+            level: { required: true }
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {
@@ -380,15 +278,108 @@ $(function() {
             $(element).removeClass('is-invalid');
         }
     });
-    /** handle form edit submission */
 
-    /*************************************************
-    *             END OF HANDLE EDIT
-    *************************************************/
+    // show confirmation to delete the selected row
+    $('#data_users tbody').on('click', 'tr td button.btn-danger', function(e) {
+        e.preventDefault();
 
-    /** start of delete */
+        const itemId = $(this).data().itemId;
 
-    /** end of delete */
+        Swal.fire({
+            title: 'Anda yakin?',
+            text: `Anda akan menghapus data ini.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: `${baseApiUrl}/${itemId}/delete`,
+                    headers: {
+                        'Authorization': 'Bearer ' + accessToken,
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function(res) {
+                        console.log(res);
+                        Swal.fire(
+                            'Terhapus!',
+                            'Data telah terhapus!',
+                            'success'
+                        )
+                        table.ajax.reload();
+                    },
+                    error: function(err) {
+                        console.log(err.responseJSON);
+                        Swal.fire(
+                            'Gagal!',
+                            'Data gagal terhapus!',
+                            'error'
+                        )
+                    }
+                })
+            }
+        });
+    });
+
+    // show confirmation to delete all selected user
+    $('#btn-delete-multiple').click(function(e) {
+        e.preventDefault();
+
+        const selectedRows = $('.multi_delete:checked');
+        
+        if (selectedRows.length > 0) {
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: `Anda akan menghapus ke-${selectedRows.length} data ini.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Iya, hapus semua!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const ids = [];
+
+                    selectedRows.each(function(index, item) {
+                        ids.push($(item).data().itemId);
+                    });
+
+                    const idsData = {"ids": ids};
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: `${baseApiUrl}/delete/multiple`,
+                        data: JSON.stringify(idsData),
+                        contentType: 'application/json',
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken,
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        success: function(res) {
+                            console.log(res);
+                            Swal.fire(
+                                'Terhapus!',
+                                selectedRows.length + ' data telah terhapus!',
+                                'success'
+                            )
+                            table.ajax.reload();
+                        },
+                        error: function(err) {
+                            console.log(err.responseJSON);
+                            Swal.fire(
+                                'Gagal!',
+                                'Data menghapus '+selectedRows.length+' data!',
+                                'error'
+                            )
+                        }
+                    })
+                }
+            });
+        }
+    });
 });
 </script>
 

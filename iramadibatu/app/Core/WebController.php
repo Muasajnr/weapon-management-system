@@ -34,7 +34,7 @@ class WebController extends BaseController
 
         $data['moduleViewPath'] = implode('\\', $arrPath) . '\\';
         $data['contentIncludeData'] = $this->contentIncludes;
-
+        
         return view($data['moduleViewPath'].$viewName, $data);
     }
 }

@@ -6,6 +6,11 @@ use App\Core\WebController;
 
 class DefaultController extends WebController
 {
+
+    protected $contentIncludes = [
+        'datatable',
+    ];
+
     public function __construct()
     {
         parent::__construct(dirname(__FILE__));

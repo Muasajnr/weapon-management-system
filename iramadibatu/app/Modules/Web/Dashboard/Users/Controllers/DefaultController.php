@@ -7,10 +7,10 @@ use App\Core\WebController;
 class DefaultController extends WebController
 {
     protected $contentIncludes = [
-        'datatable'             => true,
-        'sweetalert'            => true,
-        'select2'               => true,
-        'jquery_validation'     => true
+        'datatable',
+        'sweetalert',
+        'select2',
+        'jquery_validation'
     ];
 
     public function __construct()

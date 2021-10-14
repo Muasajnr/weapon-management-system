@@ -87,7 +87,7 @@ class UserController extends ApiController
                 'password' => 'required',
                 'level' => 'required|in_list[admin,user]',
             ];
-    
+            // print_r($this->request->getVar());die();
             if (!$this->validate($rules))
                 throw new ApiAccessErrorException(
                     'Validation Error!', 
@@ -96,15 +96,16 @@ class UserController extends ApiController
                 );
             
             $data = $this->request->getVar();
-
+            
             $this->userModel->setAuthenticatedUser(
                 $this->request
                     ->header('Logged-User')
                     ->getValue()
             );
 
+            $data = (array) $data;
             $data['password']   = password_hash($data['password'], PASSWORD_BCRYPT);
-            $isAdded = $this->userModel->createData((array) $data);
+            $isAdded = $this->userModel->createData($data);
             if (!$isAdded)
                 throw new ApiAccessErrorException(
                     'Terjadi kesalahan!', 
