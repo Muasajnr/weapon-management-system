@@ -38,7 +38,8 @@ $(function() {
                 dataType: 'json',
                 data: data,
                 headers: {
-                    'Authorization': 'Bearer ' + accessToken
+                    'Authorization': 'Bearer ' + accessToken,
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 success: function(res) {
                     callback(res);
@@ -67,7 +68,8 @@ $(function() {
                 dataType: 'json',
                 data: newData,
                 headers: {
-                    'Authorization': 'Bearer ' + accessToken
+                    'Authorization': 'Bearer ' + accessToken,
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 success: function(res) {
                     console.log(res);
@@ -421,9 +423,7 @@ $(function() {
 
         let searchQuery = $('input#searchQuery').val();
         
-        if (searchQuery !== '') {
-            table.search(searchQuery).draw();
-        }
+        table.search(searchQuery).draw();
     });
 });
 </script>

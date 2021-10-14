@@ -84,13 +84,8 @@ class JenisSaranaController extends ApiController
                 );
             
             $rules = ['name' => 'required', 'desc' => 'required', 'is_active' => 'required'];
-            $messages = [
-                'name' => ['required' => 'name is required'],
-                'desc' => ['required' => 'desc is required'],
-                'is_active' => ['required' => 'is_active is required'],
-            ];
     
-            if (!$this->validate($rules, $messages))
+            if (!$this->validate($rules))
                 throw new ApiAccessErrorException(
                     'Validation Error!', 
                     ResponseInterface::HTTP_UNPROCESSABLE_ENTITY,
@@ -142,9 +137,8 @@ class JenisSaranaController extends ApiController
                 );
             
             $rules      = ['is_active' => 'required'];
-            $messages   = ['is_active' => ['required' => 'is_active is required']];
     
-            if (!$this->validate($rules, $messages))
+            if (!$this->validate($rules))
                 throw new ApiAccessErrorException(
                     'Validation Error!', 
                     ResponseInterface::HTTP_UNPROCESSABLE_ENTITY,
@@ -297,11 +291,8 @@ class JenisSaranaController extends ApiController
                 );
         
             $rules      = ['ids' => 'required'];
-            $messages   = [
-                'ids' => ['required' => 'ids is required']
-            ];
             
-            if (!$this->validate($rules, $messages))
+            if (!$this->validate($rules))
                 throw new ApiAccessErrorException(
                     'Validation Error!', 
                     ResponseInterface::HTTP_UNPROCESSABLE_ENTITY,

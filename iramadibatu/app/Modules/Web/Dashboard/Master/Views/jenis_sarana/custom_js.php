@@ -1,33 +1,9 @@
 <?=$this->section('custom-js')?>
-
-<!-- DataTables  & Plugins -->
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables/jquery.dataTables.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/js/buttons.html5.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/js/buttons.print.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js')?>"></script>
-
-<!-- jquery-validation -->
-<script src="<?=site_url('themes/AdminLTE/plugins/jquery-validation/jquery.validate.min.js')?>"></script>
-<script src="<?=site_url('themes/AdminLTE/plugins/jquery-validation/additional-methods.min.js')?>"></script>
-
 <script>
 $(function() {
-    // checkAll
-    $('#checkAll').click(function(e) {
-        if ($(this).is(":checked")) {
-            $('.multi_delete').prop('checked', true);
-        } else {
-            $('.multi_delete').prop('checked', false);
-        }
-    });
-
+    const baseUrl = '<?=site_url('api/v1/dashboard/master/jenis_sarana')?>';
     // handles datatable
-    const table = $('#data-jenis-sarana').DataTable({
+    const table = $('#data_jenis_sarana').DataTable({
         "responsive": true,
         "drawCallback": function(settings) {
             if ($('#checkAll').is(":checked")) {
@@ -40,88 +16,31 @@ $(function() {
         "serverSide": true,
         "order": [],
         "ajax": function(data, callback, settings) {
-            const dataUrl = '<?=site_url('api/v1/dashboard/master/jenis_sarana/datatables')?>';
-
             $.ajax({
                 type: 'POST',
-                url: dataUrl,
+                url: `${baseUrl}/datatables`,
                 dataType: 'json',
                 data: data,
-                headers: {
-                    'Authorization': 'Bearer ' + accessToken
-                },
-                success: function(res) {
-                    callback(res);
-                },
-                error: function(err) {
-                    console.log(err);
-                }
+                headers: { 'Authorization': 'Bearer ' + accessToken, 'X-Requested-With': 'XMLHttpRequest' },
+                success: function(res) { callback(res); },
+                error: function(err) { console.log(err); }
             });
         },
         "columns": [
-            {
-                "targets": 0,
-                "orderable": false,
-                "searchable": false
-            },
-            {
-                "targets": 1,
-                "orderable": false,
-                "searchable": false
-            },
-            {
-                "targets": 2,
-                "orderable": true,
-                "searchable": true
-            },
-            {
-                "targets": 3,
-                "orderable": false,
-                "searchable": false
-            },
-            {
-                "targets": 4,
-                "orderable": false,
-                "searchable": false
-            },
-            {
-                "targets": 5,
-                "orderable": true,
-                "searchable": true,
-            },
-            {
-                "targets": 6,
-                "orderable": false,
-            }
+            { "targets": 0, "orderable": false, "searchable": false },
+            { "targets": 1, "orderable": false, "searchable": false },
+            { "targets": 2, "orderable": true, "searchable": true },
+            { "targets": 3, "orderable": true, "searchable": true },
+            { "targets": 4, "orderable": false, "searchable": false },
+            { "targets": 5, "orderable": true, "searchable": true },
+            { "targets": 6, "orderable": false }
         ],
     });
 
-    /*************************************************
-    *             START OF HANDLE CREATE
-    *************************************************/
-
-    // if ($('#form_added_data').find('tbody').children().length == 0) {
-    //     $('#form_added_data').append(`<tr><td class="text-center" colspan="5">tidak ada data.</td></tr>`);
-    // }
-    // let addedData = [];
-
-    // $('#form_added_data tbody').on('click', 'tr td button.btn-danger', function(e) {
-    //     e.preventDefault();
-
-    //     if ($(this).parent().parent().parent().children().length == 1) {
-    //         $(this).parent().parent().parent().append(`<tr><td class="text-center" colspan="5">tidak ada data.</td></tr>`);
-    //     }
-
-    //     $(this).parent().parent().remove();
-    // });
-
-    $('#form-add-jenis-sarana').validate({
+    // validate & submit new jenis sarana
+    $('#form_add_jenis_sarana').validate({
         submitHandler: function(form, event) {
             event.preventDefault();
-
-            // if ($($('#form_added_data').find('tbody').children()[0]).children().length == 1) {
-            //     $('#form_added_data').find('tbody').empty();
-            // }
             
             const newData = {
                 "name": $(form).find('input#name').val(),
@@ -129,33 +48,14 @@ $(function() {
                 "is_active": $(form).find('input#is_active').is(':checked') ? 1 : 0
             };
 
-            // let number = $('#form_added_data').find('tbody').children().length;
-            // $('#form_added_data tbody').append(
-            //     `
-            //     <tr>
-            //         <td>${number+1}.</td>
-            //         <td>${newData.name}</td>
-            //         <td>${newData.desc}</td>
-            //         <td>${newData.is_active ? 'Aktif' : 'Tidak Aktif'}</td>
-            //         <td class="text-center"><button type="button" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button></td>
-            //     </tr>
-            //     `
-            // );
-
-            // addedData.push(newData);
-
-            // console.log(addedData);
-            // console.log(newData)
-            // return;
-
-            const createUrl = '<?=site_url('api/v1/dashboard/master/jenis_sarana')?>';
             $.ajax({
                 type: 'POST',
-                url: createUrl,
+                url: baseUrl,
                 dataType: 'json',
                 data: newData,
                 headers: {
-                    'Authorization': 'Bearer ' + accessToken
+                    'Authorization': 'Bearer ' + accessToken,
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 success: function(res) {
                     console.log(res);
@@ -168,7 +68,7 @@ $(function() {
                     });
 
                     setTimeout(() => {
-                        $('#modal-add-jenis-sarana').modal('toggle');
+                        $('#modal_add_jenis_sarana').modal('toggle');
 
                         $(form).find('input#name').val('');
                         $(form).find('textarea#desc').val('');
@@ -191,20 +91,8 @@ $(function() {
             });
         },
         rules: { 
-            name: {
-                required: true
-            },
-            desc: {
-                required: true
-            }
-        },
-        messages: {
-            name: {
-                required: 'Nama tidak boleh kosong!'
-            },
-            desc: {
-                required: 'Deskripsi tidak boleh kosong!'
-            },
+            name: { required: true },
+            desc: { required: true }
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {
@@ -219,39 +107,13 @@ $(function() {
         }
     });
 
-    // $('#form_add_jenis_inventaris').find('#section-table-added').hide();
-    // $('#form_add_jenis_inventaris').find('#btn-submit-all').hide();
-    // $('input#is_single_insert').on('change', function(e) {
-    //     if ($(this).is(':checked')) {
-    //         $('#form_add_jenis_inventaris').find('#section-table-added').show();
-    //         $('#form_add_jenis_inventaris').find('#btn-submit-all').show();
-    //         $(this).next().text('Multi-Insert');
-    //     } else {
-    //         $('#form_add_jenis_inventaris').find('#section-table-added').hide();
-    //         $('#form_add_jenis_inventaris').find('#btn-submit-all').hide();
-    //         $(this).next().text('Single-Insert');
-    //     }
-    // });
-
-    // $('#btn-submit-all').click(function(e) {
-    //     e.preventDefault();
-
-    //     console.log('clicked');
-    // });
-    
-    /*************************************************
-    *             END OF HANDLE CREATE
-    *************************************************/
-
-
-
-    /*************************************************
-    *             START OF HANDLE SHOW
-    *************************************************/
-    $('#modal-show-jenis-sarana').on('hidden.bs.modal', function (e) {
+    // clean show modal when it closed
+    $('#modal_show_jenis_sarana').on('hidden.bs.modal', function (e) {
         $('#data-detail').html('');
     })
-    $('#data-jenis-sarana tbody').on('click', 'tr td button.btn-primary', function(e) {
+
+    // show detail modal
+    $('#data_jenis_sarana tbody').on('click', 'tr td button.btn-primary', function(e) {
         e.preventDefault();
 
         const rowData = table.row($(this).parent().parent()).data();
@@ -259,7 +121,7 @@ $(function() {
         
         $.ajax({
             type: 'GET',
-            url: '<?=site_url('api/v1/dashboard/master/jenis_sarana/')?>'+itemId,
+            url: `${baseUrl}/${itemId}`,
             dataType: 'json',
             headers: {
                 'Authorization': 'Bearer ' + accessToken
@@ -269,7 +131,7 @@ $(function() {
 
                 if (res.data) {
                     for (const [key, value] of Object.entries(res.data)) {
-                        $('#data-detail').append(
+                        $('#data_detail').append(
                             `
                             <dt class="col-sm-4">${key}</dt>
                             <dd id="show-name" class="col-sm-8">${value == null ? '-' : value}</dd>
@@ -278,7 +140,7 @@ $(function() {
                     }
                 }
 
-                $('#modal-show-jenis-sarana').modal('toggle');
+                $('#modal_show_jenis_sarana').modal('toggle');
             },
             error: function(err) {
                 console.log(err);
@@ -293,30 +155,9 @@ $(function() {
             }
         });
     });
-    /*************************************************
-    *             END OF HANDLE SHOW
-    *************************************************/
 
-
-
-    /*************************************************
-    *             START OF HANDLE EDIT
-    *************************************************/
-    $('#data-jenis-sarana tbody').on('click', 'tr td button.btn-info', function(e) {
-        e.preventDefault();
-
-        const itemId = $(this).data().itemId;
-        const rowData = table.row($(this).parent().parent()).data();
-
-        $('#edit_id').val(parseInt($(rowData[1].substring(0, rowData[1].indexOf('>')+1)).val()));
-        $('#edit_name').val(rowData[2]);
-        $('#edit_desc').val(rowData[3]);
-        $('#edit_is_active').prop('checked', $(rowData[4]).find('input').is(':checked'));
-
-        $('#modal-edit-jenis-sarana').modal('toggle');
-    });
-
-    $('#data-jenis-sarana tbody').on('change', 'tr input[type="checkbox"][name="is_active"]', function(e) {
+    // change status value
+    $('#data_jenis_sarana tbody').on('change', 'tr input[type="checkbox"][name="is_active"]', function(e) {
         e.preventDefault();
         
         const checkedValue = this.checked;
@@ -373,7 +214,23 @@ $(function() {
         });
     });
 
-    $('#form-edit-jenis-sarana').validate({
+    // set the value for edit modal
+    $('#data_jenis_sarana tbody').on('click', 'tr td button.btn-info', function(e) {
+        e.preventDefault();
+
+        const itemId = $(this).data().itemId;
+        const rowData = table.row($(this).parent().parent()).data();
+
+        $('#edit_id').val(parseInt($(rowData[1].substring(0, rowData[1].indexOf('>')+1)).val()));
+        $('#edit_name').val(rowData[2]);
+        $('#edit_desc').val(rowData[3]);
+        $('#edit_is_active').prop('checked', $(rowData[4]).find('input').is(':checked'));
+
+        $('#modal_edit_jenis_sarana').modal('toggle');
+    });
+
+    // validate & submit the changes
+    $('#form_edit_jenis_sarana').validate({
         submitHandler: function(form, event) {
             event.preventDefault();
             const itemId = $(form).find('input#edit_id').val();
@@ -382,12 +239,10 @@ $(function() {
                 "desc": $(form).find('textarea#edit_desc').val(),
                 "is_active": $(form).find('input#edit_is_active').is(':checked') ? 1 : 0
             };
-            
-            const updateUrl = '<?=site_url('api/v1/dashboard/master/jenis_sarana/')?>' + itemId + '/update';
 
             $.ajax({
                 type: 'PUT',
-                url: updateUrl,
+                url: `${baseUrl}/${itemId}/update`,
                 dataType: 'json',
                 data: JSON.stringify(updateData),
                 contentType: 'application/json',
@@ -406,7 +261,7 @@ $(function() {
                     });
 
                     setTimeout(() => {
-                        $('#modal-edit-jenis-sarana').modal('toggle');
+                        $('#modal_edit_jenis_sarana').modal('toggle');
                         table.ajax.reload();
                     }, 2000);
                 },
@@ -451,15 +306,9 @@ $(function() {
             $(element).removeClass('is-invalid');
         }
     });
-    /*************************************************
-    *             END OF HANDLE EDIT
-    *************************************************/
 
-    /*************************************************
-    *             START OF HANDLE DELETE
-    *************************************************/
-    /** start of delete stuff */
-    $('#data-jenis-sarana tbody').on('click', 'tr td button.btn-danger', function(e) {
+    // delete a single row
+    $('#data_jenis_sarana tbody').on('click', 'tr td button.btn-danger', function(e) {
         e.preventDefault();
 
         const itemId = $(this).data().itemId;
@@ -474,11 +323,9 @@ $(function() {
             confirmButtonText: 'Iya, hapus!'
         }).then((result) => {
             if (result.isConfirmed) {
-                const deleteUrl = '<?=site_url('api/v1/dashboard/master/jenis_sarana/')?>' + itemId + '/delete';
-
                 $.ajax({
                     type: 'DELETE',
-                    url: deleteUrl,
+                    url: `${baseUrl}/${itemId}/delete`,
                     headers: {
                         'Authorization': 'Bearer ' + accessToken
                     },
@@ -504,6 +351,16 @@ $(function() {
         });
     });
 
+    // checkAll
+    $('#checkAll').click(function(e) {
+        if ($(this).is(":checked")) {
+            $('.multi_delete').prop('checked', true);
+        } else {
+            $('.multi_delete').prop('checked', false);
+        }
+    });
+
+    // delete multiple rows
     $('#btn-delete-multiple').click(function(e) {
         e.preventDefault();
 
@@ -520,7 +377,6 @@ $(function() {
                 confirmButtonText: 'Iya, hapus semua!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const deleteUrl = '<?=site_url('api/v1/dashboard/master/jenis_sarana/delete/multiple')?>';
                     const ids = [];
 
                     selectedRows.each(function(index, item) {
@@ -531,7 +387,7 @@ $(function() {
 
                     $.ajax({
                         type: 'DELETE',
-                        url: deleteUrl,
+                        url: `${baseUrl}/delete/multiple`,
                         data: JSON.stringify(idsData),
                         contentType: 'application/json',
                         headers: {
@@ -559,9 +415,15 @@ $(function() {
             });
         }
     });
-    /*************************************************
-    *             END OF HANDLE DELETE
-    *************************************************/
+
+    // fitler data
+    $('#filter_data').submit(function(e) {
+        e.preventDefault();
+
+        let searchQuery = $('input#searchQuery').val();
+        
+        table.search(searchQuery).draw();
+    });
 });
 </script>
 <?=$this->endSection()?>

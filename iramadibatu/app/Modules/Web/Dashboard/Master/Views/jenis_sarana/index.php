@@ -36,7 +36,7 @@
             <div class="col-12">
                 <div class="card card-outline card-primary">
                     <div class="card-header">
-                        <button type="button" class="btn btn-primary btn-xs mr-2" data-toggle="modal" data-target="#modal-add-jenis-sarana">
+                        <button type="button" class="btn btn-primary btn-xs mr-2" data-toggle="modal" data-target="#modal_add_jenis_sarana">
                             <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Data
                         </button>
                         <button type="button" class="btn btn-danger btn-xs" id="btn-delete-multiple">
@@ -45,7 +45,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="data-jenis-sarana" class="table table-bordered table-hover table-sm" width="100%">
+                        <table id="data_jenis_sarana" class="table table-bordered table-hover table-sm" width="100%">
                             <thead>
                                 <tr>
                                     <th><div class="text-center"><input id="checkAll" type="checkbox" name="multi_delete"></div></th>
