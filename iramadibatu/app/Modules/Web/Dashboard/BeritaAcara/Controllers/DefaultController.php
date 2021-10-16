@@ -36,4 +36,19 @@ class DefaultController extends WebController
             ]
         ]);
     }
+
+    public function show($id)
+    {
+        return $this->renderView('show', [
+            'page_title'        => 'Detail Berita Acara',
+            'page_header_title' => 'Detail Berita Acara',
+            'pages_path'        => [
+                'berita acara' => [
+                    'url'       => '',
+                    'active'    => true
+                ],
+            ],
+            'id_berita_acara'   => $id,
+        ]);
+    }
 }

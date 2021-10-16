@@ -7,6 +7,8 @@ use CodeIgniter\I18n\Time;
 
 class BeritaAcaraModel extends CoreApiModel
 {
+    protected $columnOrder          = ['berita_acara.nomor', 'berita_acara.nama', 'berita_acara.tanggal', 'berita_acara.created_at'];
+    protected $columnSearch         = ['berita_acara.nomor', 'berita_acara.nama', 'berita_acara.tanggal', 'berita_acara.created_at'];
     
     public function __construct()
     {
@@ -33,11 +35,15 @@ class BeritaAcaraModel extends CoreApiModel
             pihak_1.nip as pihak_1_nip,
             pihak_2.nama as pihak_2_nama,
             pihak_2.nip as pihak_2_nip,
+
+            media.file_full_path as media_file_full_path,
+            media.file_extension as media_file_extension
             '
         );
 
         $this->defaultBuilder()->join('penanggung_jawab as pihak_1', 'berita_acara.id_pihak_1 = pihak_1.id', 'left');
         $this->defaultBuilder()->join('penanggung_jawab as pihak_2', 'berita_acara.id_pihak_2 = pihak_2.id', 'left');
+        $this->defaultBuilder()->join('media', 'media.id = berita_acara.id_media', 'left');
 
         foreach($this->columnSearch as $column) {
             if (isset($dtParams['search'])) {
@@ -142,5 +148,31 @@ class BeritaAcaraModel extends CoreApiModel
         $result = $this->builder('media')
                         ->insert($data);
         return $getId ? $this->db->insertID() : $result;
+    }
+
+    public function getBeritaAcara($id)
+    {
+        $this->defaultBuilder()->select(
+            '
+            berita_acara.*,
+
+            pihak_1.nama as pihak_1_nama,
+            pihak_1.nip as pihak_1_nip,
+            pihak_2.nama as pihak_2_nama,
+            pihak_2.nip as pihak_2_nip,
+
+            media.file_full_path as media_file_full_path,
+            media.file_extension as media_file_extension
+            '
+        );
+
+        $this->defaultBuilder()->join('media', 'media.id = berita_acara.id_media', 'left');
+        $this->defaultBuilder()->join('penanggung_jawab as pihak_1', 'berita_acara.id_pihak_1 = pihak_1.id', 'left');
+        $this->defaultBuilder()->join('penanggung_jawab as pihak_2', 'berita_acara.id_pihak_2 = pihak_2.id', 'left');
+
+        $this->defaultBuilder()->where('berita_acara.deleted_at', null);
+        $this->defaultBuilder()->where('berita_acara.id', $id);
+
+        return $this->defaultBuilder()->get()->getRowArray();
     }
 }

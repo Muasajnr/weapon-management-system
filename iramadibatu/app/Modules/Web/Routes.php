@@ -33,6 +33,7 @@ $routes->group('dashboard', ['namespace' => '\App\Modules\Web\\'], function($rou
     
     $routes->group('berita_acara', function($routes) {
         $routes->get('list', 'Dashboard\BeritaAcara\Controllers\DefaultController::index', ['as' => 'berita_acara']);
+        $routes->get('(:segment)/detail', 'Dashboard\BeritaAcara\Controllers\DefaultController::show/$1', ['as' => 'berita_acara_detail']);
         $routes->get('penanggung_jawab', 'Dashboard\BeritaAcara\Controllers\PenanggungJawabController::list', ['as' => 'penanggung_jawab']);
     });
 

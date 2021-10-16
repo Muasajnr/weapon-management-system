@@ -1,9 +1,15 @@
 <?=$this->section('custom-js')?>
 <script>
 $(function() {
+    const baseApiUrl = '<?=site_url('api/v1/dashboard/berita_acara')?>';
+
     bsCustomFileInput.init()
 
     $('#tanggal').datetimepicker({
+        format: 'YYYY-MM-DD'
+    });
+
+    $('#edit_tanggal').datetimepicker({
         format: 'YYYY-MM-DD'
     });
 
@@ -13,8 +19,9 @@ $(function() {
     const currYear = dateObj.getFullYear();
     const nowTime = currYear + '-' + currMonth + '-' + currDate;
     $('#tanggal').find('input[name="tanggal"]').val(nowTime);
+    $('#edit_tanggal').find('input[name="edit_tanggal"]').val(nowTime);
 
-    /** datatable */
+    // datatable
     const table = $('#data-berita-acara').DataTable({
         "pageLength": 25,
         "responsive": true,
@@ -48,77 +55,154 @@ $(function() {
             });
         },
         "columns": [
-            {
-                "targets": 0,
-                "orderable": false,
-                "searchable": false
-            },
-            {
-                "targets": 1,
-                "orderable": false,
-                "searchable": false
-            },
-            {
-                "targets": 2,
-                "orderable": true,
-                "searchable": true
-            },
-            {
-                "targets": 3,
-                "orderable": false,
-                "searchable": false
-            },
-            {
-                "targets": 4,
-                "orderable": false,
-                "searchable": false
-            },
-            {
-                "targets": 5,
-                "orderable": true,
-                "searchable": true,
-            },
-            {
-                "targets": 6,
-                "orderable": false,
-            },
-            {
-                "targets": 7,
-                "orderable": false,
-            },
-            {
-                "targets": 8,
-                "orderable": false,
-            }
+            { "targets": 0, "orderable": false, "searchable": false },
+            { "targets": 1, "orderable": false, "searchable": false },
+            { "targets": 2, "orderable": true, "searchable": true },
+            { "targets": 3, "orderable": true, "searchable": true },
+            { "targets": 4, "orderable": false, "searchable": false },
+            { "targets": 5, "orderable": false, "searchable": false },
+            { "targets": 6, "orderable": true, "searchable": true },
+            { "targets": 7, "orderable": false },
+            { "targets": 8, "orderable": false }
         ],
     });
 
-    /** start of add */
+    // load all penanggung_jawab data to select2 pihak 1
+    $('#select2-data-pihak-1').select2({
+        placeholder: 'Pilih Pihak 1',
+        theme: 'bootstrap4',
+        escapeMarkup: function (markup) { return markup; },
+        ajax: {
+            url: `${baseApiUrl}/penanggung_jawab`,
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            dataType: 'json',
+            cache: true,
+            processResults: function(data, params) {
+                const results = [];
+                data.data.forEach(function(item) {
+                    results.push({
+                        text: `<strong>${item.nip}</strong> - ${item.nama}`,
+                        id: item.id
+                    });
+                });
+
+                return {
+                    results: results
+                }
+            }
+        }
+    });
+
+    // load all penanggung_jawab data to select2 pihak 2
+    $('#select2-data-pihak-2').select2({
+        placeholder: 'Pilih Pihak 2',
+        theme: 'bootstrap4',
+        escapeMarkup: function (markup) { return markup; },
+        ajax: {
+            url: `${baseApiUrl}/penanggung_jawab`,
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            dataType: 'json',
+            cache: true,
+            processResults: function(data, params) {
+                const results = [];
+                data.data.forEach(function(item) {
+                    results.push({
+                        text: `<strong>${item.nip}</strong> - ${item.nama}`,
+                        id: item.id
+                    });
+                });
+
+                return {
+                    results: results
+                }
+            }
+        }
+    });
+
+    // load all penanggung_jawab data to select2 pihak 1 edit
+    $('#select2-data-pihak-1-edit').select2({
+        placeholder: 'Pilih Pihak 1',
+        theme: 'bootstrap4',
+        escapeMarkup: function (markup) { return markup; },
+        ajax: {
+            url: `${baseApiUrl}/penanggung_jawab`,
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            dataType: 'json',
+            cache: true,
+            processResults: function(data, params) {
+                const results = [];
+                data.data.forEach(function(item) {
+                    results.push({
+                        text: `<strong>${item.nip}</strong> - ${item.nama}`,
+                        id: item.id
+                    });
+                });
+
+                return {
+                    results: results
+                }
+            }
+        }
+    });
+
+    // load all penanggung_jawab data to select2 pihak 2 edit
+    $('#select2-data-pihak-2-edit').select2({
+        placeholder: 'Pilih Pihak 2',
+        theme: 'bootstrap4',
+        escapeMarkup: function (markup) { return markup; },
+        ajax: {
+            url: `${baseApiUrl}/penanggung_jawab`,
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            dataType: 'json',
+            cache: true,
+            processResults: function(data, params) {
+                const results = [];
+                data.data.forEach(function(item) {
+                    results.push({
+                        text: `<strong>${item.nip}</strong> - ${item.nama}`,
+                        id: item.id
+                    });
+                });
+
+                return {
+                    results: results
+                }
+            }
+        }
+    });
+
+    // handle adding data
     $('#form-add-berita-acara').validate({
         submitHandler: function(form, event) {
             event.preventDefault();
 
-            const berita_acara = new FormData();
-            berita_acara.append('nomor', $(form).find('input#nomor').val());
-            berita_acara.append('judul', $(form).find('input#judul').val());
-            berita_acara.append('tanggal', $(form).find('#tanggal input[name="tanggal"]').val());
-            berita_acara.append('pihak_1_nama', $(form).find('input#pihak_1_nama').val());
-            berita_acara.append('pihak_2_nama', $(form).find('input#pihak_2_nama').val());
-            berita_acara.append('pihak_1_nip', $(form).find('input#pihak_1_nip').val());
-            berita_acara.append('pihak_2_nip', $(form).find('input#pihak_2_nip').val());
-            berita_acara.append('pihak_1_pangkat', $(form).find('input#pihak_1_pangkat').val());
-            berita_acara.append('pihak_2_pangkat', $(form).find('input#pihak_2_pangkat').val());
-            berita_acara.append('pihak_1_jabatan', $(form).find('input#pihak_1_jabatan').val());
-            berita_acara.append('pihak_2_jabatan', $(form).find('input#pihak_2_jabatan').val());
-            berita_acara.append('media', $(form).find('#media').get(0).files[0]);
-            berita_acara.append('keterangan', $(form).find('textarea#keterangan').val());
+            const beritaAcara = new FormData();
+            beritaAcara.append('nama', $(form).find('input#nama').val());
+            beritaAcara.append('nomor', $(form).find('input#nomor').val());
+            beritaAcara.append('tanggal', $(form).find('#tanggal input[name="tanggal"]').val());
+            beritaAcara.append('id_pihak_1', $(form).find('#select2-data-pihak-1 option:selected').val());
+            beritaAcara.append('id_pihak_2', $(form).find('#select2-data-pihak-2 option:selected').val());
+            beritaAcara.append('media', $(form).find('#media').get(0).files[0]);
+            beritaAcara.append('keterangan', $(form).find('textarea#keterangan').val());
 
-            // berita_acara.forEach(function(key, val) {
-            //     console.log(key + ' => ' + val);
+            // beritaAcara.forEach(function(value, index) {
+            //     console.log(index + ' => ' + value);
             // });
 
             // return;
-            if ((newDoc.get('media').size / 1000) > 1600) {
+            if ((beritaAcara.get('media').size / 1000) > 1600) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Terjadi error!',
@@ -131,15 +215,16 @@ $(function() {
 
             $.ajax({
                 type: 'POST',
-                url: '<?=site_url('api/v1/dashboard/berita_acara')?>',
-                data: berita_acara,
+                url: baseApiUrl,
+                data: beritaAcara,
                 dataType: 'json',
                 mimeType: 'multipart/form-data',
                 contentType: false,
                 cache: false,
                 processData: false,
                 headers: {
-                    'Authorization': 'Bearer ' + accessToken
+                    'Authorization': 'Bearer ' + accessToken,
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 success: function(res) {
                     console.log(res);
@@ -167,77 +252,14 @@ $(function() {
             });
         },
         rules: {
-            nomor: {
-                required: true
-            },
-            judul: {
-                required: true
-            },
-            tanggal: {
-                required: true
-            },
-            pihak_1_nama: {
-                required: true
-            },
-            pihak_2_nama: {
-                required: true
-            },
-            pihak_1_nip: {
-                required: true
-            },
-            pihak_2_nip: {
-                required: true
-            },
-            pihak_1_pangkat: {
-                required: true
-            },
-            pihak_2_pangkat: {
-                required: true
-            },
-            pihak_1_jabatan: {
-                required: true
-            },
-            pihak_2_jabatan: {
-                required: true
-            },
+            nomor: { required: true },
+            nama: { required: true },
+            tanggal: { required: true },
+            pihak_1: { required: true },
+            pihak_2: { required: true },
             media: {
                 accept: 'image/png,image/jpeg,application/pdf'
             }
-        },
-        messages: {
-            nomor: {
-                required: 'Nomor berita acara tidak boleh kosong!'
-            },
-            judul: {
-                required: 'Judul tidak boleh kosong!'
-            },
-            tanggal: {
-                required: 'Tanggal harus diisi!'
-            },
-            pihak_1_nama: {
-                required: 'Nama pihak 1 tidak boleh kosong!'
-            },
-            pihak_2_nama: {
-                required: 'Nama pihak 2 tidak boleh kosong!'
-            },
-            pihak_1_nip: {
-                required: 'Nip pihak 1 tidak boleh kosong!'
-            },
-            pihak_2_nip: {
-                required: 'Nip pihak 1 tidak boleh kosong!'
-            },
-            pihak_1_pangkat: {
-                required: 'Pangkat/Golongan pihak 1 tidak boleh kosong!'
-            },
-            pihak_2_pangkat: {
-                required: 'Pangkat/Golongan pihak 1 tidak boleh kosong!'
-            },
-            pihak_1_jabatan: {
-                required: 'Jabatan pihak 1 tidak boleh kosong!'
-            },
-            pihak_2_jabatan: {
-                required: 'Jabatan pihak 1 tidak boleh kosong!'
-            },
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {
@@ -251,63 +273,89 @@ $(function() {
             $(element).removeClass('is-invalid');
         }
     });
-    /** end of add */
 
-    /** start of edit */
+    // set data to modal edit when clicked
     $('#data-berita-acara tbody').on('click', 'tr td button.btn-info', function(e) {
         e.preventDefault();
 
         const rowData = table.row($(this).parent().parent()).data();
-        const itemId = parseInt($(rowData[1].substring(0, rowData[1].indexOf('>')+1)).val());
-        
-        $.ajax({
-            type: 'GET',
-            url: '<?=site_url('api/v1/dashboard/berita_acara/')?>'+itemId,
-            dataType: 'json',
-            headers: {
-                'Authorization': 'Bearer ' + accessToken
-            },
-            success: function(res) {
-                console.log(res);
+        const itemId = parseInt($(rowData[1]).find('input[name="id"]').val());
+        const keterangan = $(rowData[1]).find('input[name="keterangan"]').val();
+        const idPihak1 = $(rowData[1]).find('input[name="id_pihak_1"]').val();
+        const idPihak1Nama = $(rowData[1]).find('input[name="id_pihak_1_nama"]').val();
+        const idPihak1Nip = $(rowData[1]).find('input[name="id_pihak_1_nip"]').val();
+        const idPihak2 = $(rowData[1]).find('input[name="id_pihak_2"]').val();
+        const idPihak2Nama = $(rowData[1]).find('input[name="id_pihak_2_nama"]').val();
+        const idPihak2Nip = $(rowData[1]).find('input[name="id_pihak_2_nip"]').val();
 
-                if (res.data) {
-                    
-                }
+        const mediaFileFullPath = $(rowData[1]).find('input[name="media_file_full_path"]').val();
+        const mediaFileExtension = $(rowData[1]).find('input[name="media_file_extension"]').val();
 
-                $('#modal_edit_berita_acara').modal('toggle');
-            },
-            error: function(err) {
-                console.log(err);
-
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Data gagal ditampilkan!',
-                    text: err.responseJSON.message,
-                    showConfirmButton: true,
-                    timer: 2000
-                });
-            }
+        $('input#edit_id').val(itemId);
+        $('input#edit_nomor').val(rowData[2]);
+        $('input#edit_nama').val(rowData[3]);
+        $('#edit_tanggal input').val(rowData[4]);
+        $("select#select2-data-pihak-1-edit").select2("trigger", "select", {
+            data: { id: idPihak1, text: `<strong>${idPihak1Nip}</strong> - ${idPihak1Nama}` }
         });
+        $("select#select2-data-pihak-2-edit").select2("trigger", "select", {
+            data: { id: idPihak1, text: `<strong>${idPihak2Nip}</strong> - ${idPihak2Nama}` }
+        });
+        $('textarea#edit_keterangan').val(keterangan);
+        $('#modal_edit_berita_acara .col-6 .media-area').html(
+            mediaFileExtension == 'pdf' ? 
+            `
+                <embed src="<?=site_url()?>/${mediaFileFullPath}" type="application/pdf" width="100%" height="400">
+            `
+            : 
+            `
+                <img src="<?=site_url()?>/${mediaFileFullPath}" alt="${rowData[3]}" width="100%">
+            `
+        );
+        $('#modal_edit_berita_acara').modal('toggle');
     });
 
+    // handle editing data
     $('#form_edit_berita_acara').validate({
         submitHandler: function(form, event) {
             event.preventDefault();
+
             const itemId = $(form).find('input#edit_id').val();
-            const updateData = {
-                "name": $(form).find('input#edit_name').val(),
-                "desc": $(form).find('textarea#edit_desc').val(),
-                "is_active": $(form).find('input#edit_is_active').is(':checked') ? 1 : 0
-            };
+
+            const editedBeritaAcara = new FormData();
+            editedBeritaAcara.append('nama', $(form).find('input#edit_nama').val());
+            editedBeritaAcara.append('nomor', $(form).find('input#edit_nomor').val());
+            editedBeritaAcara.append('tanggal', $(form).find('#edit_tanggal input[name="edit_tanggal"]').val());
+            editedBeritaAcara.append('id_pihak_1', $(form).find('select#select2-data-pihak-1-edit option:selected').val());
+            editedBeritaAcara.append('id_pihak_2', $(form).find('select#select2-data-pihak-2-edit option:selected').val());
+            editedBeritaAcara.append('media', $(form).find('#edit_media').get(0).files[0]);
+            editedBeritaAcara.append('keterangan', $(form).find('textarea#edit_keterangan').val());
             
-            const updateUrl = '<?=site_url('api/v1/dashboard/master/merk_sarana/')?>' + itemId + '/update';
+            editedBeritaAcara.forEach(function(value, index) {
+                console.log(index + ' => ' + value);
+            });
+
+            if ((editedBeritaAcara.get('media').size / 1000) > 1600) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Terjadi error!',
+                    text: 'Ukuran file terlalu besar!',
+                    showConfirmButton: true,
+                    timer: 2000
+                });
+                return;
+            }
 
             $.ajax({
-                type: 'PUT',
-                url: updateUrl,
+                type: 'POST',
+                url: `${baseApiUrl}/${itemId}/update`,
                 dataType: 'json',
-                data: JSON.stringify(updateData),
+                data: editedBeritaAcara,
                 contentType: 'application/json',
+                mimeType: 'multipart/form-data',
+                contentType: false,
+                cache: false,
+                processData: false,
                 headers: {
                     'Authorization': 'Bearer ' + accessToken,
                     'X-Requested-With': 'XMLHttpRequest'
@@ -323,7 +371,7 @@ $(function() {
                     });
 
                     setTimeout(() => {
-                        $('#modal-edit-merk-sarana').modal('toggle');
+                        $('#modal_edit_berita_acara').modal('toggle');
                         table.ajax.reload();
                     }, 2000);
                 },
@@ -341,80 +389,14 @@ $(function() {
             })
         },
         rules: {
-            nomor: {
-                required: true
-            },
-            judul: {
-                required: true
-            },
-            tanggal: {
-                required: true
-            },
-            pihak_1_nama: {
-                required: true
-            },
-            pihak_2_nama: {
-                required: true
-            },
-            pihak_1_nip: {
-                required: true
-            },
-            pihak_2_nip: {
-                required: true
-            },
-            pihak_1_pangkat: {
-                required: true
-            },
-            pihak_2_pangkat: {
-                required: true
-            },
-            pihak_1_jabatan: {
-                required: true
-            },
-            pihak_2_jabatan: {
-                required: true
-            },
+            nomor: { required: true },
+            nama: { required: true },
+            tanggal: { required: true },
+            pihak_1: { required: true },
+            pihak_2: { required: true },
             media: {
                 accept: 'image/png,image/jpeg,application/pdf'
-            },
-            keterangan: {
-                required: true
             }
-        },
-        messages: {
-            nomor: {
-                required: 'Nomor berita acara tidak boleh kosong!'
-            },
-            judul: {
-                required: 'Judul tidak boleh kosong!'
-            },
-            tanggal: {
-                required: 'Tanggal harus diisi!'
-            },
-            pihak_1_nama: {
-                required: 'Nama pihak 1 tidak boleh kosong!'
-            },
-            pihak_2_nama: {
-                required: 'Nama pihak 2 tidak boleh kosong!'
-            },
-            pihak_1_nip: {
-                required: 'Nip pihak 1 tidak boleh kosong!'
-            },
-            pihak_2_nip: {
-                required: 'Nip pihak 1 tidak boleh kosong!'
-            },
-            pihak_1_pangkat: {
-                required: 'Pangkat/Golongan pihak 1 tidak boleh kosong!'
-            },
-            pihak_2_pangkat: {
-                required: 'Pangkat/Golongan pihak 1 tidak boleh kosong!'
-            },
-            pihak_1_jabatan: {
-                required: 'Jabatan pihak 1 tidak boleh kosong!'
-            },
-            pihak_2_jabatan: {
-                required: 'Jabatan pihak 1 tidak boleh kosong!'
-            },
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {
@@ -428,9 +410,8 @@ $(function() {
             $(element).removeClass('is-invalid');
         }
     });
-    /** end of edit */
 
-    /** start of delete */
+    // show confirmation to delete a clicked row
     $('#data-berita-acara tbody').on('click', 'tr td button.btn-danger', function(e) {
         e.preventDefault();
 
@@ -446,13 +427,12 @@ $(function() {
             confirmButtonText: 'Iya, hapus!'
         }).then((result) => {
             if (result.isConfirmed) {
-                const deleteUrl = '<?=site_url('api/v1/dashboard/berita_acara/')?>' + itemId + '/delete';
-
                 $.ajax({
                     type: 'DELETE',
-                    url: deleteUrl,
+                    url: `${baseApiUrl}/${itemId}/delete`,
                     headers: {
-                        'Authorization': 'Bearer ' + accessToken
+                        'Authorization': 'Bearer ' + accessToken,
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
                     success: function(res) {
                         console.log(res);
@@ -492,7 +472,6 @@ $(function() {
                 confirmButtonText: 'Iya, hapus semua!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const deleteUrl = '<?=site_url('api/v1/dashboard/berita_acara/delete/multiple')?>';
                     const ids = [];
 
                     selectedRows.each(function(index, item) {
@@ -503,11 +482,12 @@ $(function() {
 
                     $.ajax({
                         type: 'DELETE',
-                        url: deleteUrl,
+                        url: `${baseApiUrl}/delete/multiple`,
                         data: JSON.stringify(idsData),
                         contentType: 'application/json',
                         headers: {
-                            'Authorization': 'Bearer ' + accessToken
+                            'Authorization': 'Bearer ' + accessToken,
+                            'X-Requested-With': 'XMLHttpRequest'
                         },
                         success: function(res) {
                             console.log(res);
@@ -531,7 +511,15 @@ $(function() {
             });
         }
     });
-    /** end of delete */
+
+    // fitler data
+    $('#filter_data').submit(function(e) {
+        e.preventDefault();
+
+        let searchQuery = $('input#searchQuery').val();
+        
+        table.search(searchQuery).draw();
+    });
 });
 </script>
 

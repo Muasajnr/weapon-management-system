@@ -12,11 +12,11 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="nomor">No. Berita Acara</label>
-                            <input type="text" name="nomor" class="form-control" id="nomor" placeholder="Masukkan Nomor...">
+                            <input type="text" name="nomor" class="form-control" id="nomor" placeholder="Nomor">
                         </div>
                         <div class="form-group">
-                            <label for="judul">Judul</label>
-                            <input type="text" name="judul" class="form-control" id="judul" placeholder="Masukkan Judul...">
+                            <label for="nama">Judul</label>
+                            <input type="text" name="nama" class="form-control" id="nama" placeholder="Judul">
                         </div>
                         <div class="form-group">
                             <label for="tanggal">Tanggal:</label>
@@ -27,52 +27,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group mb-5 mt-5">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <strong>Pihak 1</strong>
-                                    <hr>
-                                    <div class="form-group">
-                                        <label for="pihak_1_nama">Nama</label>
-                                        <input type="text" name="pihak_1_nama" class="form-control" id="pihak_1_nama" placeholder="Nama...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="pihak_1_nip">NIP</label>
-                                        <input type="text" name="pihak_1_nip" class="form-control" id="pihak_1_nip" placeholder="NIP...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="pihak_1_pangkat">Pangkat/Golongan</label>
-                                        <input type="text" name="pihak_1_pangkat" class="form-control" id="pihak_1_pangkat" placeholder="Pangkat/Golongan...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="pihak_1_jabatan">Jabatan</label>
-                                        <input type="text" name="pihak_1_jabatan" class="form-control" id="pihak_1_jabatan" placeholder="Jabatan...">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <strong>Pihak 2</strong>
-                                    <hr>
-                                    <div class="form-group">
-                                        <label for="pihak_2_nama">Nama</label>
-                                        <input type="text" name="pihak_2_nama" class="form-control" id="pihak_2_nama" placeholder="Nama...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="pihak_2_nip">NIP</label>
-                                        <input type="text" name="pihak_2_nip" class="form-control" id="pihak_2_nip" placeholder="NIP...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="pihak_2_golongan">Pangkat/Golongan</label>
-                                        <input type="text" name="pihak_2_pangkat" class="form-control" id="pihak_2_pangkat" placeholder="Pangkat/Golongan...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="pihak_2_jabatan">Jabatan</label>
-                                        <input type="text" name="pihak_2_jabatan" class="form-control" id="pihak_2_jabatan" placeholder="Jabatan...">
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label>Pihak 1</label>
+                            <select id="select2-data-pihak-1" name="pihak_1" class="form-control select2" style="width: 100%;"></select>
                         </div>
                         <div class="form-group">
-                            <label for="media">Unggah File ( .png | .jpeg ) , Max : <strong>500KB</strong></label>
+                            <label>Pihak 2</label>
+                            <select id="select2-data-pihak-2" name="pihak_2" class="form-control select2" style="width: 100%;"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="media">Unggah File ( .png | .jpeg | .pdf ) , Max : <strong>500KB</strong></label>
                             <div class="input-group">
                                 <div class="custom-file">
                                     <input type="file" name="media" class="custom-file-input" id="media">
@@ -85,7 +49,7 @@
                         </div>
                         <div class="form-group">
                             <label for="keterangan">Keterangan</label>
-                            <textarea id="keterangan" name="keterangan" class="form-control" rows="3" placeholder="Keterangan..."></textarea>
+                            <textarea id="keterangan" name="keterangan" class="form-control" rows="3" placeholder="Keterangan"></textarea>
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -93,7 +57,6 @@
 
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                    <!-- <button id="btn-submit-all" type="button" class="btn btn-primary">Submit</button> -->
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>

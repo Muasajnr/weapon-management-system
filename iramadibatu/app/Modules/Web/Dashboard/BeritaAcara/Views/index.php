@@ -5,13 +5,41 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12">
-                <div class="card">
+            <div class="col col-sm-12 col-md-12 col-lg-6">
+                <div class="card card-outline card-primary">
                     <div class="card-header">
-                        <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#modal-add-berita-acara">
+                        <h3 class="card-title">Filter</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="filter_data" class="form-horizontal">
+                            <div class="form-group row">
+                                <label for="searchQuery" class="col-sm-2 offset-sm-2 col-form-label">Keyword : </label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="searchQuery" placeholder="Masukkan Keyword Pencarian...">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-2 offset-sm-2"></div>
+                                <div class="col-8">
+                                    <button type="submit" class="btn btn-primary btn-sm">Cari Data</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card card-outline card-primary">
+                    <div class="card-header">
+                        <button type="button" class="btn btn-primary btn-xs mr-2" data-toggle="modal" data-target="#modal-add-berita-acara">
                             <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Data
                         </button>
-                        <button type="button" class="btn btn-danger btn-sm" id="btn-delete-multiple">
+                        <button type="button" class="btn btn-danger btn-xs" id="btn-delete-multiple">
                             <i class="fas fa-trash"></i>&nbsp;&nbsp;Hapus banyak
                         </button>
                     </div>
@@ -47,6 +75,7 @@
 <!-- /.content -->
 
 <?php echo view($moduleViewPath.'add') ?>
+<?php echo view($moduleViewPath.'edit') ?>
 
 <?=$this->endSection()?>
 

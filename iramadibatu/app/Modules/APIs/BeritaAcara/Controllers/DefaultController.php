@@ -20,6 +20,16 @@ class DefaultController extends ApiController
         $this->beritaAcaraModel = new BeritaAcaraModel();
     }
     
+    public function get($id)
+    {
+        $data = $this->beritaAcaraModel->getBeritaAcara($id);
+        return $this->response
+            ->setJSON([
+                'status'    => ResponseInterface::HTTP_OK,
+                'data'      => $data
+            ])
+            ->setStatusCode(ResponseInterface::HTTP_OK);
+    }
 
     public function index()
     {
@@ -41,7 +51,6 @@ class DefaultController extends ApiController
             $posts = (array) $posts;
         }
         $data = $this->beritaAcaraModel->customDatatables($posts);
-
         $num = $posts['start'];
         $resData = [];
 
@@ -50,9 +59,21 @@ class DefaultController extends ApiController
 
             $row        = [];
             $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-item-id=\"".$item['id']."\"></div>";
-            $row[]      = "<div class=\"text-center\"><input type=\"hidden\" value=\"".$item['id']."\">{$num}.</div>";
-            $row[]      = $item['nama'];
+            $row[]      = "<div class=\"text-center\">
+                            <input type=\"hidden\" name=\"keterangan\" value=\"".$item['keterangan']."\">
+                            <input type=\"hidden\" name=\"id\" value=\"".$item['id']."\">
+                            <input type=\"hidden\" name=\"id_pihak_1\" value=\"".$item['id_pihak_1']."\">
+                            <input type=\"hidden\" name=\"id_pihak_1_nama\" value=\"".$item['pihak_1_nama']."\">
+                            <input type=\"hidden\" name=\"id_pihak_1_nip\" value=\"".$item['pihak_1_nip']."\">
+                            <input type=\"hidden\" name=\"id_pihak_2\" value=\"".$item['id_pihak_2']."\">
+                            <input type=\"hidden\" name=\"id_pihak_2_nama\" value=\"".$item['pihak_2_nama']."\">
+                            <input type=\"hidden\" name=\"id_pihak_2_nip\" value=\"".$item['pihak_2_nip']."\">
+                            <input type=\"hidden\" name=\"media_file_full_path\" value=\"".$item['media_file_full_path']."\">
+                            <input type=\"hidden\" name=\"media_file_extension\" value=\"".$item['media_file_extension']."\">
+                            {$num}.
+                           </div>";
             $row[]      = $item['nomor'];
+            $row[]      = $item['nama'];
             $row[]      = $item['tanggal'];
             $row[]      = $item['pihak_1_nama'] ?? '-'; // todo: show modal of pihak 1 detail
             $row[]      = $item['pihak_2_nama'] ?? '-'; // show modal of pihak 2 detail
@@ -315,9 +336,9 @@ class DefaultController extends ApiController
     {
         $showUrl = site_url('dashboard/berita_acara/'.$id.'/detail');
         return "<div class=\"text-center\">
-                    <a href=\"javascript:void(0)\" onclick=\"window.open('$showUrl', 'lihat_berita_acara', 'width=800, height=1200')\" class=\"btn btn-primary btn-sm mr-2\"><i class=\"fas fa-eye\"></i></a>
-                    <button type=\"button\" class=\"btn btn-info btn-sm mr-2\" data-item-id=\"$id\"><i class=\"fas fa-pencil-alt\"></i></button>
-                    <button type=\"button\" class=\"btn btn-danger btn-sm\" data-item-id=\"$id\"><i class=\"fas fa-trash\"></i></button>
+                    <a href=\"javascript:void(0)\" onclick=\"window.open('$showUrl', 'lihat_berita_acara', 'width=800, height=1200')\" class=\"btn btn-primary btn-xs mr-2\"><i class=\"fas fa-eye mr-1\"></i>Detail</a>
+                    <button type=\"button\" class=\"btn btn-info btn-xs mr-2\" data-item-id=\"$id\"><i class=\"fas fa-pencil-alt mr-1\"></i>Edit</button>
+                    <button type=\"button\" class=\"btn btn-danger btn-xs\" data-item-id=\"$id\"><i class=\"fas fa-trash mr-1\"></i>Hapus</button>
                 </div>";
     }
 

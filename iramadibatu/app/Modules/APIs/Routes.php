@@ -65,6 +65,7 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
 
         $routes->group('berita_acara', function($routes) {
             $routes->get('/', 'BeritaAcara\Controllers\DefaultController::index'); // works
+            $routes->get('(:segment)', 'BeritaAcara\Controllers\DefaultController::get/$1');
 
             $routes->post('datatables', 'BeritaAcara\Controllers\DefaultController::datatables'); // works
             $routes->post('/', 'BeritaAcara\Controllers\DefaultController::create'); // works
