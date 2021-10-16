@@ -4,7 +4,7 @@ post {{base_url}}/api/v1/login
 Content-Type: application/json
 
 {
-    "username": "testuser18",
+    "username": "testuser17",
     "password": "12345"
 }
 
