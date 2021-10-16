@@ -66,15 +66,14 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
         });
 
         $routes->group('berita_acara', function($routes) {
-            $routes->get('/', 'BeritaAcara\Controllers\DefaultController::index');
+            $routes->get('/', 'BeritaAcara\Controllers\DefaultController::index'); // works
 
             $routes->post('datatables', 'BeritaAcara\Controllers\DefaultController::datatables'); // works
-            $routes->post('/', 'BeritaAcara\Controllers\DefaultController::create');
+            $routes->post('/', 'BeritaAcara\Controllers\DefaultController::create'); // works
+            $routes->post('(:segment)/update', 'BeritaAcara\Controllers\DefaultController::update/$1'); // works
 
-            $routes->put('(:segment)/update', 'BeritaAcara\Controllers\DefaultController::update/$1');
-
-            $routes->delete('(:segment)/delete', 'BeritaAcara\Controllers\DefaultController::delete/$1');
-            $routes->delete('delete/multiple', 'BeritaAcara\Controllers\DefaultController::deleteMultiple');
+            $routes->delete('(:segment)/delete', 'BeritaAcara\Controllers\DefaultController::delete/$1'); // works
+            $routes->delete('delete/multiple', 'BeritaAcara\Controllers\DefaultController::deleteMultiple'); // works
 
             $routes->group('penanggung_jawab', function($routes) {
                 $routes->get('/', 'BeritaAcara\Controllers\PenanggungJawabController::index'); // works

@@ -3,6 +3,7 @@
 namespace App\Modules\APIs\BeritaAcara\Models;
 
 use App\Core\CoreApiModel;
+use CodeIgniter\I18n\Time;
 
 class BeritaAcaraModel extends CoreApiModel
 {
@@ -127,4 +128,19 @@ class BeritaAcaraModel extends CoreApiModel
         return $this->defaultBuilder()->countAllResults();
     }
 
+    /**
+     * create media data
+     */
+    public function createMediaData(array $data, bool $getId = false)
+    {
+        $now = Time::now();
+        $data['created_at']         = $now->toDateTimeString();
+        $data['sys_created_user']   = $this->authenticatedUser;
+        $data['updated_at']         = $now->toDateTimeString();
+        $data['sys_updated_user']   = $this->authenticatedUser;
+        
+        $result = $this->builder('media')
+                        ->insert($data);
+        return $getId ? $this->db->insertID() : $result;
+    }
 }
