@@ -181,7 +181,7 @@ class CoreApiModel extends Model
      * 
      * @return array
      */
-    public function getOne($id) : array
+    public function getOne($id) : ?array
     {
         $this->defaultBuilder()->select('*');
         $this->defaultBuilder()->where('id', $id);

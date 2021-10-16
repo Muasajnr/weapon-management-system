@@ -53,16 +53,14 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
 
         $routes->group('sarana_keamanan', function($routes) {
             $routes->get('/', 'SaranaKeamanan\Controllers\DefaultController::index');
-            $routes->get('(:segment)', 'SaranaKeamanan\Controllers\DefaultController::get/$1');
-            $routes->get('jenis_sarana/(:segment)', 'SaranaKeamanan\Controllers\DefaultController::getAllByJenisSarana/$1');
+            $routes->get('(:segment)', 'SaranaKeamanan\Controllers\DefaultController::get/$1'); // works
 
-            $routes->post('datatables/(:segment)', 'SaranaKeamanan\Controllers\DefaultController::datatables/$1'); // works
-            $routes->post('create/(:segment)', 'SaranaKeamanan\Controllers\DefaultController::create/$1');
+            $routes->post('datatable', 'SaranaKeamanan\Controllers\DefaultController::datatable'); // works
+            $routes->post('/', 'SaranaKeamanan\Controllers\DefaultController::create'); // works
+            $routes->post('(:segment)/update', 'SaranaKeamanan\Controllers\DefaultController::update/$1'); // works
 
-            $routes->put('(:segment)/update', 'SaranaKeamanan\Controllers\DefaultController::update/$1');
-
-            $routes->delete('(:segment)/delete', 'SaranaKeamanan\Controllers\DefaultController::delete/$1');
-            $routes->delete('delete/multiple', 'SaranaKeamanan\Controllers\DefaultController::deleteMultiple');
+            $routes->delete('(:segment)/delete', 'SaranaKeamanan\Controllers\DefaultController::delete/$1'); // works
+            $routes->delete('delete/multiple', 'SaranaKeamanan\Controllers\DefaultController::deleteMultiple'); // works
         });
 
         $routes->group('berita_acara', function($routes) {

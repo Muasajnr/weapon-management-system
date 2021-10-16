@@ -32,6 +32,7 @@ class DefaultController extends ApiController
             ->setStatusCode(ResponseInterface::HTTP_OK);
     }
 
+    // datatable
     public function datatables()
     {
         $posts = $this->request->getPost();
@@ -71,6 +72,7 @@ class DefaultController extends ApiController
             ->setStatusCode(ResponseInterface::HTTP_OK);
     }
 
+    // create
     public function create()
     {
         try {
@@ -143,6 +145,7 @@ class DefaultController extends ApiController
         }
     }
 
+    // update
     public function update($id)
     {
         try {
@@ -214,6 +217,7 @@ class DefaultController extends ApiController
         }
     }
 
+    // delete
     public function delete($id)
     {
         try {
@@ -256,6 +260,7 @@ class DefaultController extends ApiController
         }
     }
 
+    // delete multiple
     public function deleteMultiple()
     {
         try {

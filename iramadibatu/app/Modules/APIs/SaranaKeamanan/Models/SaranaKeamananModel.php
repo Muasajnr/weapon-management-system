@@ -20,12 +20,11 @@ class SaranaKeamananModel extends CoreApiModel
      * get datatables
      * 
      * @param array $dtParams
-     * @param string $type
      * @param bool $history
      * 
      * @return array
      */
-    public function customDatatable(array $dtParams, int $id, bool $history = false) : array
+    public function customDatatable(array $dtParams, bool $history = false) : array
     {
         $i = 0;
 
@@ -73,7 +72,7 @@ class SaranaKeamananModel extends CoreApiModel
         else
             $this->defaultBuilder()->where('sarana_keamanan.deleted_at is not null');
         
-        $this->defaultBuilder()->where('sarana_keamanan.id_jenis_inventaris', $id > 3 ? 3 : $id);
+        $this->defaultBuilder()->where('sarana_keamanan.id_jenis_inventaris', $dtParams['id_jenis_inventaris'] > 3 ? 3 : $dtParams['id_jenis_inventaris']);
         $this->defaultBuilder()->where('jenis_sarana.deleted_at', null);
         $this->defaultBuilder()->where('merk_sarana.deleted_at', null);
 
@@ -90,7 +89,7 @@ class SaranaKeamananModel extends CoreApiModel
      * 
      * @return array
      */
-    public function customCountTotalDatatable(array $dtParams, int $id, bool $history = false)
+    public function customCountTotalDatatable(array $dtParams, bool $history = false)
     {
         $i = 0;
         foreach($this->columnSearch as $column) {
@@ -116,7 +115,7 @@ class SaranaKeamananModel extends CoreApiModel
         else
             $this->defaultBuilder()->where('sarana_keamanan.deleted_at is not null');
         
-        $this->defaultBuilder()->where('sarana_keamanan.id_jenis_inventaris', $id > 3 ? 3 : $id);
+        $this->defaultBuilder()->where('sarana_keamanan.id_jenis_inventaris', $dtParams['id_jenis_inventaris'] > 3 ? 3 : $dtParams['id_jenis_inventaris']);
 
         return $this->defaultBuilder()
                     ->countAllResults();
@@ -131,14 +130,14 @@ class SaranaKeamananModel extends CoreApiModel
      * 
      * @return array
      */
-    public function customCountTotalFilteredDatatable(int $id, bool $history = false) : int
+    public function customCountTotalFilteredDatatable(array $dtParams, bool $history = false) : int
     {
         if (!$history)
             $this->defaultBuilder()->where('deleted_at', null);
         else
             $this->defaultBuilder()->where('deleted_at is not null');
 
-        $this->defaultBuilder()->where('sarana_keamanan.id_jenis_inventaris', $id > 3 ? 3 : $id);
+        $this->defaultBuilder()->where('sarana_keamanan.id_jenis_inventaris', $dtParams['id_jenis_inventaris'] > 3 ? 3 : $dtParams['id_jenis_inventaris']);
         
         return $this->defaultBuilder()->countAllResults();
     }

@@ -20,11 +20,25 @@ class DefaultController extends ApiController
         $this->SKModel = new SaranaKeamananModel();
     }
 
+    public function get($id)
+    {
+        $data = $this->SKModel->getOne($id);
+        return $this->response
+            ->setJSON([
+                'status'    => ResponseInterface::HTTP_OK,
+                'data'      => $data
+            ])
+            ->setStatusCode(ResponseInterface::HTTP_OK);
+    }
+
     // datatable
-    public function datatables($id)
+    public function datatable()
     {
         $posts = $this->request->getPost();
-        $data = $this->SKModel->customDatatable($posts, (int)$id);
+        if (empty($posts)) {
+            $posts = (array) $this->request->getVar();
+        }
+        $data = $this->SKModel->customDatatable($posts);
 
         $num = $posts['start'];
         $resData = [];
@@ -47,8 +61,8 @@ class DefaultController extends ApiController
         }
 
         $output['draw']             = $posts['draw'];
-        $output['recordsTotal']     = $this->SKModel->customCountTotalDatatable($posts, (int)$id);
-        $output['recordsFiltered']  = $this->SKModel->customCountTotalFilteredDatatable((int) $id);
+        $output['recordsTotal']     = $this->SKModel->customCountTotalDatatable($posts);
+        $output['recordsFiltered']  = $this->SKModel->customCountTotalFilteredDatatable($posts);
         $output['data']             = $resData;
 
         return $this->response
@@ -57,15 +71,21 @@ class DefaultController extends ApiController
     }
 
     // create
-    public function create($id)
+    public function create()
     {
         try {            
-            $rules = [
+            if (!$this->validate([
                 'id_berita_acara' => 'required',
                 'id_jenis_sarana' => 'required',
-            ];
-    
-            if (!$this->validate($rules))
+                'id_merk_sarana'    => 'required',
+                'id_jenis_inventaris'   => 'required',
+                'satuan'    => 'required',
+                'jumlah'    => 'required',
+                'nomor_sarana'  => 'required',
+                'nomor_bpsa'    => 'required',
+                'kondisi'   => 'required|in_list[baik,rusak]',
+                'keterangan'    => 'required'
+            ]))
                 throw new ApiAccessErrorException(
                     'Validation Error!', 
                     ResponseInterface::HTTP_UNPROCESSABLE_ENTITY,
@@ -73,7 +93,7 @@ class DefaultController extends ApiController
                 );
             
             $data = $this->request->getPost();
-            $mediaSarana = $this->request->getFile('media_sarana');
+            $media = $this->request->getFile('media');
 
             $this->SKModel->setAuthenticatedUser(
                 $this->request
@@ -81,37 +101,31 @@ class DefaultController extends ApiController
                     ->getValue()
             );
 
-            $data['id_jenis_inventaris']    = $id;
             $data['qrcode_secret']  = uniqid();
-            // $data['no_sarana']  = $data['no_senjata'];
-            // unset($data['no_senjata']);
-            $isAdded = $this->SKModel->createData($data, true);
-            if (!$isAdded)
+            $isCreated = $this->SKModel->createData($data, true);
+            if (!$isCreated)
                 throw new ApiAccessErrorException(
                     'Terjadi kesalahan!', 
                     ResponseInterface::HTTP_INTERNAL_SERVER_ERROR
                 );
             
-            $now = Time::now();
-            // print_r($mediaSarana ? 'true' : 'false');die();
-            if ($mediaSarana) {
-
-                $filename   = $now->toLocalizedString('yyyyMMdd_HHmmss');
-                $filename   .= '_berita_acara';
-                $filename   .= '.'.$mediaSarana->getExtension();
+            if ($media) {
+                $filename   = Time::now()->toLocalizedString('yyyyMMdd_HHmmss');
+                $filename   .= '_sarana_keamanan';
+                $filename   .= '.'.$media->getExtension();
                 
-                $dataMedia['file_full_path'] = 'uploads/beritaacara/'.$filename;
-                $dataMedia['file_origin_name'] = $mediaSarana->getClientName();
-                $dataMedia['file_extension'] = $mediaSarana->getExtension();
-                $dataMedia['file_size'] = $mediaSarana->getSize();
-                $dataMedia['file_mime_type'] = $mediaSarana->getMimeType();
+                $dataMedia['file_full_path']    = 'uploads/sarana_keamanan/'.$filename;
+                $dataMedia['file_origin_name']  = $media->getClientName();
+                $dataMedia['file_extension']    = $media->getExtension();
+                $dataMedia['file_size']         = $media->getSize();
+                $dataMedia['file_mime_type']    = $media->getMimeType();
 
-                $filepath = ROOTPATH.'../public/uploads/berita_acara/';
-                $mediaSarana->move($filepath, $filename);
+                $filepath = ROOTPATH.'../public/uploads/sarana_keamanan/';
+                $media->move($filepath, $filename);
 
                 $insertedId = $this->SKModel->createMediaData($dataMedia, true);
                 $dataSK['id_media'] = $insertedId;
-                $this->SKModel->updateData($isAdded, $dataSK);
+                $this->SKModel->updateData($isCreated, $dataSK);
             }
     
             return $this->response
@@ -133,12 +147,181 @@ class DefaultController extends ApiController
         }
     }
 
+    // update
+    public function update($id)
+    {
+        try {            
+            if (!$this->validate([
+                'id_berita_acara' => 'required',
+                'id_jenis_sarana' => 'required',
+                'id_merk_sarana'    => 'required',
+                'id_jenis_inventaris'   => 'required',
+                'satuan'    => 'required',
+                'jumlah'    => 'required',
+                'nomor_sarana'  => 'required',
+                'nomor_bpsa'    => 'required',
+                'kondisi'   => 'required|in_list[baik,rusak]',
+                'keterangan'    => 'required'
+            ]))
+                throw new ApiAccessErrorException(
+                    'Validation Error!', 
+                    ResponseInterface::HTTP_UNPROCESSABLE_ENTITY,
+                    $this->validator->getErrors()
+                );
+            
+            $data = $this->request->getPost();
+            $media = $this->request->getFile('media');
 
+            $this->SKModel->setAuthenticatedUser(
+                $this->request
+                    ->header('Logged-User')
+                    ->getValue()
+            );
+
+            $data['qrcode_secret']  = uniqid();
+            $isUpdated = $this->SKModel->updateData($id, $data);
+            if (!$isUpdated)
+                throw new ApiAccessErrorException(
+                    'Terjadi kesalahan!', 
+                    ResponseInterface::HTTP_INTERNAL_SERVER_ERROR
+                );
+            
+            if ($media) {
+                $filename   = Time::now()->toLocalizedString('yyyyMMdd_HHmmss');
+                $filename   .= '_sarana_keamanan';
+                $filename   .= '.'.$media->getExtension();
+                
+                $dataMedia['file_full_path']    = 'uploads/sarana_keamanan/'.$filename;
+                $dataMedia['file_origin_name']  = $media->getClientName();
+                $dataMedia['file_extension']    = $media->getExtension();
+                $dataMedia['file_size']         = $media->getSize();
+                $dataMedia['file_mime_type']    = $media->getMimeType();
+
+                $filepath = ROOTPATH.'../public/uploads/sarana_keamanan/';
+                $media->move($filepath, $filename);
+
+                $insertedId = $this->SKModel->createMediaData($dataMedia, true);
+                $this->SKModel->updateData($id, [
+                    'id_media' => $insertedId
+                ]);
+            }
+    
+            return $this->response
+                ->setJSON([
+                    'status'    => ResponseInterface::HTTP_CREATED,
+                    'message'   => 'Data telah diperbaharui!'
+                ])
+                ->setStatusCode(ResponseInterface::HTTP_CREATED);
+        } catch(ApiAccessErrorException $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode($e->getCode());
+        } catch(Exception $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // delete
+    public function delete($id)
+    {
+        try {
+            if (!$this->SKModel->isExist((int) $id))
+                throw new ApiAccessErrorException(
+                    'Not Found!', 
+                    ResponseInterface::HTTP_NOT_FOUND,
+                    $this->validator->getErrors()
+                );
+
+            $this->SKModel->setAuthenticatedUser(
+                $this->request
+                    ->header('Logged-User')
+                    ->getValue()
+            );
+
+            $isDeleted = $this->SKModel->deleteData($id);
+            if (!$isDeleted)
+                throw new ApiAccessErrorException(
+                    'Terjadi kesalahan!', 
+                    ResponseInterface::HTTP_INTERNAL_SERVER_ERROR
+                );
+            
+            return $this->response
+                ->setJSON([
+                    'status'    => ResponseInterface::HTTP_OK,
+                    'message'   => 'Data telah dihapus!'
+                ])
+                ->setStatusCode(ResponseInterface::HTTP_OK);
+        } catch(ApiAccessErrorException $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode($e->getCode());
+        } catch(\Exception $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // delete multiple
+    public function deleteMultiple()
+    {
+        try {
+            if (!$this->request->isAJAX())
+                throw new ApiAccessErrorException(
+                    'Invalid Request!', 
+                    ResponseInterface::HTTP_BAD_REQUEST
+                );
+            
+            if (!$this->validate(['ids' => 'required']))
+                throw new ApiAccessErrorException(
+                    'Validation Error!', 
+                    ResponseInterface::HTTP_UNPROCESSABLE_ENTITY,
+                    $this->validator->getErrors()
+                );
+
+            $ids = $this->request->getVar('ids');
+                
+            $this->SKModel->setAuthenticatedUser(
+                $this->request
+                    ->header('Logged-User')
+                    ->getValue()
+            );
+
+            $affectedRows = $this->SKModel->deleteMultipleData($ids);
+            if ($affectedRows != count($ids))
+                throw new ApiAccessErrorException(
+                    'Terjadi kesalahan!', 
+                    ResponseInterface::HTTP_INTERNAL_SERVER_ERROR
+                );
+            
+            return $this->response
+                ->setJSON([
+                    'status'    => ResponseInterface::HTTP_OK,
+                    'message'   => 'Data telah dihapus!'
+                ])
+                ->setStatusCode(ResponseInterface::HTTP_OK);
+        } catch(ApiAccessErrorException $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode($e->getCode());
+        } catch(\Exception $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 
     protected function buildCustomButtonActions($id)
     {
-
-        $showUrl = site_url('dashboard/sarana_keamanan/senjata_api/'.$id.'/show');
+        $showUrl = site_url('dashboard/sarana_keamanan/'.$id.'/show');
         return "<div class=\"text-center\">
                     <a href=\"javascript:void(0)\" onclick=\"window.open('$showUrl', 'lihat_senjata', 'width=800, height=1200')\" class=\"btn btn-primary btn-xs mr-2\"><i class=\"fas fa-eye mr-1\"></i> Detail</a>
                     <button type=\"button\" class=\"btn btn-info btn-xs mr-2\" data-item-id=\"$id\"><i class=\"fas fa-pencil-alt mr-1\"></i>Edit</button>

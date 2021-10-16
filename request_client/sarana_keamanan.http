@@ -1,2 +1,40 @@
-@base_url = http://iramadibatu.myprojects.com
-@active_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzM3NzkwOTcsIm5iZiI6MTYzMzc3OTEwNywiZXhwIjoxNjMzNzg2Mjk3LCJkYXRhIjp7ImlkIjoiMzMiLCJmdWxsbmFtZSI6InRlc3QgdXNlciAxOCIsInVzZXJuYW1lIjoidGVzdHVzZXIxOCIsImVtYWlsIjoidGVzdHVzZXIxOEBleGFtcGxlLmNvbSIsImxldmVsIjoiYWRtaW4ifX0.FGuF2qY4ku0OO_BcDQwpnQ4luQVLUADugjcpJWmuJw0
+@base_url = http://iramadibatu.myprojects.com/api/v1/dashboard/sarana_keamanan
+@active_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzQzOTE5MzQsIm5iZiI6MTYzNDM5MTk0NCwiZXhwIjoxNjM0Mzk5MTM0LCJkYXRhIjp7ImlkIjoiMjkiLCJmdWxsbmFtZSI6InRlc3QgdXNlciAxNyIsInVzZXJuYW1lIjoidGVzdHVzZXIxNyIsImVtYWlsIjoidGVzdHVzZXIxN0BleGFtcGxlLmNvbSIsImxldmVsIjoiYWRtaW4ifX0.bou8I6GHoMdBDOF46onxcA8f3sFATZ-XlYsSCXA9zic
+
+get {{base_url}}/31
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+###
+
+post {{base_url}}/datatable
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{
+    "start": 0,
+    "draw": 1,
+    "length": 25,
+    "id_jenis_inventaris": 1
+}
+
+###
+// delete
+delete {{base_url}}/25/delete
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+
+###
+// delete multiple
+delete {{base_url}}/delete/multiple
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{
+    "ids": [23, 24]
+}
