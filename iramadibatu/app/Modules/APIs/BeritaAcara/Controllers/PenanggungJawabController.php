@@ -31,6 +31,17 @@ class PenanggungJawabController extends ApiController
             ->setStatusCode(ResponseInterface::HTTP_OK);
     }
 
+    public function get($id)
+    {
+        $data = $this->penanggungJawabModel->getOne($id);
+        return $this->response
+            ->setJSON([
+                'status'    => ResponseInterface::HTTP_OK,
+                'data'      => $data
+            ])
+            ->setStatusCode(ResponseInterface::HTTP_OK);
+    }
+
     public function datatable()
     {
         $dataPosts = $this->request->getPost();
@@ -48,7 +59,10 @@ class PenanggungJawabController extends ApiController
             $num++;
 
             $row        = [];
-            $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-item-id=\"".$item['id']."\"></div>";
+            $row[]      = "<div class=\"text-center\">
+                            <input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-item-id=\"".$item['id']."\">
+                            <label></label>
+                          </div>";
             $row[]      = "<input type=\"hidden\" value=\"".$item['id']."\">{$num}.";
             $row[]      = $item['nama'];
             $row[]      = $item['nip'];

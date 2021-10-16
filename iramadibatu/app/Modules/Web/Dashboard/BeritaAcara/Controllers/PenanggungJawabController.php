@@ -13,6 +13,11 @@ class PenanggungJawabController extends WebController
         'jquery_validation',
     ];
 
+    public function __construct()
+    {
+        parent::__construct(dirname(__FILE__));
+    }
+
     public function list()
     {
         return $this->renderView('penanggung_jawab/list', [

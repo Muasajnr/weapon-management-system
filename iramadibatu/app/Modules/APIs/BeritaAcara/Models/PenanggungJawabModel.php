@@ -6,6 +6,8 @@ use App\Core\CoreApiModel;
 
 class PenanggungJawabModel extends CoreApiModel
 {
+    protected $columnOrder          = ['nama', 'nip', 'pangkat_golongan', 'jabatan', 'created_at'];
+    protected $columnSearch         = ['nama', 'nip', 'pangkat_golongan', 'jabatan', 'created_at'];
     
     public function __construct()
     {

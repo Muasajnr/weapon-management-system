@@ -75,6 +75,7 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
 
             $routes->group('penanggung_jawab', function($routes) {
                 $routes->get('/', 'BeritaAcara\Controllers\PenanggungJawabController::index'); // works
+                $routes->get('(:segment)', 'BeritaAcara\Controllers\PenanggungJawabController::get/$1'); // works
 
                 $routes->post('datatable', 'BeritaAcara\Controllers\PenanggungJawabController::datatable'); // works
                 $routes->post('/', 'BeritaAcara\Controllers\PenanggungJawabController::create'); // works
