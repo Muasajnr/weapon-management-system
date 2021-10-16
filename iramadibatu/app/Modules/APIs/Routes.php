@@ -75,6 +75,18 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
 
             $routes->delete('(:segment)/delete', 'BeritaAcara\Controllers\DefaultController::delete/$1');
             $routes->delete('delete/multiple', 'BeritaAcara\Controllers\DefaultController::deleteMultiple');
+
+            $routes->group('penanggung_jawab', function($routes) {
+                $routes->get('/', 'BeritaAcara\Controllers\PenanggungJawabController::index'); // works
+
+                $routes->post('datatable', 'BeritaAcara\Controllers\PenanggungJawabController::datatable'); // works
+                $routes->post('/', 'BeritaAcara\Controllers\PenanggungJawabController::create'); // works
+
+                $routes->put('(:segment)/update', 'BeritaAcara\Controllers\PenanggungJawabController::update/$1'); // works
+
+                $routes->delete('(:segment)/delete', 'BeritaAcara\Controllers\PenanggungJawabController::delete/$1'); // works
+                $routes->delete('delete/multiple', 'BeritaAcara\Controllers\PenanggungJawabController::deleteMultiple'); // works
+            });
         });
 
         $routes->group('bon_simpan_pinjam', function($routes) {

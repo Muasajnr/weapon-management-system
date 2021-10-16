@@ -11,7 +11,11 @@ class DefaultController extends WebController
         'datatable',
         'sweetalert',
         'select2',
-        'jquery_validation'
+        'jquery_validation',
+
+        'moment',
+        'tempusdominus',
+        'bs-custom-file-input'
     ];
 
     public function __construct()

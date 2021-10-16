@@ -12,7 +12,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-        <div class="col-6">
+            <div class="col-6">
                 <div class="card card-outline card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Filter</h3>

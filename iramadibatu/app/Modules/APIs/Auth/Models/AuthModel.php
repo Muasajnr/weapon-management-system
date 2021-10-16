@@ -18,6 +18,7 @@ class AuthModel extends CoreApiModel
         $result = $this->builder('users')
             ->select('id, fullname, username, email, password, level')
             ->where('username', $username)
+            ->where('deleted_at', null)
             ->get()
             ->getRowArray();
 

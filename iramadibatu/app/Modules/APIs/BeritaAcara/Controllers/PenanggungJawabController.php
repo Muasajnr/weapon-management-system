@@ -1,26 +1,28 @@
 <?php
 
-namespace App\Modules\APIs\Master\Controllers;
+namespace App\Modules\APIs\BeritaAcara\Controllers;
 
+use App\Controllers\BaseController;
 use App\Core\ApiController;
 use App\Exceptions\ApiAccessErrorException;
-use App\Modules\APIs\Master\Models\JenisInventarisModel;
+use App\Modules\APIs\BeritaAcara\Models\PenanggungJawabModel;
 use CodeIgniter\HTTP\ResponseInterface;
 use Exception;
 
-class JenisInventarisController extends ApiController
+class PenanggungJawabController extends ApiController
 {
-    private $JIModel;
+    
+    protected $penanggungJawabModel;
 
     public function __construct()
     {
         parent::__construct();
-        $this->JIModel = new JenisInventarisModel();
+        $this->penanggungJawabModel = new PenanggungJawabModel();
     }
-
+    
     public function index()
     {
-        $allData = $this->JIModel->getAll();
+        $allData = $this->penanggungJawabModel->getAll();
         return $this->response
             ->setJSON([
                 'status'    => ResponseInterface::HTTP_OK,
@@ -29,23 +31,17 @@ class JenisInventarisController extends ApiController
             ->setStatusCode(ResponseInterface::HTTP_OK);
     }
 
-    public function get($id)
+    public function datatable()
     {
-        $data = $this->JIModel->getOne($id);
-        return $this->response
-            ->setJSON([
-                'status'    => ResponseInterface::HTTP_OK,
-                'data'      => $data
-            ])
-            ->setStatusCode(ResponseInterface::HTTP_OK);
-    }
+        $dataPosts = $this->request->getPost();
+        if (empty($dataPosts)) {
+            $dataPosts = $this->request->getVar();
+            $dataPosts = (array) $dataPosts;
+        }
 
-    /**datatables */
-    public function datatables()
-    {
-        $posts = $this->request->getPost();
-        $data = $this->JIModel->datatable($posts);
-        $num = $posts['start'];
+        // print_r($dataPosts);die();
+        $data = $this->penanggungJawabModel->datatable($dataPosts);
+        $num = $dataPosts['start'];
         $resData = [];
 
         foreach($data as $item) {
@@ -54,18 +50,19 @@ class JenisInventarisController extends ApiController
             $row        = [];
             $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-item-id=\"".$item['id']."\"></div>";
             $row[]      = "<input type=\"hidden\" value=\"".$item['id']."\">{$num}.";
-            $row[]      = $item['name'];
-            $row[]      = $item['desc'];
-            $row[]      = $this->buildStatusSwitch($item['id'], $item['is_active']);
+            $row[]      = $item['nama'];
+            $row[]      = $item['nip'];
+            $row[]      = $item['pangkat_golongan'];
+            $row[]      = $item['jabatan'];
             $row[]      = $item['created_at'];
             $row[]      = $this->buildCustomButtonActions($item['id']);
 
             $resData[] = $row;
         }
 
-        $output['draw']             = $posts['draw'];
-        $output['recordsTotal']     = $this->JIModel->countDatatableData($posts);
-        $output['recordsFiltered']  = $this->JIModel->countDatatableFilteredData();
+        $output['draw']             = $dataPosts['draw'];
+        $output['recordsTotal']     = $this->penanggungJawabModel->countDatatableData($dataPosts);
+        $output['recordsFiltered']  = $this->penanggungJawabModel->countDatatableFilteredData();
         $output['data']             = $resData;
 
         return $this->response
@@ -73,10 +70,23 @@ class JenisInventarisController extends ApiController
             ->setStatusCode(ResponseInterface::HTTP_OK);
     }
 
-    /**datatables history */
-    public function datatablesHistory() {}
+    public function try_catch_kosongan()
+    {
+        try {
 
-    /**create */
+        } catch(ApiAccessErrorException $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode($e->getCode());
+        } catch(\Exception $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public function create()
     {
         try {
@@ -85,31 +95,34 @@ class JenisInventarisController extends ApiController
                     'Invalid Request!', 
                     ResponseInterface::HTTP_BAD_REQUEST
                 );
-            
-            $rules = ['name' => 'required', 'desc' => 'required', 'is_active' => 'required'];
-    
-            if (!$this->validate($rules))
+            // print_r($this->request->getVar());die();
+            if (!$this->validate([
+                'nama'  => 'required',
+                'nip'  => 'required',
+                'pangkat_golongan'  => 'required',
+                'jabatan'  => 'required',
+            ]))
                 throw new ApiAccessErrorException(
                     'Validation Error!', 
                     ResponseInterface::HTTP_UNPROCESSABLE_ENTITY,
                     $this->validator->getErrors()
                 );
-            
+
             $data = $this->request->getVar();
 
-            $this->JIModel->setAuthenticatedUser(
+            $this->penanggungJawabModel->setAuthenticatedUser(
                 $this->request
                     ->header('Logged-User')
                     ->getValue()
             );
 
-            $isAdded = $this->JIModel->createData((array) $data);
-            if (!$isAdded)
+            $isCreated = $this->penanggungJawabModel->createData((array) $data);
+            if (!$isCreated)
                 throw new ApiAccessErrorException(
                     'Terjadi kesalahan!', 
                     ResponseInterface::HTTP_INTERNAL_SERVER_ERROR
                 );
-    
+
             return $this->response
                 ->setJSON([
                     'status'    => ResponseInterface::HTTP_CREATED,
@@ -121,7 +134,7 @@ class JenisInventarisController extends ApiController
             return $this->response
                 ->setJSON($errOutput)
                 ->setStatusCode($e->getCode());
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             $errOutput = $this->getErrorOutput($e, $this->request);
             return $this->response
                 ->setJSON($errOutput)
@@ -129,7 +142,6 @@ class JenisInventarisController extends ApiController
         }
     }
 
-    /**update */
     public function update($id)
     {
         try {
@@ -138,36 +150,39 @@ class JenisInventarisController extends ApiController
                     'Invalid Request!', 
                     ResponseInterface::HTTP_BAD_REQUEST
                 );
-            
-            $rules = ['name' => 'required', 'desc' => 'required', 'is_active' => 'required'];
 
-            if (!$this->validate($rules))
+            if (!$this->validate([
+                'nama'  => 'required',
+                'nip'  => 'required',
+                'pangkat_golongan'  => 'required',
+                'jabatan'  => 'required',
+            ]))
                 throw new ApiAccessErrorException(
                     'Validation Error!', 
                     ResponseInterface::HTTP_UNPROCESSABLE_ENTITY,
                     $this->validator->getErrors()
                 );
-            
-            if(!$this->JIModel->isExist($id))
+
+            if(!$this->penanggungJawabModel->isExist($id))
                 throw new ApiAccessErrorException(
                     'Not Found!', 
                     ResponseInterface::HTTP_NOT_FOUND
                 );
 
-            $this->JIModel->setAuthenticatedUser(
+            $this->penanggungJawabModel->setAuthenticatedUser(
                 $this->request
                     ->header('Logged-User')
                     ->getValue()
             );
 
             $data = $this->request->getVar();
-            $isUpdated = $this->JIModel->updateData($id, (array) $data);
+            $isUpdated = $this->penanggungJawabModel->updateData($id, (array) $data);
             if (!$isUpdated)
                 throw new ApiAccessErrorException(
                     'Terjadi kesalahan!', 
                     ResponseInterface::HTTP_INTERNAL_SERVER_ERROR
                 );
-
+            
             return $this->response
                 ->setJSON([
                     'status'    => ResponseInterface::HTTP_OK,
@@ -179,7 +194,7 @@ class JenisInventarisController extends ApiController
             return $this->response
                 ->setJSON($errOutput)
                 ->setStatusCode($e->getCode());
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             $errOutput = $this->getErrorOutput($e, $this->request);
             return $this->response
                 ->setJSON($errOutput)
@@ -187,72 +202,22 @@ class JenisInventarisController extends ApiController
         }
     }
 
-    /**set_active */
-    public function setStatus($id)
-    {
+    public function delete($id) {
         try {
-            if (!$this->request->isAJAX())
-                throw new ApiAccessErrorException(
-                    'Invalid Request!', 
-                    ResponseInterface::HTTP_BAD_REQUEST
-                );
-            
-            $rules      = ['is_active' => 'required'];
-            $messages   = ['is_active' => ['required' => 'is_active is required']];
-    
-            if (!$this->validate($rules, $messages))
-                throw new ApiAccessErrorException(
-                    'Validation Error!', 
-                    ResponseInterface::HTTP_UNPROCESSABLE_ENTITY,
-                    $this->validator->getErrors()
-                );
-            
-            if(!$this->JIModel->isExist($id))
-                throw new ApiAccessErrorException(
-                    'Not Found!', 
-                    ResponseInterface::HTTP_NOT_FOUND,
-                    $this->validator->getErrors()
-                );
-            
-            $isActive = $this->request->getVar('is_active');
-            $isUpdated = $this->JIModel->setActive($id, $isActive);
-            if (!$isUpdated)
-                throw new ApiAccessErrorException(
-                    'Terjadi kesalahan!', 
-                    ResponseInterface::HTTP_INTERNAL_SERVER_ERROR
-                );
-
-            return $this->response
-                ->setJSON([
-                    'status'    => ResponseInterface::HTTP_OK,
-                    'message'   => 'Status telah diperbaharui!'
-                ])
-                ->setStatusCode(ResponseInterface::HTTP_OK);
-        } catch (ApiAccessErrorException $e) {
-            $errOutput = $this->getErrorOutput($e, $this->request);
-            return $this->response
-                ->setJSON($errOutput)
-                ->setStatusCode($e->getCode());
-        } catch (Exception $e) {
-            $errOutput = $this->getErrorOutput($e, $this->request);
-            return $this->response
-                ->setJSON($errOutput)
-                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    /**delete */
-    public function delete($id)
-    {
-        try {
-            if (!$this->JIModel->isExist((int) $id))
+            if (!$this->penanggungJawabModel->isExist((int) $id))
                 throw new ApiAccessErrorException(
                     'Not Found!', 
                     ResponseInterface::HTTP_NOT_FOUND,
                     $this->validator->getErrors()
                 );
 
-            $isDeleted = $this->JIModel->deleteData($id);
+            $this->penanggungJawabModel->setAuthenticatedUser(
+                $this->request
+                    ->header('Logged-User')
+                    ->getValue()
+            );
+
+            $isDeleted = $this->penanggungJawabModel->deleteData($id);
             if (!$isDeleted)
                 throw new ApiAccessErrorException(
                     'Terjadi kesalahan!', 
@@ -278,7 +243,6 @@ class JenisInventarisController extends ApiController
         }
     }
 
-    /**delete multiple */
     public function deleteMultiple()
     {
         try {
@@ -287,10 +251,8 @@ class JenisInventarisController extends ApiController
                     'Invalid Request!', 
                     ResponseInterface::HTTP_BAD_REQUEST
                 );
-        
-            $rules      = ['ids' => 'required'];
             
-            if (!$this->validate($rules))
+            if (!$this->validate(['ids' => 'required']))
                 throw new ApiAccessErrorException(
                     'Validation Error!', 
                     ResponseInterface::HTTP_UNPROCESSABLE_ENTITY,
@@ -298,8 +260,14 @@ class JenisInventarisController extends ApiController
                 );
 
             $ids = $this->request->getVar('ids');
-            
-            $affectedRows = $this->JIModel->deleteMultipleData($ids);
+                
+            $this->penanggungJawabModel->setAuthenticatedUser(
+                $this->request
+                    ->header('Logged-User')
+                    ->getValue()
+            );
+
+            $affectedRows = $this->penanggungJawabModel->deleteMultipleData($ids);
             if ($affectedRows != count($ids))
                 throw new ApiAccessErrorException(
                     'Terjadi kesalahan!', 
@@ -323,26 +291,6 @@ class JenisInventarisController extends ApiController
                 ->setJSON($errOutput)
                 ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
         }
-    }
-
-    /**restore */
-    public function restore($id)
-    {
-
-    }
-
-    /**restore multiple */
-
-    /**purge */
-    public function purge($id)
-    {
-
-    }
-
-    /**purge multiple */
-    public function purgeMultiple($id)
-    {
-
     }
 
     protected function buildCustomButtonActions($id)

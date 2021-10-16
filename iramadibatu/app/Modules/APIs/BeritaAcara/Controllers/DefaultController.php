@@ -3,6 +3,7 @@
 namespace App\Modules\APIs\BeritaAcara\Controllers;
 
 use App\Core\ApiController;
+use App\Exceptions\ApiAccessErrorException;
 use App\Modules\APIs\BeritaAcara\Models\BeritaAcaraModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
@@ -63,6 +64,109 @@ class DefaultController extends ApiController
         return $this->response
             ->setJSON($output)
             ->setStatusCode(ResponseInterface::HTTP_OK);
+    }
+
+    public function create()
+    {
+        try {
+            if (!$this->request->isAJAX())
+                throw new ApiAccessErrorException('Not ajax', ResponseInterface::HTTP_BAD_REQUEST);
+
+            if (!$this->validate([
+                'nama'  => 'required',
+                'nomor' => 'required',
+                'tanggal'   => 'required',
+
+                'pihak_1_nip'   => 'required',
+                'pihak_1_nama'  => 'required',
+                'pihak_1_pangkat'   => 'required',
+                'pihak_1_jabatan'   => 'required',
+
+                'pihak_2_nip'   => 'required',
+                'pihak_2_nama'  => 'required',
+                'pihak_2_pangkat'   => 'required',
+                'pihak_2_jabatan'   => 'required',
+            ]))
+                throw new ApiAccessErrorException(
+                    'Validation Error!', 
+                    ResponseInterface::HTTP_UNPROCESSABLE_ENTITY,
+                    $this->validator->getErrors()
+                );
+
+            $data = $this->request->getPost();
+            $media = $this->request->getFile('media');
+
+            $this->SKModel->setAuthenticatedUser(
+                $this->request
+                    ->header('Logged-User')
+                    ->getValue()
+            );
+
+            // 
+
+
+        } catch(ApiAccessErrorException $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode($e->getCode());
+        } catch(\Exception $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function update()
+    {
+        try {
+            
+        } catch(ApiAccessErrorException $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode($e->getCode());
+        } catch(\Exception $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function delete()
+    {
+        try {
+            
+        } catch(ApiAccessErrorException $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode($e->getCode());
+        } catch(\Exception $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function deleteMultiple()
+    {
+        try {
+            
+        } catch(ApiAccessErrorException $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode($e->getCode());
+        } catch(\Exception $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     private function buildCustomActionButtons(int $id)

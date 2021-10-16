@@ -8,6 +8,8 @@ $(function() {
         "responsive": true,
         "processing": true,
         "serverSide": true,
+        "pageLength": 25,
+        "dom": 'lrtip',
         "order": [],
         "drawCallback": function(settings) {
             if ($('#checkAll').is(":checked")) {

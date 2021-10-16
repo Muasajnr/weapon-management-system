@@ -41,7 +41,7 @@ class DefaultController extends ApiController
             $row[]      = "<div class=\"text-center\">
                                 <a href=\"javascript:void(0)\" 
                                     onclick=\"window.open('$showUrl', 'ShowStok', 'width=800, height=1200')\" 
-                                    class=\"btn btn-primary btn-sm\">
+                                    class=\"btn btn-primary btn-xs\">
                                     <i class=\"fas fa-eye mr-2\"></i>Lihat Detail
                                 </a>
                            </div>";

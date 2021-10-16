@@ -23,6 +23,11 @@ $(function() {
     // handles datatable
     const table = $('#data-stok').DataTable({
         "responsive": true,
+        "processing": true,
+        "serverSide": true,
+        "pageLength": 25,
+        "dom": 'lrtip',
+        "order": [],
         "drawCallback": function(settings) {
             if ($('#checkAll').is(":checked")) {
                 $('.multi_delete').prop('checked', true);
@@ -30,9 +35,6 @@ $(function() {
                 $('.multi_delete').prop('checked', false);
             }
         },
-        "processing": true,
-        "serverSide": true,
-        "order": [],
         "ajax": function(data, callback, settings) {
             const dataUrl = '<?=site_url('api/v1/dashboard/stok/datatables')?>';
 

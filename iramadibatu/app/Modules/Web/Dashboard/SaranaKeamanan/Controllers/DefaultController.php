@@ -60,4 +60,12 @@ class DefaultController extends WebController
             ]
         ]);
     }
+
+    public function senjataApiShow($id)
+    {
+
+        return $this->renderView('senjata_api/show', [
+            'page_title'        => 'Detail'
+        ]);
+    }
 }

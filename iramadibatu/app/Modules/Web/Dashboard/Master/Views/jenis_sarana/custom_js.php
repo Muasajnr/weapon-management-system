@@ -5,6 +5,11 @@ $(function() {
     // handles datatable
     const table = $('#data_jenis_sarana').DataTable({
         "responsive": true,
+        "processing": true,
+        "serverSide": true,
+        "pageLength": 25,
+        "dom": 'lrtip',
+        "order": [],
         "drawCallback": function(settings) {
             if ($('#checkAll').is(":checked")) {
                 $('.multi_delete').prop('checked', true);
@@ -12,9 +17,6 @@ $(function() {
                 $('.multi_delete').prop('checked', false);
             }
         },
-        "processing": true,
-        "serverSide": true,
-        "order": [],
         "ajax": function(data, callback, settings) {
             $.ajax({
                 type: 'POST',

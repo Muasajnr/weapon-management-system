@@ -44,7 +44,7 @@
                         </h3>
                     </div>
                     <h3>Selamat Datang!</h3>
-                    <p style="color:#ddd;" class="text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad unde nesciunt vitae, excepturi nihil voluptate libero neque cum, beatae suscipit quisquam, tempore in? Sit quis ea maxime molestias nihil ad?voluptatem dolorem facere voluptas nemo. Corporis!</p>
+                    <p style="color:#ddd;" class="text-justify">Sistem Database Inventarisasi Sarana Keamanan Digital Terpadu (IRAMADIBATU) adalah program pengembangan teknologi informasi pada bidang keamanan dan ketertiban pada Lembaga Pemasyarakatan Kelas 1 Batu Nusakambangan yang dapat diakses secara elektronik melalui Web</p>
                 </div>
             </div>
             <div class="col-md-4 p-0 d-flex align-items-center">

@@ -19,11 +19,22 @@
         <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')?>">
     <?php endif; ?>
 
+    <?php if (in_array('select2', $contentIncludeData)): ?>
+        <!-- Select2 -->
+        <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/select2/css/select2.min.css')?>">
+        <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css');?>">
+    <?php endif; ?>
+
     <?php if (in_array('datatable', $contentIncludeData)): ?>
         <!-- DataTables -->
         <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')?>">
         <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')?>">
         <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')?>">
+    <?php endif; ?>
+
+    <?php if (in_array('tempusdominus', $contentIncludeData)): ?>
+        <!-- Tempusdominus Bootstrap 4 -->
+        <link rel="stylesheet" href="<?=site_url('themes/AdminLTE/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')?>">
     <?php endif; ?>
 
     <!-- Custom Style -->
@@ -89,23 +100,34 @@
     <script src="<?=site_url('themes/AdminLTE/dist/js/adminlte.min.js')?>"></script>
     <!-- pace-progress -->
     <script src="<?=site_url('themes/AdminLTE/plugins/pace-progress/pace.min.js')?>"></script>
-
+    <!-- Sweetalert -->
     <?php if (in_array('sweetalert', $contentIncludeData)): ?>
         <?=$this->include('layouts/dashboard/content_inc/sweetalert_js.php')?>
     <?php endif; ?>
-
+    <!-- Datatable- -->
     <?php if (in_array('datatable', $contentIncludeData)): ?>
         <?=$this->include('layouts/dashboard/content_inc/datatable_js.php')?>
     <?php endif; ?>
-
+    <!-- Select2 -->
     <?php if (in_array('select2', $contentIncludeData)): ?>
         <?=$this->include('layouts/dashboard/content_inc/select2_js.php')?>
     <?php endif; ?>
-
+    <!-- JQuery Validation -->
     <?php if (in_array('jquery_validation', $contentIncludeData)): ?>
         <?=$this->include('layouts/dashboard/content_inc/jquery_validation_js.php')?>
     <?php endif; ?>
-
+    <!-- Moment -->
+    <?php if (in_array('moment', $contentIncludeData)): ?>
+        <script src="<?=site_url('themes/AdminLTE/plugins/moment/moment.min.js')?>"></script>
+    <?php endif; ?>
+    <!-- Tempusdominus -->
+    <?php if (in_array('tempusdominus', $contentIncludeData)): ?>
+        <script src="<?=site_url('themes/AdminLTE/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')?>"></script>
+    <?php endif; ?>
+    <!-- bs-custom-file-input -->
+    <?php if (in_array('bs-custom-file-input', $contentIncludeData)): ?>
+        <script src="<?=site_url('themes/AdminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js')?>"></script>
+    <?php endif; ?>
     <!-- Custom JS -->
     <script>
     $(document).ajaxStart(function() {

@@ -14,6 +14,8 @@ class DefaultController extends ApiController
     private $authModel;
 
     public function __construct() {
+        parent::__construct();
+        
         helper('jwt');
         $this->authModel = new AuthModel();
     }

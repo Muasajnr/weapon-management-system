@@ -127,11 +127,34 @@
                         <p>Distribusi Sarana</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="<?=route_to('berita_acara')?>" class="nav-link <?=service('uri')->getSegment(2) == 'berita_acara' ? 'active' : ''?>">
                         <i class="fas fa-file-signature nav-icon"></i>
                         <p>Berita Acara</p>
                     </a>
+                </li> -->
+                <li class="nav-item <?=service('uri')->getSegment(2) == 'berita_acara' ? 'menu-open' : ''?>">
+                    <a href="#" class="nav-link <?=service('uri')->getSegment(2) == 'berita_acara' ? 'active' : ''?>">
+                        <i class="nav-icon fas fa-file-signature"></i>
+                        <p>
+                            Berita Acara
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="<?=route_to('berita_acara')?>" class="nav-link <?=service('uri')->getSegment(2) == 'berita_acara' ? (service('uri')->getSegment(3) == 'list' ? 'active' : '') : ''?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?=route_to('penanggung_jawab')?>" class="nav-link <?=service('uri')->getSegment(2) == 'berita_acara' ? (service('uri')->getSegment(3) == 'penanggung_jawab' ? 'active' : '') : ''?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Penanggung Jawab</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-header text-warning">Perkembangan</li>
                 <li class="nav-item">
@@ -140,12 +163,12 @@
                         <p>Data Stok</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="<?=route_to('laporan')?>" class="nav-link <?=service('uri')->getSegment(2) == 'laporan' ? 'active' : ''?>">
                         <i class="fas fa-chart-line nav-icon"></i>
                         <p>Laporan</p>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-header text-danger">Tools</li>
                 <li class="nav-item">
                     <a href="<?=route_to('qr_scanner')?>" class="nav-link <?=service('uri')->getSegment(2) == 'qr_scanner' ? 'active' : ''?>">

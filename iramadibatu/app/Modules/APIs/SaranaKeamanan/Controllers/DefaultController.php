@@ -35,13 +35,13 @@ class DefaultController extends ApiController
             $row        = [];
             $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-item-id=\"".$item['id']."\"></div>";
             $row[]      = "<input type=\"hidden\" value=\"".$item['id']."\">{$num}.";
-            $row[]      = $item['nomor_sarana'];
-            $row[]      = $item['nomor_bpsa'];
-            $row[]      = $item['nama'];
-            $row[]      = $item['merk'];
-            $row[]      = $item['kondisi'];
-            $row[]      = $item['keterangan'];
-            $row[]      = $this->buildActionButtons($item['id']);
+            $row[]      = $item['nomor_sarana'] ?? '-';
+            $row[]      = $item['nomor_bpsa'] ?? '-';
+            $row[]      = $item['nama'] ?? '-';
+            $row[]      = $item['merk'] ?? '-';
+            $row[]      = $item['kondisi'] ?? '-';
+            $row[]      = $item['keterangan'] ?? '-';
+            $row[]      = $this->buildCustomButtonActions($item['id']);
 
             $resData[] = $row;
         }
@@ -64,13 +64,8 @@ class DefaultController extends ApiController
                 'id_berita_acara' => 'required',
                 'id_jenis_sarana' => 'required',
             ];
-
-            $messages = [
-                'id_berita_acara' => ['required' => 'Berita acara is required'],
-                'id_jenis_sarana' => ['required' => 'Jenis sarana is required']
-            ];
     
-            if (!$this->validate($rules, $messages))
+            if (!$this->validate($rules))
                 throw new ApiAccessErrorException(
                     'Validation Error!', 
                     ResponseInterface::HTTP_UNPROCESSABLE_ENTITY,
@@ -136,5 +131,18 @@ class DefaultController extends ApiController
                 ->setJSON($errOutput)
                 ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+
+    protected function buildCustomButtonActions($id)
+    {
+
+        $showUrl = site_url('dashboard/sarana_keamanan/senjata_api/'.$id.'/show');
+        return "<div class=\"text-center\">
+                    <a href=\"javascript:void(0)\" onclick=\"window.open('$showUrl', 'lihat_senjata', 'width=800, height=1200')\" class=\"btn btn-primary btn-xs mr-2\"><i class=\"fas fa-eye mr-1\"></i> Detail</a>
+                    <button type=\"button\" class=\"btn btn-info btn-xs mr-2\" data-item-id=\"$id\"><i class=\"fas fa-pencil-alt mr-1\"></i>Edit</button>
+                    <button type=\"button\" class=\"btn btn-danger btn-xs\" data-item-id=\"$id\"><i class=\"fas fa-trash mr-1\"></i>Hapus</button>
+                </div>";
     }
 }

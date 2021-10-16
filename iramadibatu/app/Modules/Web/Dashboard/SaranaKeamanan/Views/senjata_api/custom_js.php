@@ -3,7 +3,10 @@
 <script src="<?=site_url('themes/AdminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js')?>"></script>
 <script>
 $(function() {
-    const baseUrl = '<?=site_url('api/v1/dashboard/sarana_keamanan')?>';
+    const urlSaranaKeamanan = '<?=site_url('api/v1/dashboard/sarana_keamanan')?>';
+    const urlBeritaAcara = '<?=site_url('api/v1/dashboard/berita_acara')?>';
+    const urlJenisSarana = '<?=site_url('api/v1/dashboard/jenis_sarana')?>';
+    const urlMerkSarana = '<?=site_url('api/v1/dashboard/merk_sarana')?>';
 
     bsCustomFileInput.init()
 
@@ -12,6 +15,8 @@ $(function() {
         "responsive": true,
         "processing": true,
         "serverSide": true,
+        "pageLength": 25,
+        "dom": 'lrtip',
         "order": [],
         "drawCallback": function(settings) {
             if ($('#checkAll').is(":checked")) {
@@ -23,7 +28,7 @@ $(function() {
         "ajax": function(data, callback, settings) {
             $.ajax({
                 type: 'POST',
-                url: `${baseUrl}/datatables/1`,
+                url: `${urlSaranaKeamanan}/datatables/1`,
                 dataType: 'json',
                 data: data,
                 headers: {
@@ -82,9 +87,10 @@ $(function() {
             return null;
         },
         ajax: {
-            url: '<?=site_url('api/v1/dashboard/berita_acara')?>',
+            url: urlBeritaAcara,
             headers: {
-                'Authorization': 'Bearer ' + accessToken
+                'Authorization': 'Bearer ' + accessToken,
+                'X-Requested-With': 'XMLHttpRequest'
             },
             dataType: 'json',
             cache: true,
