@@ -10,6 +10,7 @@
                     <div class="card-body">
                         <div id="reader" width="600px"></div>
                         <div id="scan-result"></div>
+                        <button id="getqrcode-data">Find</button>
                     </div>
                 </div>
             </div>
@@ -24,43 +25,49 @@
 <script src="<?=site_url('assets/js/vendor/html5-qrcode.min.js')?>"></script>
 <script>
 $(function() {
+    var currentSecret = '';
+
+    $('#getqrcode-data').hide();
+
+    $('#getqrcode-data').click(function(e) {
+        $('#scan-result').html('Silahkan tunggu...');
+        $.ajax({
+            type: 'GET',
+            url: `${urlSaranaKeamanan}/qrcode?qrsecret=${currentSecret}`,
+            dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            success: function(res) {
+                console.log(res);
+
+                if (res.data != null) {
+                    $('#scan-result').html(
+                        `
+                        <dl class="row">
+                            <dt class="col-sm-4">Jenis Sarana : </dt>
+                            <dd class="col-sm-8">${res.data.nama_jenis_sarana}</dd>
+                        </dl>
+                        ${res.data}
+                        `
+                    );
+                }
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    });
+
     function onScanSuccess(decodedText, decodedResult) {
-        $('#scan-result').html(
-            `${decodedText}`
-        );
-
-        // $.ajax({
-        //     type: 'GET',
-        //     url: `${urlSaranaKeamanan}/qrcode?qrsecret=${decodedText}`,
-        //     dataType: 'json',
-        //     headers: {
-        //         'Authorization': 'Bearer ' + accessToken,
-        //         'X-Requested-With': 'XMLHttpRequest'
-        //     },
-        //     success: function(res) {
-        //         console.log(res);
-
-        //         if (res.data != null) {
-        //             $('#scan-result').html(
-        //                 `
-        //                 <dl class="row">
-        //                     <dt class="col-sm-4">Jenis Sarana : </dt>
-        //                     <dd class="col-sm-8">${res.data.nama_jenis_sarana}</dd>
-        //                 </dl>
-        //                 `
-        //             );
-        //         }
-        //     },
-        //     error: function(err) {
-        //         console.log(err);
-        //     }
-        // });
+        if (currentSecret !== decodedText) {
+            currentSecret = decodedText;
+            $('#getqrcode-data').trigger('click');
+        }
     }
 
-    function onScanFailure(error) {
-        console.warn(`Code scan error = ${error}`);
-        $('#scan-result').html(`<p>asdfasdf</p>`);
-    }
+    function onScanFailure(error) {}
 
     let html5QrcodeScanner = new Html5QrcodeScanner(
         "reader",
