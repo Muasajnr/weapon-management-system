@@ -25,34 +25,34 @@
 <script>
 $(function() {
     function onScanSuccess(decodedText, decodedResult) {
-        $('#scan-result').html('Tunggu sebentar...');
+        $('#scan-result').html('Mantap');
 
-        $.ajax({
-            type: 'GET',
-            url: `${urlSaranaKeamanan}/qrcode?qrsecret=${decodedText}`,
-            dataType: 'json',
-            headers: {
-                'Authorization': 'Bearer ' + accessToken,
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            success: function(res) {
-                console.log(res);
+        // $.ajax({
+        //     type: 'GET',
+        //     url: `${urlSaranaKeamanan}/qrcode?qrsecret=${decodedText}`,
+        //     dataType: 'json',
+        //     headers: {
+        //         'Authorization': 'Bearer ' + accessToken,
+        //         'X-Requested-With': 'XMLHttpRequest'
+        //     },
+        //     success: function(res) {
+        //         console.log(res);
 
-                if (res.data != null) {
-                    $('#scan-result').html(
-                        `
-                        <dl class="row">
-                            <dt class="col-sm-4">Jenis Sarana : </dt>
-                            <dd class="col-sm-8">${res.data.nama_jenis_sarana}</dd>
-                        </dl>
-                        `
-                    );
-                }
-            },
-            error: function(err) {
-                console.log(err);
-            }
-        });
+        //         if (res.data != null) {
+        //             $('#scan-result').html(
+        //                 `
+        //                 <dl class="row">
+        //                     <dt class="col-sm-4">Jenis Sarana : </dt>
+        //                     <dd class="col-sm-8">${res.data.nama_jenis_sarana}</dd>
+        //                 </dl>
+        //                 `
+        //             );
+        //         }
+        //     },
+        //     error: function(err) {
+        //         console.log(err);
+        //     }
+        // });
     }
 
     function onScanFailure(error) {
