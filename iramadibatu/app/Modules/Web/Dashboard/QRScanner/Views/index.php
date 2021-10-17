@@ -26,7 +26,8 @@
 <script>
 $(function() {
     var currentSecret = '';
-
+    var urlSaranaKeamanan = '<?=site_url('api/v1/dashboard/sarana_keamanan')?>';
+    
     $('#getqrcode-data').hide();
 
     $('#getqrcode-data').click(function(e) {
