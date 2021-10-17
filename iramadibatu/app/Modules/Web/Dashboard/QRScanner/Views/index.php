@@ -25,7 +25,9 @@
 <script>
 $(function() {
     function onScanSuccess(decodedText, decodedResult) {
-        $('#scan-result').html('Mantap');
+        $('#scan-result').html(
+            `${decodedText}`
+        );
 
         // $.ajax({
         //     type: 'GET',
@@ -57,7 +59,7 @@ $(function() {
 
     function onScanFailure(error) {
         console.warn(`Code scan error = ${error}`);
-        $('#scan-result').html(`<p>QQ Code tidak terbaca!</p>`);
+        $('#scan-result').html(`<p>asdfasdf</p>`);
     }
 
     let html5QrcodeScanner = new Html5QrcodeScanner(
