@@ -208,8 +208,8 @@ class SaranaKeamananModel extends CoreApiModel
         $this->defaultBuilder()->join('merk_sarana', 'sarana_keamanan.id_merk_sarana = merk_sarana.id', 'left');
         $this->defaultBuilder()->join('media', 'sarana_keamanan.id_media = media.id', 'left');
 
-        $this->defaultBuilder()->where('qrcode_secret', $qrsecret);
-        $this->defaultBuilder()->where('deleted_at', null);
+        $this->defaultBuilder()->where('sarana_keamanan.qrcode_secret', $qrsecret);
+        $this->defaultBuilder()->where('sarana_keamanan.deleted_at', null);
 
         return $this->defaultBuilder()->get()->getRowArray();
     }

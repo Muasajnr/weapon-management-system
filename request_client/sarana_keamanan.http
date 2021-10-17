@@ -1,7 +1,15 @@
 @base_url = http://iramadibatu.myprojects.com/api/v1/dashboard/sarana_keamanan
-@active_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzQzOTE5MzQsIm5iZiI6MTYzNDM5MTk0NCwiZXhwIjoxNjM0Mzk5MTM0LCJkYXRhIjp7ImlkIjoiMjkiLCJmdWxsbmFtZSI6InRlc3QgdXNlciAxNyIsInVzZXJuYW1lIjoidGVzdHVzZXIxNyIsImVtYWlsIjoidGVzdHVzZXIxN0BleGFtcGxlLmNvbSIsImxldmVsIjoiYWRtaW4ifX0.bou8I6GHoMdBDOF46onxcA8f3sFATZ-XlYsSCXA9zic
+@active_token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaGVfQ2xhaW0xIiwiYXVkIjoiVGhlX0F1ZDEiLCJpYXQiOjE2MzQ0NTg1MTcsIm5iZiI6MTYzNDQ1ODUyNywiZXhwIjoxNjM0NDY1NzE3LCJkYXRhIjp7ImlkIjoiMjkiLCJmdWxsbmFtZSI6InRlc3QgdXNlciAxNyIsInVzZXJuYW1lIjoidGVzdHVzZXIxNyIsImVtYWlsIjoidGVzdHVzZXIxN0BleGFtcGxlLmNvbSIsImxldmVsIjoiYWRtaW4ifX0.In8XFd_bTC6d7exe274OAFqwwMqnDyqyXgSaYQuQdQQ
 
 get {{base_url}}/31
+Authorization: Bearer {{active_token}}
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+###
+
+
+get {{base_url}}/qrcode/data?qrsecret=616bad56a5bde
 Authorization: Bearer {{active_token}}
 Content-Type: application/json
 X-Requested-With: XMLHttpRequest

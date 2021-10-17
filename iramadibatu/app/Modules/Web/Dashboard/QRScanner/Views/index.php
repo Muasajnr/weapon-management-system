@@ -34,7 +34,7 @@ $(function() {
         $('#scan-result').html('Silahkan tunggu...');
         $.ajax({
             type: 'GET',
-            url: `${urlSaranaKeamanan}/qrcode?qrsecret=${currentSecret}`,
+            url: `${urlSaranaKeamanan}/qrcode/data?qrsecret=${currentSecret}`,
             dataType: 'json',
             headers: {
                 'Authorization': 'Bearer ' + accessToken,

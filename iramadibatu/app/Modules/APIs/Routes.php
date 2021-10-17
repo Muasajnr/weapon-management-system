@@ -54,7 +54,7 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
         $routes->group('sarana_keamanan', function($routes) {
             $routes->get('/', 'SaranaKeamanan\Controllers\DefaultController::index');
             $routes->get('(:segment)', 'SaranaKeamanan\Controllers\DefaultController::get/$1'); // works
-            $routes->get('qrcode', 'SaranaKeamanan\Controllers\DefaultController::getByQrCode'); // works
+            $routes->get('qrcode/data', 'SaranaKeamanan\Controllers\DefaultController::getByQrCode'); // works
 
             $routes->post('datatable', 'SaranaKeamanan\Controllers\DefaultController::datatable'); // works
             $routes->post('/', 'SaranaKeamanan\Controllers\DefaultController::create'); // works
