@@ -12,16 +12,16 @@
                     <div class="card-body">
                         <input type="hidden" name="edit_id">
                         <div class="form-group">
-                            <label id="select2-data-berita-acara">Berita Acara</label>
-                            <select id="select2-data-berita-acara" name="edit_berita_acara" class="form-control select2" style="width: 100%;"></select>
+                            <label for="select2-data-berita-acara-edit">Berita Acara</label>
+                            <select id="select2-data-berita-acara-edit" name="edit_berita_acara" class="form-control select2" style="width: 100%;"></select>
                         </div>
                         <div class="form-group">
-                            <label for="select2-data-jenis-sarana">Jenis Senjata</label>
-                            <select id="select2-data-jenis-sarana" name="edit_jenis_senjata" class="form-control select2" style="width: 100%;"></select>
+                            <label for="select2-data-jenis-sarana-edit">Jenis Senjata</label>
+                            <select id="select2-data-jenis-sarana-edit" name="edit_jenis_senjata" class="form-control select2" style="width: 100%;"></select>
                         </div>
                         <div class="form-group">
-                            <label for="select2-data-merk-sarana">Merk Senjata</label>
-                            <select id="select2-data-merk-sarana" name="edit_merk_senjata" class="form-control select2" style="width: 100%;"></select>
+                            <label for="select2-data-merk-sarana-edit">Merk Senjata</label>
+                            <select id="select2-data-merk-sarana-edit" name="edit_merk_senjata" class="form-control select2" style="width: 100%;"></select>
                         </div>
                         <div class="form-group">
                             <label for="edit_no_senjata">Nomor Senjata</label>
@@ -42,24 +42,29 @@
                                 <label class="form-check-label">Rusak</label>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="edit_media_senjata">Unggah File ( .png | .jpeg ) , Max : <strong>500KB</strong></label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" name="edit_media_senjata" class="custom-file-input" id="edit_media_senjata">
-                                    <label class="custom-file-label" for="edit_media_senjata">Pilih file</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="edit_media_senjata">Unggah File ( .png | .jpeg ) , Max : <strong>500KB</strong></label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" name="edit_media_senjata" class="custom-file-input" id="edit_media_senjata">
+                                            <label class="custom-file-label" for="edit_media_senjata">Pilih file</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Upload</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">Upload</span>
-                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label for="">Media Saat Ini : </label>
+                                <div class="media-area"></div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="edit_keterangan">Keterangan</label>
                             <textarea id="edit_keterangan" name="edit_keterangan" class="form-control" rows="3" placeholder="Masukkan Keterangan..."></textarea>
-                        </div>
-                        <div class="form-group text-center mb-0">
-                            <button type="submit" class="btn btn-primary">Edit</button>
                         </div>
                     </div>
                     <!-- /.card-body -->

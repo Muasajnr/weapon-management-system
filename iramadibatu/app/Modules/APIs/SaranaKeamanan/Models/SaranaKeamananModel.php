@@ -37,7 +37,17 @@ class SaranaKeamananModel extends CoreApiModel
             merk_sarana.name as merk,
             sarana_keamanan.kondisi,
             sarana_keamanan.keterangan,
-            sarana_keamanan.created_at
+            sarana_keamanan.created_at,
+
+            media.file_full_path as media_file_full_path,
+            media.file_extension as media_file_extension,
+            berita_acara.id as id_berita_acara,
+            berita_acara.nama as judul_berita_acara,
+            berita_acara.nomor as nomor_berita_acara,
+            jenis_sarana.id as id_jenis_sarana,
+            jenis_sarana.name as nama_jenis_sarana,
+            merk_sarana.id as id_merk_sarana,
+            merk_sarana.name as nama_merk_sarana
             '
         );
 
@@ -45,6 +55,7 @@ class SaranaKeamananModel extends CoreApiModel
         $this->defaultBuilder()->join('jenis_sarana', 'sarana_keamanan.id_jenis_sarana = jenis_sarana.id', 'left');
         $this->defaultBuilder()->join('merk_sarana', 'sarana_keamanan.id_merk_sarana = merk_sarana.id', 'left');
         $this->defaultBuilder()->join('media', 'sarana_keamanan.id_media = media.id', 'left');
+        $this->defaultBuilder()->join('berita_acara', 'berita_acara.id = sarana_keamanan.id_berita_acara', 'left');
 
         foreach($this->columnSearch as $column) {
             if (isset($dtParams['search'])) {
@@ -91,6 +102,9 @@ class SaranaKeamananModel extends CoreApiModel
      */
     public function customCountTotalDatatable(array $dtParams, bool $history = false)
     {
+        $this->defaultBuilder()->join('jenis_sarana', 'sarana_keamanan.id_jenis_sarana = jenis_sarana.id', 'left');
+        $this->defaultBuilder()->join('merk_sarana', 'sarana_keamanan.id_merk_sarana = merk_sarana.id', 'left');
+
         $i = 0;
         foreach($this->columnSearch as $column) {
             if (isset($dtParams['search']) && !empty($dtParams['search'])) {
@@ -116,6 +130,8 @@ class SaranaKeamananModel extends CoreApiModel
             $this->defaultBuilder()->where('sarana_keamanan.deleted_at is not null');
         
         $this->defaultBuilder()->where('sarana_keamanan.id_jenis_inventaris', $dtParams['id_jenis_inventaris'] > 3 ? 3 : $dtParams['id_jenis_inventaris']);
+        $this->defaultBuilder()->where('jenis_sarana.deleted_at', null);
+        $this->defaultBuilder()->where('merk_sarana.deleted_at', null);
 
         return $this->defaultBuilder()
                     ->countAllResults();
@@ -132,12 +148,17 @@ class SaranaKeamananModel extends CoreApiModel
      */
     public function customCountTotalFilteredDatatable(array $dtParams, bool $history = false) : int
     {
+        $this->defaultBuilder()->join('jenis_sarana', 'sarana_keamanan.id_jenis_sarana = jenis_sarana.id', 'left');
+        $this->defaultBuilder()->join('merk_sarana', 'sarana_keamanan.id_merk_sarana = merk_sarana.id', 'left');
+
         if (!$history)
-            $this->defaultBuilder()->where('deleted_at', null);
+            $this->defaultBuilder()->where('sarana_keamanan.deleted_at', null);
         else
-            $this->defaultBuilder()->where('deleted_at is not null');
+            $this->defaultBuilder()->where('sarana_keamanan.deleted_at is not null');
 
         $this->defaultBuilder()->where('sarana_keamanan.id_jenis_inventaris', $dtParams['id_jenis_inventaris'] > 3 ? 3 : $dtParams['id_jenis_inventaris']);
+        $this->defaultBuilder()->where('jenis_sarana.deleted_at', null);
+        $this->defaultBuilder()->where('merk_sarana.deleted_at', null);
         
         return $this->defaultBuilder()->countAllResults();
     }

@@ -57,9 +57,6 @@
                             <label for="keterangan">Keterangan</label>
                             <textarea id="keterangan" name="keterangan" class="form-control" rows="3" placeholder="Masukkan Keterangan..."></textarea>
                         </div>
-                        <div class="form-group text-center mb-0">
-                            <button type="submit" class="btn btn-primary">Tambah</button>
-                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>

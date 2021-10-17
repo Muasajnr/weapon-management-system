@@ -34,6 +34,18 @@ class DefaultController extends ApiController
     // datatable
     public function datatable()
     {
+        // const idBeritaAcara = $(rowData[1]).find('input[name="id_berita_acara"]').val();
+        // const judulBeritaAcara = $(rowData[1]).find('input[name="judul_berita_acara"]').val();
+        // const nomorBeritaAcara = $(rowData[1]).find('input[name="nomor_berita_acara"]').val();
+
+        // const idJenisSarana = $(rowData[1]).find('input[name="id_jenis_sarana"]').val();
+        // const namaJenisSarana = $(rowData[1]).find('input[name="nama_jenis_sarana"]').val();
+
+        // const idMerkSarana = $(rowData[1]).find('input[name="id_merk_sarana"]').val();
+        // const namaMerkSarana = $(rowData[1]).find('input[name="nama_merk_sarana"]').val();
+
+        // const mediaFileFullPath = $(rowData[1]).find('input[name="media_file_full_path"]').val();
+        // const mediaFileExtension = $(rowData[1]).find('input[name="media_file_extension"]').val();
         $posts = $this->request->getPost();
         if (empty($posts)) {
             $posts = (array) $this->request->getVar();
@@ -48,7 +60,20 @@ class DefaultController extends ApiController
 
             $row        = [];
             $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-item-id=\"".$item['id']."\"></div>";
-            $row[]      = "<input type=\"hidden\" value=\"".$item['id']."\">{$num}.";
+            $row[]      = "
+                <div class=\"text-center\">
+                    <input type=\"hidden\" name=\"id\" value=\"".$item['id']."\">{$num}.
+                    <input type=\"hidden\" name=\"id_berita_acara\" value=\"".$item['id_berita_acara']."\">
+                    <input type=\"hidden\" name=\"judul_berita_acara\" value=\"".$item['judul_berita_acara']."\">
+                    <input type=\"hidden\" name=\"nomor_berita_acara\" value=\"".$item['nomor_berita_acara']."\">
+                    <input type=\"hidden\" name=\"id_jenis_sarana\" value=\"".$item['id_jenis_sarana']."\">
+                    <input type=\"hidden\" name=\"nama_jenis_sarana\" value=\"".$item['nama_jenis_sarana']."\">
+                    <input type=\"hidden\" name=\"id_merk_sarana\" value=\"".$item['id_merk_sarana']."\">
+                    <input type=\"hidden\" name=\"nama_merk_sarana\" value=\"".$item['nama_merk_sarana']."\">
+                    <input type=\"hidden\" name=\"media_file_full_path\" value=\"".$item['media_file_full_path']."\">
+                    <input type=\"hidden\" name=\"media_file_extension\" value=\"".$item['media_file_extension']."\">
+                </div>
+            ";
             $row[]      = $item['nomor_sarana'] ?? '-';
             $row[]      = $item['nomor_bpsa'] ?? '-';
             $row[]      = $item['nama'] ?? '-';
@@ -323,6 +348,7 @@ class DefaultController extends ApiController
     {
         $showUrl = site_url('dashboard/sarana_keamanan/'.$id.'/show');
         return "<div class=\"text-center\">
+                    <button type=\"button\" class=\"btn btn-warning btn-xs mr-2\" data-item-id=\"$id\"><i class=\"fas fa-qrcode mr-1\"></i>QR Code</button>
                     <a href=\"javascript:void(0)\" onclick=\"window.open('$showUrl', 'lihat_senjata', 'width=800, height=1200')\" class=\"btn btn-primary btn-xs mr-2\"><i class=\"fas fa-eye mr-1\"></i> Detail</a>
                     <button type=\"button\" class=\"btn btn-info btn-xs mr-2\" data-item-id=\"$id\"><i class=\"fas fa-pencil-alt mr-1\"></i>Edit</button>
                     <button type=\"button\" class=\"btn btn-danger btn-xs\" data-item-id=\"$id\"><i class=\"fas fa-trash mr-1\"></i>Hapus</button>

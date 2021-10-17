@@ -76,6 +76,7 @@
 
 <?php echo view($moduleViewPath.'senjata_api/add') ?>
 <?php echo view($moduleViewPath.'senjata_api/edit') ?>
+<?php echo view($moduleViewPath.'senjata_api/qrcode') ?>
 
 <?=$this->endSection()?>
 

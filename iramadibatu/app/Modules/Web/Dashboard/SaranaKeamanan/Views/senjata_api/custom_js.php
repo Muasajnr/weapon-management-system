@@ -1,6 +1,6 @@
 <?=$this->section('custom-js')?>
 <!-- bs-custom-file-input -->
-<script src="<?=site_url('themes/AdminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js')?>"></script>
+<script src="<?=site_url('assets/js/vendor/qrcode.min.js')?>"></script>
 <script>
 $(function() {
     const urlSaranaKeamanan = '<?=site_url('api/v1/dashboard/sarana_keamanan')?>';
@@ -26,9 +26,11 @@ $(function() {
             }
         },
         "ajax": function(data, callback, settings) {
+            data.id_jenis_inventaris = 1;
+
             $.ajax({
                 type: 'POST',
-                url: `${urlSaranaKeamanan}/datatables/1`,
+                url: `${urlSaranaKeamanan}/datatable`,
                 dataType: 'json',
                 data: data,
                 headers: {
@@ -56,9 +58,10 @@ $(function() {
         ],
     });
 
+    // handle list berita acara
     $('#select2-data-berita-acara').select2({
         // allowClear: true,
-        minimumResultsForSearch: Infinity,
+        // minimumResultsForSearch: Infinity,
         placeholder: 'Pilih berita acara',
         theme: 'bootstrap4',
         escapeMarkup: function (markup) { return markup; },
@@ -66,25 +69,6 @@ $(function() {
             noResults: function () {
                 return `<button type="button" class="btn btn-sm btn-default" href="http://google.com/"><i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Berita Acara</button>`;
             }
-        },
-        matcher: function(params, data)
-        {
-            if ($.trim(params.term) === '') {
-                return data;
-            }
-
-            if (typeof data.text === 'undefined') {
-                return null;
-            }
-
-            if (data.text.indexOf(params.term) > -1) {
-                var modifiedData = $.extend({}, data, true);
-                // modifiedData.text += ' (matched)';
-
-                return modifiedData;
-            }
-
-            return null;
         },
         ajax: {
             url: urlBeritaAcara,
@@ -110,9 +94,10 @@ $(function() {
         }
     });
 
+    // handle list jenis sarana
     $('#select2-data-jenis-sarana').select2({
         // allowClear: true,
-        minimumResultsForSearch: Infinity,
+        // minimumResultsForSearch: Infinity,
         placeholder: 'Pilih jenis sarana',
         theme: 'bootstrap4',
         escapeMarkup: function (markup) { return markup; },
@@ -143,8 +128,10 @@ $(function() {
         }
     });
     
+    // handle list merk sarana
     $('#select2-data-merk-sarana').select2({
         // allowClear: true,
+        // minimumResultsForSearch: Infinity,
         theme: 'bootstrap4',
         placeholder: 'Pilih merk sarana',
         escapeMarkup: function (markup) { return markup; },
@@ -175,6 +162,111 @@ $(function() {
         }
     });
 
+    // handle list berita acara edit
+    $('#select2-data-berita-acara-edit').select2({
+        // allowClear: true,
+        // minimumResultsForSearch: Infinity,
+        placeholder: 'Pilih berita acara',
+        theme: 'bootstrap4',
+        escapeMarkup: function (markup) { return markup; },
+        language: {
+            noResults: function () {
+                return `<button type="button" class="btn btn-sm btn-default" href="http://google.com/"><i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Berita Acara</button>`;
+            }
+        },
+        ajax: {
+            url: urlBeritaAcara,
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            dataType: 'json',
+            cache: true,
+            processResults: function(data, params) {
+                const results = [];
+                data.data.forEach(function(item) {
+                    results.push({
+                        text: `<strong>${item.nomor}</strong> - ${item.nama}`,
+                        id: item.id
+                    });
+                });
+
+                return {
+                    results: results
+                }
+            }
+        }
+    });
+
+    // handle list jenis sarana edit
+    $('#select2-data-jenis-sarana-edit').select2({
+        // allowClear: true,
+        // minimumResultsForSearch: Infinity,
+        placeholder: 'Pilih jenis sarana',
+        theme: 'bootstrap4',
+        escapeMarkup: function (markup) { return markup; },
+        language: {
+            noResults: function () {
+                return `<button type="button" class="btn btn-sm btn-default" href="http://google.com/"><i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah</button>`;
+            }
+        },
+        ajax: {
+            url: '<?=site_url('api/v1/dashboard/master/jenis_sarana')?>',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            },
+            dataType: 'json',
+            cache: true,
+            processResults: function(data, params) {
+                const results = [];
+                data.data.forEach(function(item) {
+                    results.push({
+                        text: item.name,
+                        id: item.id
+                    });
+                });
+                return {
+                    results: results
+                }
+            }
+        }
+    });
+    
+    // handle list merk sarana edit
+    $('#select2-data-merk-sarana-edit').select2({
+        // allowClear: true,
+        // minimumResultsForSearch: Infinity,
+        theme: 'bootstrap4',
+        placeholder: 'Pilih merk sarana',
+        escapeMarkup: function (markup) { return markup; },
+        language: {
+            noResults: function () {
+                return `<button type="button" class="btn btn-sm btn-default" href="http://google.com/"><i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah</button>`;
+            }
+        },
+        ajax: {
+            url: '<?=site_url('api/v1/dashboard/master/merk_sarana')?>',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            },
+            dataType: 'json',
+            cache: true,
+            processResults: function(data, params) {
+                const results = [];
+                data.data.forEach(function(item) {
+                    results.push({
+                        text: item.name,
+                        id: item.id
+                    });
+                });
+                return {
+                    results: results
+                }
+            }
+        }
+    });
+
+    // handle adding form
     $('#form-add-senjata-api').validate({
         submitHandler: function(form, event) {
             event.preventDefault();
@@ -188,9 +280,9 @@ $(function() {
             newData.append("kondisi", $(form).find('input[name="kondisi"]:checked').val());
 
             if ($(form).find('#media_senjata').get(0).files[0] !== undefined) {
-                newData.append("media_sarana", $(form).find('#media_senjata').get(0).files[0]);
+                newData.append("media", $(form).find('#media_senjata').get(0).files[0]);
 
-                if ((newData.get('media_sarana').size / 1000) > 512) {
+                if ((newData.get('media').size / 1000) > 512) {
                 Swal.fire({
                         icon: 'error',
                         title: 'Terjadi error!',
@@ -203,11 +295,14 @@ $(function() {
             }
             
             newData.append("keterangan", $(form).find('textarea#keterangan').val());
+            newData.append("id_jenis_inventaris", 1);
+            newData.append("jumlah", 1);
+            newData.append("satuan", "unit");
 
-            const createUrl = '<?=site_url('api/v1/dashboard/sarana_keamanan/create/1')?>';
+            const createUrl = '<?=site_url('api/v1/dashboard/sarana_keamanan')?>';
             $.ajax({
                 type: 'POST',
-                url: createUrl,
+                url: urlSaranaKeamanan,
                 dataType: 'json',
                 data: newData,
                 mimeType: 'multipart/form-data',
@@ -277,7 +372,82 @@ $(function() {
         }
     });
 
-    
+    // set edit data to modal
+    $('#data_senjata_api tbody').on('click', 'tr td button.btn-info', function(e) {
+        e.preventDefault();
+        
+        const rowData = table.row($(this).parent().parent()).data();
+        const itemId = parseInt($(rowData[1]).find('input[name="id"]').val());
+        
+        const idBeritaAcara = $(rowData[1]).find('input[name="id_berita_acara"]').val();
+        const judulBeritaAcara = $(rowData[1]).find('input[name="judul_berita_acara"]').val();
+        const nomorBeritaAcara = $(rowData[1]).find('input[name="nomor_berita_acara"]').val();
+
+        const idJenisSarana = $(rowData[1]).find('input[name="id_jenis_sarana"]').val();
+        const namaJenisSarana = $(rowData[1]).find('input[name="nama_jenis_sarana"]').val();
+
+        const idMerkSarana = $(rowData[1]).find('input[name="id_merk_sarana"]').val();
+        const namaMerkSarana = $(rowData[1]).find('input[name="nama_merk_sarana"]').val();
+
+        const mediaFileFullPath = $(rowData[1]).find('input[name="media_file_full_path"]').val();
+        const mediaFileExtension = $(rowData[1]).find('input[name="media_file_extension"]').val();
+
+        $('input#edit_id').val(itemId);
+        $("select#select2-data-berita-acara-edit").select2("trigger", "select", {
+            data: { id: idBeritaAcara, text: `<strong>${nomorBeritaAcara}</strong> - ${judulBeritaAcara}` }
+        });
+        $("select#select2-data-jenis-sarana-edit").select2("trigger", "select", {
+            data: { id: idJenisSarana, text: `${namaJenisSarana}` }
+        });
+        $("select#select2-data-merk-sarana-edit").select2("trigger", "select", {
+            data: { id: idMerkSarana, text: `${namaMerkSarana}` }
+        });
+
+        $('#modal-edit-senjata-api .col-6 .media-area').html(
+            mediaFileExtension == 'pdf' ? 
+            `
+                <embed src="<?=site_url()?>/${mediaFileFullPath}" type="application/pdf" width="100%" height="400">
+            `
+            : 
+            `
+                <img src="<?=site_url()?>/${mediaFileFullPath}" alt="${rowData[3]}" width="100%">
+            `
+        );
+
+        $('input#edit_no_senjata').val(rowData[2]);
+        $('input#edit_no_bpsa').val(rowData[3]);
+        $('textarea#edit_keterangan').val(rowData[7]);
+        
+        if (rowData[6] === 'baik')
+            $('input[name="edit_kondisi"][value="baik"]').prop('checked', true);
+        else
+            $('input[name="edit_kondisi"][value="rusak"]').prop('checked', true);
+        
+        $('#modal-edit-senjata-api').modal('toggle');
+    });
+
+    // qrcode button clicked
+    $('#data_senjata_api tbody').on('click', 'tr td button.btn-warning', function(e) {
+        $('#modal-qrcode-senjata-api').modal('toggle');
+    });
+
+    // generate qrcode
+    new QRCode(document.getElementById('qrcode-senjata-api'), "ma name jeff");
+
+    // print qr code
+    $('#print-qrcode').click(function(e) {
+        var prntPage = window.open('', '', 'height=1200,width=800');
+        var qrCodeDiv = $('#qrcode-senjata-api').html();
+        prntPage.document.write(
+            `
+            ${qrCodeDiv}
+            `
+        );
+        prntPage.document.close();
+        prntPage.focus();
+        prntPage.print();
+        prntPage.close();
+    });
 });
 </script>
 
