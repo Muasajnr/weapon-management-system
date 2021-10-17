@@ -9,6 +9,9 @@
                 <div class="card card-outline card-primary">
                     <div class="card-body">
                         <div id="reader" width="600px"></div>
+                        <div id="scan-result">
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -26,12 +29,25 @@ $(function() {
     function onScanSuccess(decodedText, decodedResult) {
         // handle the scanned code as you like, for example:
         console.log(`Code matched = ${decodedText}`, decodedResult);
+        $('#scan-result').html(
+            `
+            <h3>Data : </h3>
+            <p>${decodedText}</p>
+            <p>${decodedResult}</p>
+            `
+        );
     }
 
     function onScanFailure(error) {
         // handle scan failure, usually better to ignore and keep scanning.
         // for example:
         console.warn(`Code scan error = ${error}`);
+        $('#scan-result').html(
+            `
+            <h3>Data : </h3>
+            <p>something went wrong!</p>
+            `
+        );
     }
 
     let html5QrcodeScanner = new Html5QrcodeScanner(
