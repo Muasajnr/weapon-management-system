@@ -38,6 +38,7 @@ class SaranaKeamananModel extends CoreApiModel
             sarana_keamanan.kondisi,
             sarana_keamanan.keterangan,
             sarana_keamanan.created_at,
+            sarana_keamanan.qrcode_secret,
 
             media.file_full_path as media_file_full_path,
             media.file_extension as media_file_extension,
@@ -177,6 +178,40 @@ class SaranaKeamananModel extends CoreApiModel
         $result = $this->builder('media')
                         ->insert($data);
         return $getId ? $this->db->insertID() : $result;
+    }
+
+    public function getByQR(string $qrsecret)
+    {
+        $this->defaultBuilder()->select(
+            '
+            sarana_keamanan.id,
+            sarana_keamanan.nomor_bpsa,
+            sarana_keamanan.nomor_sarana,
+            sarana_keamanan.kondisi,
+            sarana_keamanan.keterangan,
+            sarana_keamanan.created_at,
+            sarana_keamanan.qrcode_secret,
+
+            media.file_full_path as media_file_full_path,
+            media.file_extension as media_file_extension,
+
+            jenis_inventaris.name as jenis_inventaris,
+            jenis_sarana.id as id_jenis_sarana,
+            jenis_sarana.name as nama_jenis_sarana,
+            merk_sarana.id as id_merk_sarana,
+            merk_sarana.name as nama_merk_sarana
+            '
+        );
+
+        $this->defaultBuilder()->join('jenis_inventaris', 'sarana_keamanan.id_jenis_inventaris = jenis_inventaris.id', 'left');
+        $this->defaultBuilder()->join('jenis_sarana', 'sarana_keamanan.id_jenis_sarana = jenis_sarana.id', 'left');
+        $this->defaultBuilder()->join('merk_sarana', 'sarana_keamanan.id_merk_sarana = merk_sarana.id', 'left');
+        $this->defaultBuilder()->join('media', 'sarana_keamanan.id_media = media.id', 'left');
+
+        $this->defaultBuilder()->where('qrcode_secret', $qrsecret);
+        $this->defaultBuilder()->where('deleted_at', null);
+
+        return $this->defaultBuilder()->get()->getRowArray();
     }
 
     private function convertType(string $type) : string {

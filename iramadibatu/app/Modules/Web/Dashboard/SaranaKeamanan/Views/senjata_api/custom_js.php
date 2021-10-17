@@ -426,13 +426,20 @@ $(function() {
         $('#modal-edit-senjata-api').modal('toggle');
     });
 
+    // generate qrcode
+    var qrcode = new QRCode(document.getElementById('qrcode-senjata-api'), "init_value");
+
     // qrcode button clicked
     $('#data_senjata_api tbody').on('click', 'tr td button.btn-warning', function(e) {
+        const rowData = table.row($(this).parent().parent()).data();
+        const itemId = parseInt($(rowData[1]).find('input[name="id"]').val());
+        const qrCodeSecret = $(rowData[1]).find('input[name="qrcode_secret"]').val();
+
+        qrcode.clear();
+        qrcode.makeCode(qrCodeSecret)
+
         $('#modal-qrcode-senjata-api').modal('toggle');
     });
-
-    // generate qrcode
-    new QRCode(document.getElementById('qrcode-senjata-api'), "ma name jeff");
 
     // print qr code
     $('#print-qrcode').click(function(e) {

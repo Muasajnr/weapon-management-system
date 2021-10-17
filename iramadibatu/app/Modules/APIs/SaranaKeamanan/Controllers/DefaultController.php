@@ -31,21 +31,23 @@ class DefaultController extends ApiController
             ->setStatusCode(ResponseInterface::HTTP_OK);
     }
 
+    public function getByQrCode()
+    {
+        $qrsecret = $this->request->getGet('qrsecret');
+        if (!is_null($qrsecret)) {
+            $data = $this->SKModel->getByQR($qrsecret);
+                return $this->response
+                    ->setJSON([
+                        'status'    => ResponseInterface::HTTP_OK,
+                        'data'      => $data
+                    ])
+                    ->setStatusCode(ResponseInterface::HTTP_OK);
+        }
+    }
+
     // datatable
     public function datatable()
     {
-        // const idBeritaAcara = $(rowData[1]).find('input[name="id_berita_acara"]').val();
-        // const judulBeritaAcara = $(rowData[1]).find('input[name="judul_berita_acara"]').val();
-        // const nomorBeritaAcara = $(rowData[1]).find('input[name="nomor_berita_acara"]').val();
-
-        // const idJenisSarana = $(rowData[1]).find('input[name="id_jenis_sarana"]').val();
-        // const namaJenisSarana = $(rowData[1]).find('input[name="nama_jenis_sarana"]').val();
-
-        // const idMerkSarana = $(rowData[1]).find('input[name="id_merk_sarana"]').val();
-        // const namaMerkSarana = $(rowData[1]).find('input[name="nama_merk_sarana"]').val();
-
-        // const mediaFileFullPath = $(rowData[1]).find('input[name="media_file_full_path"]').val();
-        // const mediaFileExtension = $(rowData[1]).find('input[name="media_file_extension"]').val();
         $posts = $this->request->getPost();
         if (empty($posts)) {
             $posts = (array) $this->request->getVar();
@@ -72,6 +74,7 @@ class DefaultController extends ApiController
                     <input type=\"hidden\" name=\"nama_merk_sarana\" value=\"".$item['nama_merk_sarana']."\">
                     <input type=\"hidden\" name=\"media_file_full_path\" value=\"".$item['media_file_full_path']."\">
                     <input type=\"hidden\" name=\"media_file_extension\" value=\"".$item['media_file_extension']."\">
+                    <input type=\"hidden\" name=\"qrcode_secret\" value=\"".$item['qrcode_secret']."\">
                 </div>
             ";
             $row[]      = $item['nomor_sarana'] ?? '-';

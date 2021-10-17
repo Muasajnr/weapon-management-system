@@ -9,9 +9,7 @@
                 <div class="card card-outline card-primary">
                     <div class="card-body">
                         <div id="reader" width="600px"></div>
-                        <div id="scan-result">
-
-                        </div>
+                        <div id="scan-result"></div>
                     </div>
                 </div>
             </div>
@@ -27,27 +25,39 @@
 <script>
 $(function() {
     function onScanSuccess(decodedText, decodedResult) {
-        // handle the scanned code as you like, for example:
-        console.log(`Code matched = ${decodedText}`, decodedResult);
-        $('#scan-result').html(
-            `
-            <h3>Data : </h3>
-            <p>${decodedText}</p>
-            <p>${decodedResult}</p>
-            `
-        );
+        $('#scan-result').html('Tunggu sebentar...');
+
+        $.ajax({
+            type: 'GET',
+            url: `${urlSaranaKeamanan}/qrcode?qrsecret=${decodedText}`,
+            dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            success: function(res) {
+                console.log(res);
+
+                if (res.data != null) {
+                    $('#scan-result').html(
+                        `
+                        <dl class="row">
+                            <dt class="col-sm-4">Jenis Sarana : </dt>
+                            <dd class="col-sm-8">${res.data.nama_jenis_sarana}</dd>
+                        </dl>
+                        `
+                    );
+                }
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
     }
 
     function onScanFailure(error) {
-        // handle scan failure, usually better to ignore and keep scanning.
-        // for example:
         console.warn(`Code scan error = ${error}`);
-        $('#scan-result').html(
-            `
-            <h3>Data : </h3>
-            <p>something went wrong!</p>
-            `
-        );
+        $('#scan-result').html(`<p>QQ Code tidak terbaca!</p>`);
     }
 
     let html5QrcodeScanner = new Html5QrcodeScanner(
