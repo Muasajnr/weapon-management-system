@@ -66,7 +66,7 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
 
         $routes->group('berita_acara', function($routes) {
             $routes->get('/', 'BeritaAcara\Controllers\DefaultController::index'); // works
-            $routes->get('(:segment)', 'BeritaAcara\Controllers\DefaultController::get/$1');
+            $routes->get('(:segment)', 'BeritaAcara\Controllers\DefaultController::get/$1'); //works
 
             $routes->post('datatables', 'BeritaAcara\Controllers\DefaultController::datatables'); // works
             $routes->post('/', 'BeritaAcara\Controllers\DefaultController::create'); // works
@@ -76,7 +76,7 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
             $routes->delete('delete/multiple', 'BeritaAcara\Controllers\DefaultController::deleteMultiple'); // works
 
             $routes->group('penanggung_jawab', function($routes) {
-                $routes->get('/', 'BeritaAcara\Controllers\PenanggungJawabController::index'); // works
+                $routes->get('all', 'BeritaAcara\Controllers\PenanggungJawabController::index'); // works
                 $routes->get('(:segment)', 'BeritaAcara\Controllers\PenanggungJawabController::get/$1'); // works
 
                 $routes->post('datatable', 'BeritaAcara\Controllers\PenanggungJawabController::datatable'); // works

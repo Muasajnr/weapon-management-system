@@ -23,6 +23,7 @@ class PenanggungJawabController extends ApiController
     public function index()
     {
         $allData = $this->penanggungJawabModel->getAll();
+        // print_r($allData);die();
         return $this->response
             ->setJSON([
                 'status'    => ResponseInterface::HTTP_OK,
