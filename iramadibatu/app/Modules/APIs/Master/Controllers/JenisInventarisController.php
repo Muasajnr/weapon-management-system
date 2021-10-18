@@ -103,7 +103,12 @@ class JenisInventarisController extends ApiController
                     ->getValue()
             );
 
-            $isAdded = $this->JIModel->createData((array) $data);
+            $newData['name']    = $data->name;
+            $newData['is_active'] = $data->is_active;
+            $newData['desc']    = $data->desc;
+
+            $isAdded = $this->JIModel->createData($newData);
+            
             if (!$isAdded)
                 throw new ApiAccessErrorException(
                     'Terjadi kesalahan!', 
@@ -161,7 +166,12 @@ class JenisInventarisController extends ApiController
             );
 
             $data = $this->request->getVar();
-            $isUpdated = $this->JIModel->updateData($id, (array) $data);
+
+            $updatedData['name']    = $data->name;
+            $updatedData['is_active'] = $data->is_active;
+            $updatedData['desc']    = $data->desc;
+
+            $isUpdated = $this->JIModel->updateData($id, $updatedData);
             if (!$isUpdated)
                 throw new ApiAccessErrorException(
                     'Terjadi kesalahan!', 

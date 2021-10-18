@@ -100,7 +100,11 @@ class JenisSaranaController extends ApiController
                     ->getValue()
             );
 
-            $isAdded = $this->JSModel->createData((array) $data);
+            $newData['name'] = $data->name;
+            $newData['desc'] = $data->desc;
+            $newData['is_active'] = $data->is_active;
+
+            $isAdded = $this->JSModel->createData($newData);
             if (!$isAdded)
                 throw new ApiAccessErrorException(
                     'Terjadi kesalahan!', 
@@ -190,13 +194,8 @@ class JenisSaranaController extends ApiController
                 );
             
             $rules = ['name' => 'required', 'desc' => 'required', 'is_active' => 'required'];
-            $messages = [
-                'name' => ['required' => 'name is required'],
-                'desc' => ['required' => 'desc is required'],
-                'is_active' => ['required' => 'is_active is required'],
-            ];
 
-            if (!$this->validate($rules, $messages))
+            if (!$this->validate($rules))
                 throw new ApiAccessErrorException(
                     'Validation Error!', 
                     ResponseInterface::HTTP_UNPROCESSABLE_ENTITY,
@@ -217,7 +216,12 @@ class JenisSaranaController extends ApiController
             );
 
             $data = $this->request->getVar();
-            $isUpdated = $this->JSModel->updateData($id, (array) $data);
+
+            $updatedData['name']    = $data->name;
+            $updatedData['is_active'] = $data->is_active;
+            $updatedData['desc']    = $data->desc;
+
+            $isUpdated = $this->JSModel->updateData($id, $updatedData);
             if (!$isUpdated)
                 throw new ApiAccessErrorException(
                     'Terjadi kesalahan!', 

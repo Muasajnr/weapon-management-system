@@ -82,14 +82,18 @@ class MerkSaranaController extends ApiController
                 );
             
             $data = $this->request->getVar();
-
+            
             $this->MSModel->setAuthenticatedUser(
                 $this->request
                     ->header('Logged-User')
                     ->getValue()
             );
 
-            $isAdded = $this->MSModel->createData((array) $data);
+            $newData['name']    = $data->name;
+            $newData['is_active'] = $data->is_active;
+            $newData['desc']    = $data->desc;
+
+            $isAdded = $this->MSModel->createData($newData);
             if (!$isAdded)
                 throw new ApiAccessErrorException(
                     'Terjadi kesalahan!', 
@@ -201,7 +205,12 @@ class MerkSaranaController extends ApiController
             );
 
             $data = $this->request->getVar();
-            $isUpdated = $this->MSModel->updateData($id, (array) $data);
+
+            $updatedData['name']    = $data->name;
+            $updatedData['is_active'] = $data->is_active;
+            $updatedData['desc']    = $data->desc;
+
+            $isUpdated = $this->MSModel->updateData($id, $updatedData);
             if (!$isUpdated)
                 throw new ApiAccessErrorException(
                     'Terjadi kesalahan!', 
