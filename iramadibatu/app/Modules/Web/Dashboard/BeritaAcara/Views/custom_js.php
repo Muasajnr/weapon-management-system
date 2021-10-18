@@ -102,7 +102,7 @@ $(function() {
         theme: 'bootstrap4',
         escapeMarkup: function (markup) { return markup; },
         ajax: {
-            url: `${baseApiUrl}/penanggung_jawab`,
+            url: `${baseApiUrl}/penanggung_jawab/all`,
             headers: {
                 'Authorization': 'Bearer ' + accessToken,
                 'X-Requested-With': 'XMLHttpRequest'
