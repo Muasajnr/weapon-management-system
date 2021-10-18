@@ -8,8 +8,8 @@ use CodeIgniter\I18n\Time;
 class SaranaKeamananModel extends CoreApiModel
 {
     
-    protected $columnSearch = [];
-    protected $columnOrder = [];
+    protected $columnSearch = ['nomor_sarana', 'nomor_bpsa'];
+    protected $columnOrder = ['nomor_sarana', 'nomor_bpsa'];
 
     public function __construct()
     {

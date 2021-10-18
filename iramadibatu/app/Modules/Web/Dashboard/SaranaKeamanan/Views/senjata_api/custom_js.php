@@ -49,9 +49,9 @@ $(function() {
             { "targets": 0, "orderable": false, "searchable": false },
             { "targets": 1, "orderable": false, "searchable": false },
             { "targets": 2, "orderable": true, "searchable": true },
-            { "targets": 3, "orderable": false, "searchable": false },
+            { "targets": 3, "orderable": true, "searchable": true },
             { "targets": 4, "orderable": false, "searchable": false },
-            { "targets": 5, "orderable": true, "searchable": true },
+            { "targets": 5, "orderable": false, "searchable": false },
             { "targets": 6, "orderable": false },
             { "targets": 7, "orderable": false },
             { "targets": 8, "orderable": false }
@@ -299,7 +299,6 @@ $(function() {
             newData.append("jumlah", 1);
             newData.append("satuan", "unit");
 
-            const createUrl = '<?=site_url('api/v1/dashboard/sarana_keamanan')?>';
             $.ajax({
                 type: 'POST',
                 url: urlSaranaKeamanan,
@@ -310,7 +309,8 @@ $(function() {
                 cache: false,
                 processData: false,
                 headers: {
-                    'Authorization': 'Bearer ' + accessToken
+                    'Authorization': 'Bearer ' + accessToken,
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 success: function(res) {
                     console.log(res);
@@ -372,6 +372,108 @@ $(function() {
         }
     });
 
+    $('#form-edit-senjata-api').validate({
+        submitHandler: function(form, event) {
+            event.preventDefault();
+
+            const itemId = $(form).find('input[name="edit_id"]').val();
+
+            const updatedData = new FormData();
+            updatedData.append("id_berita_acara", $(form).find('#select2-data-berita-acara-edit option:selected').val());
+            updatedData.append("id_jenis_sarana", $(form).find('#select2-data-jenis-sarana-edit option:selected').val());
+            updatedData.append("id_merk_sarana", $(form).find('#select2-data-merk-sarana-edit option:selected').val());
+            updatedData.append("nomor_sarana",$(form).find('input#edit_no_senjata').val());
+            updatedData.append("nomor_bpsa", $(form).find('input#edit_no_bpsa').val());
+            updatedData.append("kondisi", $(form).find('input[name="edit_kondisi"]:checked').val());
+
+            if ($(form).find('#edit_media_senjata').get(0).files[0] !== undefined) {
+                updatedData.append("media", $(form).find('#edit_media_senjata').get(0).files[0]);
+
+                if ((updatedData.get('media').size / 1000) > 512) {
+                Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi error!',
+                        text: 'Ukuran file terlalu besar!',
+                        showConfirmButton: true,
+                        timer: 2000
+                    });
+                    return;
+                }
+            }
+            
+            updatedData.append("keterangan", $(form).find('textarea#edit_keterangan').val());
+            updatedData.append("id_jenis_inventaris", 1);
+            updatedData.append("jumlah", 1);
+            updatedData.append("satuan", "unit");
+
+            updatedData.forEach(function(value, index) {
+                console.log(index + ' => ' + value);
+            });
+
+
+            $.ajax({
+                type: 'POST',
+                url: `${urlSaranaKeamanan}/${itemId}/update`,
+                dataType: 'json',
+                data: updatedData,
+                mimeType: 'multipart/form-data',
+                contentType: false,
+                cache: false,
+                processData: false,
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken,
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                success: function(res) {
+                    console.log(res);
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Data telah diperbaharui!',
+                        showConfirmButton: true,
+                        timer: 2000
+                    });
+
+                    setTimeout(() => {
+                        $('#modal-edit-senjata-api').modal('toggle');
+                        table.ajax.reload();
+                    }, 2000);
+                },
+                error: function(err) {
+                    console.log(err.responseJSON);
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Data gagal ditambahkan!',
+                        text: err.responseJSON.message,
+                        showConfirmButton: true,
+                        timer: 2000
+                    });
+                }
+            });
+        },
+        rules: { 
+            berita_acara: { required: true },
+            jenis_senjata: { required: true },
+            merk_senjata: { required: true },
+            no_senjata: { required: true },
+            no_bpsa: { required: true },
+            media_senjata: { accept: 'image/png,image/jpeg' },
+            kondisi: { required: true },
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
     // set edit data to modal
     $('#data_senjata_api tbody').on('click', 'tr td button.btn-info', function(e) {
         e.preventDefault();
@@ -392,7 +494,7 @@ $(function() {
         const mediaFileFullPath = $(rowData[1]).find('input[name="media_file_full_path"]').val();
         const mediaFileExtension = $(rowData[1]).find('input[name="media_file_extension"]').val();
 
-        $('input#edit_id').val(itemId);
+        $('#form-edit-senjata-api').find('input[name="edit_id"]').val(itemId);
         $("select#select2-data-berita-acara-edit").select2("trigger", "select", {
             data: { id: idBeritaAcara, text: `<strong>${nomorBeritaAcara}</strong> - ${judulBeritaAcara}` }
         });
@@ -417,8 +519,8 @@ $(function() {
         $('input#edit_no_senjata').val(rowData[2]);
         $('input#edit_no_bpsa').val(rowData[3]);
         $('textarea#edit_keterangan').val(rowData[7]);
-        
-        if (rowData[6] === 'baik')
+
+        if ($(rowData[6]).text() === 'baik')
             $('input[name="edit_kondisi"][value="baik"]').prop('checked', true);
         else
             $('input[name="edit_kondisi"][value="rusak"]').prop('checked', true);
@@ -454,6 +556,116 @@ $(function() {
         prntPage.focus();
         prntPage.print();
         prntPage.close();
+    });
+
+    // show confirmation to delete a clicked row
+    $('#data_senjata_api tbody').on('click', 'tr td button.btn-danger', function(e) {
+        e.preventDefault();
+
+        const itemId = $(this).data().itemId;
+
+        Swal.fire({
+            title: 'Anda yakin?',
+            text: `Anda akan menghapus data ini.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: `${urlSaranaKeamanan}/${itemId}/delete`,
+                    headers: {
+                        'Authorization': 'Bearer ' + accessToken,
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function(res) {
+                        console.log(res);
+                        Swal.fire(
+                            'Terhapus!',
+                            'Data telah terhapus!',
+                            'success'
+                        )
+                        table.ajax.reload();
+                    },
+                    error: function(err) {
+                        console.log(err.responseJSON);
+                        Swal.fire(
+                            'Gagal!',
+                            'Data gagal terhapus!',
+                            'error'
+                        )
+                    }
+                })
+            }
+        });
+    });
+
+    $('#btn-delete-multiple').click(function(e) {
+        e.preventDefault();
+
+        const selectedRows = $('.multi_delete:checked');
+        
+        if (selectedRows.length > 0) {
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: `Anda akan menghapus ke-${selectedRows.length} data ini.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Iya, hapus semua!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const ids = [];
+
+                    selectedRows.each(function(index, item) {
+                        ids.push($(item).data().itemId);
+                    });
+
+                    const idsData = {"ids": ids};
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: `${urlSaranaKeamanan}/delete/multiple`,
+                        data: JSON.stringify(idsData),
+                        contentType: 'application/json',
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken,
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        success: function(res) {
+                            console.log(res);
+                            Swal.fire(
+                                'Terhapus!',
+                                selectedRows.length + ' data telah terhapus!',
+                                'success'
+                            )
+                            table.ajax.reload();
+                        },
+                        error: function(err) {
+                            console.log(err.responseJSON);
+                            Swal.fire(
+                                'Gagal!',
+                                'Data menghapus '+selectedRows.length+' data!',
+                                'error'
+                            )
+                        }
+                    })
+                }
+            });
+        }
+    });
+
+    // fitler data
+    $('#filter_data').submit(function(e) {
+        e.preventDefault();
+
+        let searchQuery = $('input#searchQuery').val();
+        
+        table.search(searchQuery).draw();
     });
 });
 </script>

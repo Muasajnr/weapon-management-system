@@ -81,7 +81,8 @@ class DefaultController extends ApiController
             $row[]      = $item['nomor_bpsa'] ?? '-';
             $row[]      = $item['nama'] ?? '-';
             $row[]      = $item['merk'] ?? '-';
-            $row[]      = $item['kondisi'] ?? '-';
+            $row[]      = "<span class=\"badge badge-"
+                .($item['kondisi'] == 'baik' ? 'success' : 'danger')."\">".$item['kondisi']."</span>";
             $row[]      = $item['keterangan'] ?? '-';
             $row[]      = $this->buildCustomButtonActions($item['id']);
 
@@ -199,6 +200,12 @@ class DefaultController extends ApiController
             
             $data = $this->request->getPost();
             $media = $this->request->getFile('media');
+            
+            if(!$this->SKModel->isExist($id))
+                throw new ApiAccessErrorException(
+                    'Not Found!', 
+                    ResponseInterface::HTTP_NOT_FOUND
+                );
 
             $this->SKModel->setAuthenticatedUser(
                 $this->request
@@ -207,7 +214,7 @@ class DefaultController extends ApiController
             );
 
             $data['qrcode_secret']  = uniqid();
-            $isUpdated = $this->SKModel->updateData($id, $data);
+            $isUpdated = $this->SKModel->updateData((int)$id, $data);
             if (!$isUpdated)
                 throw new ApiAccessErrorException(
                     'Terjadi kesalahan!', 
@@ -229,17 +236,17 @@ class DefaultController extends ApiController
                 $media->move($filepath, $filename);
 
                 $insertedId = $this->SKModel->createMediaData($dataMedia, true);
-                $this->SKModel->updateData($id, [
+                $this->SKModel->updateData((int)$id, [
                     'id_media' => $insertedId
                 ]);
             }
     
             return $this->response
                 ->setJSON([
-                    'status'    => ResponseInterface::HTTP_CREATED,
+                    'status'    => ResponseInterface::HTTP_OK,
                     'message'   => 'Data telah diperbaharui!'
                 ])
-                ->setStatusCode(ResponseInterface::HTTP_CREATED);
+                ->setStatusCode(ResponseInterface::HTTP_OK);
         } catch(ApiAccessErrorException $e) {
             $errOutput = $this->getErrorOutput($e, $this->request);
             return $this->response
