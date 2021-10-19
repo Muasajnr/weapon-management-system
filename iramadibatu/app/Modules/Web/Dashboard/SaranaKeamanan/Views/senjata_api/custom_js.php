@@ -1,5 +1,4 @@
 <?=$this->section('custom-js')?>
-<!-- bs-custom-file-input -->
 <script src="<?=site_url('assets/js/vendor/qrcode.min.js')?>"></script>
 <script>
 $(function() {
@@ -54,7 +53,9 @@ $(function() {
             { "targets": 5, "orderable": false, "searchable": false },
             { "targets": 6, "orderable": false },
             { "targets": 7, "orderable": false },
-            { "targets": 8, "orderable": false }
+            { "targets": 8, "orderable": false },
+            { "targets": 9, "orderable": false },
+            { "targets": 10, "orderable": false }
         ],
     });
 
@@ -372,6 +373,7 @@ $(function() {
         }
     });
 
+    // handle editing form
     $('#form-edit-senjata-api').validate({
         submitHandler: function(form, event) {
             event.preventDefault();

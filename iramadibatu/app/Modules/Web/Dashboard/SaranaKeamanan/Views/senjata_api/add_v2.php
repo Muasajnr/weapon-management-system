@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-add-lainnya">
+<div class="modal fade" id="modal-add-senjata-api">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form-add-lainnya">
+            <form id="form-add-senjata-api">
                 <div class="modal-body pt-0">
                     <div class="card-body">
                         <div class="form-group">

@@ -4,6 +4,7 @@ namespace App\Modules\APIs\SaranaKeamanan\Controllers;
 
 use App\Core\ApiController;
 use App\Exceptions\ApiAccessErrorException;
+use App\Modules\APIs\Master\Models\JenisSaranaModel;
 use App\Modules\APIs\SaranaKeamanan\Models\SaranaKeamananModel;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\I18n\Time;
@@ -57,36 +58,72 @@ class DefaultController extends ApiController
         $num = $posts['start'];
         $resData = [];
 
-        foreach($data as $item) {
-            $num++;
-
-            $row        = [];
-            $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-item-id=\"".$item['id']."\"></div>";
-            $row[]      = "
-                <div class=\"text-center\">
-                    <input type=\"hidden\" name=\"id\" value=\"".$item['id']."\">{$num}.
-                    <input type=\"hidden\" name=\"id_berita_acara\" value=\"".$item['id_berita_acara']."\">
-                    <input type=\"hidden\" name=\"judul_berita_acara\" value=\"".$item['judul_berita_acara']."\">
-                    <input type=\"hidden\" name=\"nomor_berita_acara\" value=\"".$item['nomor_berita_acara']."\">
-                    <input type=\"hidden\" name=\"id_jenis_sarana\" value=\"".$item['id_jenis_sarana']."\">
-                    <input type=\"hidden\" name=\"nama_jenis_sarana\" value=\"".$item['nama_jenis_sarana']."\">
-                    <input type=\"hidden\" name=\"id_merk_sarana\" value=\"".$item['id_merk_sarana']."\">
-                    <input type=\"hidden\" name=\"nama_merk_sarana\" value=\"".$item['nama_merk_sarana']."\">
-                    <input type=\"hidden\" name=\"media_file_full_path\" value=\"".$item['media_file_full_path']."\">
-                    <input type=\"hidden\" name=\"media_file_extension\" value=\"".$item['media_file_extension']."\">
-                    <input type=\"hidden\" name=\"qrcode_secret\" value=\"".$item['qrcode_secret']."\">
-                </div>
-            ";
-            $row[]      = $item['nomor_sarana'] ?? '-';
-            $row[]      = $item['nomor_bpsa'] ?? '-';
-            $row[]      = $item['nama'] ?? '-';
-            $row[]      = $item['merk'] ?? '-';
-            $row[]      = "<span class=\"badge badge-"
-                .($item['kondisi'] == 'baik' ? 'success' : 'danger')."\">".$item['kondisi']."</span>";
-            $row[]      = $item['keterangan'] ?? '-';
-            $row[]      = $this->buildCustomButtonActions($item['id']);
-
-            $resData[] = $row;
+        if ($posts['id_jenis_inventaris'] == 1 || $posts['id_jenis_inventaris'] == 2) {
+            foreach($data as $item) {
+                $num++;
+    
+                $row        = [];
+                $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-item-id=\"".$item['id']."\"></div>";
+                $row[]      = "
+                    <div class=\"text-center\">
+                        <input type=\"hidden\" name=\"id\" value=\"".$item['id']."\">{$num}.
+                        <input type=\"hidden\" name=\"id_berita_acara\" value=\"".$item['id_berita_acara']."\">
+                        <input type=\"hidden\" name=\"judul_berita_acara\" value=\"".$item['judul_berita_acara']."\">
+                        <input type=\"hidden\" name=\"nomor_berita_acara\" value=\"".$item['nomor_berita_acara']."\">
+                        <input type=\"hidden\" name=\"id_jenis_sarana\" value=\"".$item['id_jenis_sarana']."\">
+                        <input type=\"hidden\" name=\"nama_jenis_sarana\" value=\"".$item['nama_jenis_sarana']."\">
+                        <input type=\"hidden\" name=\"id_merk_sarana\" value=\"".$item['id_merk_sarana']."\">
+                        <input type=\"hidden\" name=\"nama_merk_sarana\" value=\"".$item['nama_merk_sarana']."\">
+                        <input type=\"hidden\" name=\"media_file_full_path\" value=\"".$item['media_file_full_path']."\">
+                        <input type=\"hidden\" name=\"media_file_extension\" value=\"".$item['media_file_extension']."\">
+                        <input type=\"hidden\" name=\"qrcode_secret\" value=\"".$item['qrcode_secret']."\">
+                    </div>
+                ";
+                $row[]      = $item['nomor_sarana'] != null && $item['nomor_sarana'] != 0 ? $item['nomor_sarana'] : '-';
+                $row[]      = $item['nomor_bpsa'] != null && $item['nomor_bpsa'] != 0 ? $item['nomor_bpsa'] : '-';
+                $row[]      = $item['nama'] ?? '-';
+                $row[]      = $item['merk'] ?? '-';
+                $row[]      = $item['jumlah'] ?? '-';
+                $row[]      = $item['satuan'] ?? '-';
+                $row[]      = "<span class=\"badge badge-"
+                    .($item['kondisi'] == 'baik' ? 'success' : 'danger')."\">".$item['kondisi']."</span>";
+                $row[]      = $item['keterangan'] ?? '-';
+                $row[]      = $this->buildCustomButtonActions($item['id']);
+    
+                $resData[] = $row;
+            }
+        } else {
+            // print_r($data);die();
+            foreach($data as $item) {
+                $num++;
+    
+                $row        = [];
+                $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-item-id=\"".$item['id']."\"></div>";
+                $row[]      = "
+                    <div class=\"text-center\">
+                        <input type=\"hidden\" name=\"id\" value=\"".$item['id']."\">{$num}.
+                        <input type=\"hidden\" name=\"id_berita_acara\" value=\"".$item['id_berita_acara']."\">
+                        <input type=\"hidden\" name=\"judul_berita_acara\" value=\"".$item['judul_berita_acara']."\">
+                        <input type=\"hidden\" name=\"nomor_berita_acara\" value=\"".$item['nomor_berita_acara']."\">
+                        <input type=\"hidden\" name=\"id_jenis_sarana\" value=\"".$item['id_jenis_sarana']."\">
+                        <input type=\"hidden\" name=\"nama_jenis_sarana\" value=\"".$item['nama_jenis_sarana']."\">
+                        <input type=\"hidden\" name=\"id_merk_sarana\" value=\"".$item['id_merk_sarana']."\">
+                        <input type=\"hidden\" name=\"nama_merk_sarana\" value=\"".$item['nama_merk_sarana']."\">
+                        <input type=\"hidden\" name=\"media_file_full_path\" value=\"".$item['media_file_full_path']."\">
+                        <input type=\"hidden\" name=\"media_file_extension\" value=\"".$item['media_file_extension']."\">
+                        <input type=\"hidden\" name=\"qrcode_secret\" value=\"".$item['qrcode_secret']."\">
+                    </div>
+                ";
+                $row[]      = $item['nama'] ?? '-';
+                $row[]      = $item['jumlah'] ?? '-';
+                $row[]      = $item['satuan'] ?? '-';
+                $row[]      = "<span class=\"badge badge-"
+                    .($item['kondisi'] == 'baik' ? 'success' : 'danger')."\">".$item['kondisi']."</span>";
+                $row[]      = $item['keterangan'] ?? '-';
+                $row[]      = $this->buildCustomButtonActions($item['id']);
+    
+                $resData[] = $row;
+            }
         }
 
         $output['draw']             = $posts['draw'];
@@ -121,7 +158,7 @@ class DefaultController extends ApiController
                     $this->validator->getErrors()
                 );
             
-            $data = $this->request->getPost();
+            $dataPost = $this->request->getPost();
             $media = $this->request->getFile('media');
 
             $this->SKModel->setAuthenticatedUser(
@@ -131,13 +168,38 @@ class DefaultController extends ApiController
             );
 
             $data['qrcode_secret']  = uniqid();
+
+            $data['id_jenis_inventaris']    = $dataPost['id_jenis_inventaris'] != 0 ? $dataPost['id_jenis_inventaris'] : null;
+            $data['id_berita_acara']    = $dataPost['id_berita_acara'] != 0 ? $dataPost['id_berita_acara'] : null;
+            $data['id_merk_sarana']    = $dataPost['id_merk_sarana'] != 0 ? $dataPost['id_merk_sarana'] : null;
+            $data['id_jenis_sarana']    = $dataPost['id_jenis_sarana'] != 0 ? $dataPost['id_jenis_sarana'] : null;
+            $data['satuan']    = $dataPost['satuan'];
+            $data['jumlah']    = $dataPost['jumlah'];
+            $data['kondisi']    = $dataPost['kondisi'];
+            $data['nomor_sarana']    = $dataPost['nomor_sarana'];
+            $data['nomor_bpsa']    = $dataPost['nomor_bpsa'];
+            $data['keterangan']    = $dataPost['keterangan'];
+
+            if ($dataPost['id_jenis_inventaris'] >= 3) {
+                $JSModel = new JenisSaranaModel();
+                $isCreated = $JSModel->createData([
+                    'name'  => $dataPost['nama'],
+                    'desc'  => $dataPost['nama'],
+                    'is_active' => 1,
+                ], true);
+                // print_r($isCreated);die();
+                if ($isCreated)
+                    $data['id_jenis_sarana']    = $isCreated;
+            }
+            // print_r($data);die();
             $isCreated = $this->SKModel->createData($data, true);
+            // print_r($isCreated);die();
             if (!$isCreated)
                 throw new ApiAccessErrorException(
                     'Terjadi kesalahan!', 
                     ResponseInterface::HTTP_INTERNAL_SERVER_ERROR
                 );
-            
+            // print_r('is created');die();
             if ($media) {
                 $filename   = Time::now()->toLocalizedString('yyyyMMdd_HHmmss');
                 $filename   .= '_sarana_keamanan';

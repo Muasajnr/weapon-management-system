@@ -54,6 +54,8 @@
                                     <th>No. BPSA</th>
                                     <th>Nama</th>
                                     <th>Merk</th>
+                                    <th>Jumlah</th>
+                                    <th>Satuan</th>
                                     <th>Kondisi</th>
                                     <th>Keterangan</th>
                                     <th>Actions</th>

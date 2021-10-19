@@ -1,34 +1,26 @@
-<div class="modal fade" id="modal-edit-senjata-api">
+<div class="modal fade" id="modal-edit-lainnya">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Tambah <?=$page_title?></h4>
+                <h4 class="modal-title">Edit <?=$page_title?></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <!-- <div class="modal-body pb-0">
-                <div class="card-body pb-0 pt-0 text-right">
-                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                        <input type="checkbox" name="is_single_insert" class="custom-control-input" id="is_single_insert" disabled>
-                        <label class="custom-control-label" for="is_single_insert">Single-Insert</label>
-                    </div>
-                </div>
-            </div> -->
-            <form id="form-edit-senjata-api">
+            <form id="form-edit-lainnya">
                 <div class="modal-body pt-0">
                     <div class="card-body">
                         <div class="form-group">
-                            <label id="select2-data-berita-acara">Berita Acara</label>
-                            <select id="select2-data-berita-acara" name="edit_berita_acara" class="form-control select2" style="width: 100%;"></select>
+                            <label for="select2-data-berita-acara-edit">Berita Acara</label>
+                            <select id="select2-data-berita-acara-edit" name="edit_berita_acara" class="form-control select2" style="width: 100%;"></select>
                         </div>
                         <div class="form-group">
-                            <label for="select2-data-jenis-sarana">Jenis Senjata</label>
-                            <select id="select2-data-jenis-sarana" name="edit_jenis_senjata" class="form-control select2" style="width: 100%;"></select>
+                            <label for="select2-data-jenis-sarana-edit">Jenis Senjata</label>
+                            <select id="select2-data-jenis-sarana-edit" name="edit_jenis_senjata" class="form-control select2" style="width: 100%;"></select>
                         </div>
                         <div class="form-group">
-                            <label for="select2-data-merk-sarana">Merk Senjata</label>
-                            <select id="select2-data-merk-sarana" name="edit_merk_senjata" class="form-control select2" style="width: 100%;"></select>
+                            <label for="select2-data-merk-sarana-edit">Merk Senjata</label>
+                            <select id="select2-data-merk-sarana-edit" name="edit_merk_senjata" class="form-control select2" style="width: 100%;"></select>
                         </div>
                         <div class="form-group">
                             <label for="edit_no_senjata">Nomor Senjata</label>
@@ -49,16 +41,24 @@
                                 <label class="form-check-label">Rusak</label>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="edit_media_senjata">Unggah File ( .png | .jpeg ) , Max : <strong>500KB</strong></label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" name="edit_media_senjata" class="custom-file-input" id="edit_media_senjata">
-                                    <label class="custom-file-label" for="edit_media_senjata">Pilih file</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="edit_media_senjata">Unggah File ( .png | .jpeg ) , Max : <strong>500KB</strong></label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" name="edit_media_senjata" class="custom-file-input" id="edit_media_senjata">
+                                            <label class="custom-file-label" for="edit_media_senjata">Pilih file</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Upload</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">Upload</span>
-                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label for="">Media Saat Ini : </label>
+                                <div class="media-area"></div>
                             </div>
                         </div>
                         <div class="form-group">

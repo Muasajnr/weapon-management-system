@@ -30,11 +30,14 @@ class SaranaKeamananModel extends CoreApiModel
 
         $this->defaultBuilder()->select(
             '
+            jenis_sarana.name as nama,
+            merk_sarana.name as merk,
+
             sarana_keamanan.id,
             sarana_keamanan.nomor_bpsa,
             sarana_keamanan.nomor_sarana,
-            jenis_sarana.name as nama,
-            merk_sarana.name as merk,
+            sarana_keamanan.jumlah,
+            sarana_keamanan.satuan,
             sarana_keamanan.kondisi,
             sarana_keamanan.keterangan,
             sarana_keamanan.created_at,

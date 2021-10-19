@@ -166,10 +166,10 @@ class JenisInventarisController extends ApiController
             );
 
             $data = $this->request->getVar();
-
-            $updatedData['name'] = $data['name'];
-            $updatedData['desc'] = $data['desc'];
-            $updatedData['is_active'] = $data['is_active'];
+            // print_r($data);die();
+            $updatedData['name'] = $data->name;
+            $updatedData['desc'] = $data->desc;
+            $updatedData['is_active'] = $data->is_active;
 
             $isUpdated = $this->JIModel->updateData($id, $updatedData);
             if (!$isUpdated)

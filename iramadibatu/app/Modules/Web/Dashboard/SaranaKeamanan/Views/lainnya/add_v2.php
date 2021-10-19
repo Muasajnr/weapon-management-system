@@ -15,20 +15,19 @@
                             <select id="select2-data-berita-acara" name="berita_acara" class="form-control select2" style="width: 100%;"></select>
                         </div>
                         <div class="form-group">
-                            <label>Jenis Senjata</label>
-                            <select id="select2-data-jenis-sarana" name="jenis_senjata" class="form-control select2" style="width: 100%;"></select>
+                            <label for="nama">Nama</label>
+                            <input type="text" name="nama" class="form-control" id="nama" placeholder="Nama">
                         </div>
                         <div class="form-group">
-                            <label>Merk Senjata</label>
-                            <select id="select2-data-merk-sarana" name="merk_senjata" class="form-control select2" style="width: 100%;"></select>
+                            <label for="jumlah">Jumlah</label>
+                            <input type="number" name="jumlah" class="form-control" id="jumlah" placeholder="Jumlah">
                         </div>
                         <div class="form-group">
-                            <label for="no_senjata">Nomor Senjata</label>
-                            <input type="text" name="no_senjata" class="form-control" id="no_senjata" placeholder="Masukkan Nomor Senjata...">
-                        </div>
-                        <div class="form-group">
-                            <label for="no_bpsa">Nomor BPSA</label>
-                            <input type="text" name="no_bpsa" class="form-control" id="no_bpsa" placeholder="Masukkan Nomor BPSA...">
+                            <label for="satuan">Satuan</label>
+                            <select id="satuan" name="satuan" class="form-control" style="width: 100%;">
+                                <option value="buah">Buah</option>
+                                <option value="Unit">Unit</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="kondisi">Kondisi</label>
@@ -55,7 +54,7 @@
                         </div>
                         <div class="form-group">
                             <label for="keterangan">Keterangan</label>
-                            <textarea id="keterangan" name="keterangan" class="form-control" rows="3" placeholder="Masukkan Keterangan..."></textarea>
+                            <textarea id="keterangan" name="keterangan" class="form-control" rows="3" placeholder="Keterangan"></textarea>
                         </div>
                     </div>
                     <!-- /.card-body -->
