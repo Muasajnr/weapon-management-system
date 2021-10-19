@@ -26,7 +26,7 @@
                             <div class="form-group row">
                                 <div class="col-2 offset-sm-2"></div>
                                 <div class="col-8">
-                                    <button type="submit" class="btn btn-primary btn-sm">Cari Data</button>
+                                    <button type="submit" class="btn btn-primary btn-xs">Cari Data</button>
                                 </div>
                             </div>
                         </form>

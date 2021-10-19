@@ -24,11 +24,11 @@
                         </div>
                         <div class="form-group">
                             <label for="no_senjata">Nomor Senjata</label>
-                            <input type="text" name="no_senjata" class="form-control" id="no_senjata" placeholder="Masukkan Nomor Senjata...">
+                            <input type="text" name="no_senjata" class="form-control" id="no_senjata" placeholder="Masukkan Nomor Senjata">
                         </div>
                         <div class="form-group">
                             <label for="no_bpsa">Nomor BPSA</label>
-                            <input type="text" name="no_bpsa" class="form-control" id="no_bpsa" placeholder="Masukkan Nomor BPSA...">
+                            <input type="text" name="no_bpsa" class="form-control" id="no_bpsa" placeholder="Masukkan Nomor BPSA">
                         </div>
                         <div class="form-group">
                             <label for="kondisi">Kondisi</label>
@@ -58,7 +58,14 @@
                             <textarea id="keterangan" name="keterangan" class="form-control" rows="3" placeholder="Masukkan Keterangan..."></textarea>
                         </div>
                     </div>
-                    <!-- /.card-body -->
+                </div>
+
+                <div class="modal-body pt-0">
+                    <div class="card-body">
+                        <table id="added_sk">
+                            
+                        </table>
+                    </div>
                 </div>
 
                 <div class="modal-footer justify-content-between">
