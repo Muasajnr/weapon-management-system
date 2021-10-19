@@ -46,10 +46,10 @@ $(function() {
         "columns": [
             { "targets": 0, "orderable": false, "searchable": false },
             { "targets": 1, "orderable": false, "searchable": false },
-            { "targets": 2, "orderable": true, "searchable": true },
+            { "targets": 2, "orderable": false, "searchable": false },
             { "targets": 3, "orderable": false, "searchable": false },
             { "targets": 4, "orderable": false, "searchable": false },
-            { "targets": 5, "orderable": true, "searchable": true },
+            { "targets": 5, "orderable": false, "searchable": false },
             { "targets": 6, "orderable": false },
             { "targets": 7, "orderable": false }
         ],
@@ -244,36 +244,6 @@ $(function() {
 
             const itemId = $(form).find('input[name="edit_id"]').val();
 
-            const newData = new FormData();
-            newData.append("id_berita_acara", $(form).find('#select2-data-berita-acara option:selected').val());
-            newData.append("nama",$(form).find('input#nama').val());
-            newData.append("jumlah", $(form).find('input#jumlah').val());
-            newData.append("kondisi", $(form).find('input[name="kondisi"]:checked').val());
-
-            if ($(form).find('#media_senjata').get(0).files[0] !== undefined) {
-                newData.append("media", $(form).find('#media_senjata').get(0).files[0]);
-
-                if ((newData.get('media').size / 1000) > 512) {
-                Swal.fire({
-                        icon: 'error',
-                        title: 'Terjadi error!',
-                        text: 'Ukuran file terlalu besar!',
-                        showConfirmButton: true,
-                        timer: 2000
-                    });
-                    return;
-                }
-            }
-            
-            newData.append("keterangan", $(form).find('textarea#keterangan').val());
-            newData.append("id_jenis_inventaris", 3);
-            newData.append("satuan", $(form).find('#satuan option:selected').val());
-
-            newData.append('id_jenis_sarana', 0);
-            newData.append('id_merk_sarana', 0);
-            newData.append('nomor_sarana', '-');
-            newData.append('nomor_bpsa', '-');
-
             const updatedData = new FormData();
             updatedData.append("id_berita_acara", $(form).find('#select2-data-berita-acara-edit option:selected').val());
             updatedData.append("nama",$(form).find('input#edit_nama').val());
@@ -297,13 +267,15 @@ $(function() {
             
             updatedData.append("keterangan", $(form).find('textarea#edit_keterangan').val());
             updatedData.append("id_jenis_inventaris", 3);
-            updatedData.append("satuan", $(form).find('#satuan option:selected').val());
+            updatedData.append("satuan", $(form).find('#edit_satuan option:selected').val());
+            updatedData.append("id_jenis_sarana", '-');
+            updatedData.append("id_merk_sarana", '-');
+            updatedData.append("nomor_sarana", '-');
+            updatedData.append("nomor_bpsa", '-');
 
-            updatedData.forEach(function(value, index) {
-                console.log(index + ' => ' + value);
-            });
-
-            return;
+            // updatedData.forEach(function(value, index) {
+            //     console.log(index + ' => ' + value);
+            // });
 
             $.ajax({
                 type: 'POST',
@@ -329,7 +301,7 @@ $(function() {
                     });
 
                     setTimeout(() => {
-                        $('#modal-edit-non-organik').modal('toggle');
+                        $('#modal-edit-lainnya').modal('toggle');
                         table.ajax.reload();
                     }, 2000);
                 },
@@ -409,6 +381,146 @@ $(function() {
             $('input[name="edit_kondisi"][value="rusak"]').prop('checked', true);
         
         $('#modal-edit-lainnya').modal('toggle');
+    });
+
+    // generate qrcode
+    var qrcode = new QRCode(document.getElementById('qrcode-senjata-api'), "init_value");
+
+    // qrcode button clicked
+    $('#data_lainnya tbody').on('click', 'tr td button.btn-warning', function(e) {
+        const rowData = table.row($(this).parent().parent()).data();
+        const itemId = parseInt($(rowData[1]).find('input[name="id"]').val());
+        const qrCodeSecret = $(rowData[1]).find('input[name="qrcode_secret"]').val();
+
+        qrcode.clear();
+        qrcode.makeCode(qrCodeSecret)
+
+        $('#modal-qrcode-senjata-api').modal('toggle');
+    });
+
+    // print qr code
+    $('#print-qrcode').click(function(e) {
+        var prntPage = window.open('', '', 'height=1200,width=800');
+        var qrCodeDiv = $('#qrcode-senjata-api').html();
+        prntPage.document.write(
+            `
+            ${qrCodeDiv}
+            `
+        );
+        prntPage.document.close();
+        prntPage.focus();
+        prntPage.print();
+        prntPage.close();
+    });
+
+    // show confirmation to delete a clicked row
+    $('#data_lainnya tbody').on('click', 'tr td button.btn-danger', function(e) {
+        e.preventDefault();
+
+        const itemId = $(this).data().itemId;
+
+        Swal.fire({
+            title: 'Anda yakin?',
+            text: `Anda akan menghapus data ini.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: `${urlSaranaKeamanan}/${itemId}/delete`,
+                    headers: {
+                        'Authorization': 'Bearer ' + accessToken,
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function(res) {
+                        console.log(res);
+                        Swal.fire(
+                            'Terhapus!',
+                            'Data telah terhapus!',
+                            'success'
+                        )
+                        table.ajax.reload();
+                    },
+                    error: function(err) {
+                        console.log(err.responseJSON);
+                        Swal.fire(
+                            'Gagal!',
+                            'Data gagal terhapus!',
+                            'error'
+                        )
+                    }
+                })
+            }
+        });
+    });
+
+    $('#btn-delete-multiple').click(function(e) {
+        e.preventDefault();
+
+        const selectedRows = $('.multi_delete:checked');
+        
+        if (selectedRows.length > 0) {
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: `Anda akan menghapus ke-${selectedRows.length} data ini.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Iya, hapus semua!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const ids = [];
+
+                    selectedRows.each(function(index, item) {
+                        ids.push($(item).data().itemId);
+                    });
+
+                    const idsData = {"ids": ids};
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: `${urlSaranaKeamanan}/delete/multiple`,
+                        data: JSON.stringify(idsData),
+                        contentType: 'application/json',
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken,
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        success: function(res) {
+                            console.log(res);
+                            Swal.fire(
+                                'Terhapus!',
+                                selectedRows.length + ' data telah terhapus!',
+                                'success'
+                            )
+                            table.ajax.reload();
+                        },
+                        error: function(err) {
+                            console.log(err.responseJSON);
+                            Swal.fire(
+                                'Gagal!',
+                                'Data menghapus '+selectedRows.length+' data!',
+                                'error'
+                            )
+                        }
+                    })
+                }
+            });
+        }
+    });
+
+    // fitler data
+    $('#filter_data').submit(function(e) {
+        e.preventDefault();
+
+        let searchQuery = $('input#searchQuery').val();
+        
+        table.search(searchQuery).draw();
     });
 });
 </script>

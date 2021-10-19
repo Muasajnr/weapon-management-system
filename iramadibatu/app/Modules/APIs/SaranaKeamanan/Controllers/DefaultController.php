@@ -265,7 +265,8 @@ class DefaultController extends ApiController
                     $this->validator->getErrors()
                 );
             
-            $data = $this->request->getPost();
+            $dataPost = $this->request->getPost();
+            // print_r($data);die();
             $media = $this->request->getFile('media');
             
             if(!$this->SKModel->isExist($id))
@@ -281,6 +282,35 @@ class DefaultController extends ApiController
             );
 
             $data['qrcode_secret']  = uniqid();
+
+            $data['id_jenis_inventaris']    = $dataPost['id_jenis_inventaris'] != 0 ? $dataPost['id_jenis_inventaris'] : null;
+            $data['id_berita_acara']    = $dataPost['id_berita_acara'] != 0 ? $dataPost['id_berita_acara'] : null;
+            $data['id_merk_sarana']    = $dataPost['id_merk_sarana'] != 0 ? $dataPost['id_merk_sarana'] : null;
+            $data['id_jenis_sarana']    = $dataPost['id_jenis_sarana'] != 0 ? $dataPost['id_jenis_sarana'] : null;
+            $data['satuan']    = $dataPost['satuan'];
+            $data['jumlah']    = $dataPost['jumlah'];
+            $data['kondisi']    = $dataPost['kondisi'];
+            $data['nomor_sarana']    = $dataPost['nomor_sarana'];
+            $data['nomor_bpsa']    = $dataPost['nomor_bpsa'];
+            $data['keterangan']    = $dataPost['keterangan'];
+
+            if ($dataPost['id_jenis_inventaris'] >= 3) {
+                $JSModel = new JenisSaranaModel();
+                $checkData = $JSModel->checkByName($dataPost['nama']);
+                if (is_null($checkData)) {
+                    $createdId = $JSModel->createData([
+                        'name'  => $dataPost['nama'],
+                        'desc'  => $dataPost['nama'],
+                        'is_active' => 1,
+                    ], true);
+
+                    if ($createdId)
+                        $data['id_jenis_sarana']    = $createdId;
+                } else {
+                    $data['id_jenis_sarana'] = $checkData['id'];
+                }
+            }
+
             $isUpdated = $this->SKModel->updateData((int)$id, $data);
             if (!$isUpdated)
                 throw new ApiAccessErrorException(
