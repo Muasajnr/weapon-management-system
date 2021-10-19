@@ -33,4 +33,11 @@ class JenisSaranaModel extends CoreApiModel
             ->update();
     }
 
+    public function checkByName(string $name)
+    {
+        $this->defaultBuilder()->select('id, name');
+        $this->defaultBuilder()->where('name', $name);
+        return $this->defaultBuilder()->get()->getRowArray();
+    }
+
 }

@@ -236,6 +236,180 @@ $(function() {
             $(element).removeClass('is-invalid');
         }
     });
+
+    // handle editing form
+    $('#form-edit-lainnya').validate({
+        submitHandler: function(form, event) {
+            event.preventDefault();
+
+            const itemId = $(form).find('input[name="edit_id"]').val();
+
+            const newData = new FormData();
+            newData.append("id_berita_acara", $(form).find('#select2-data-berita-acara option:selected').val());
+            newData.append("nama",$(form).find('input#nama').val());
+            newData.append("jumlah", $(form).find('input#jumlah').val());
+            newData.append("kondisi", $(form).find('input[name="kondisi"]:checked').val());
+
+            if ($(form).find('#media_senjata').get(0).files[0] !== undefined) {
+                newData.append("media", $(form).find('#media_senjata').get(0).files[0]);
+
+                if ((newData.get('media').size / 1000) > 512) {
+                Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi error!',
+                        text: 'Ukuran file terlalu besar!',
+                        showConfirmButton: true,
+                        timer: 2000
+                    });
+                    return;
+                }
+            }
+            
+            newData.append("keterangan", $(form).find('textarea#keterangan').val());
+            newData.append("id_jenis_inventaris", 3);
+            newData.append("satuan", $(form).find('#satuan option:selected').val());
+
+            newData.append('id_jenis_sarana', 0);
+            newData.append('id_merk_sarana', 0);
+            newData.append('nomor_sarana', '-');
+            newData.append('nomor_bpsa', '-');
+
+            const updatedData = new FormData();
+            updatedData.append("id_berita_acara", $(form).find('#select2-data-berita-acara-edit option:selected').val());
+            updatedData.append("nama",$(form).find('input#edit_nama').val());
+            updatedData.append("jumlah", $(form).find('input#edit_jumlah').val());
+            updatedData.append("kondisi", $(form).find('input[name="edit_kondisi"]:checked').val());
+
+            if ($(form).find('#edit_media').get(0).files[0] !== undefined) {
+                updatedData.append("media", $(form).find('#edit_media').get(0).files[0]);
+
+                if ((updatedData.get('media').size / 1000) > 512) {
+                Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi error!',
+                        text: 'Ukuran file terlalu besar!',
+                        showConfirmButton: true,
+                        timer: 2000
+                    });
+                    return;
+                }
+            }
+            
+            updatedData.append("keterangan", $(form).find('textarea#edit_keterangan').val());
+            updatedData.append("id_jenis_inventaris", 3);
+            updatedData.append("satuan", $(form).find('#satuan option:selected').val());
+
+            updatedData.forEach(function(value, index) {
+                console.log(index + ' => ' + value);
+            });
+
+            return;
+
+            $.ajax({
+                type: 'POST',
+                url: `${urlSaranaKeamanan}/${itemId}/update`,
+                dataType: 'json',
+                data: updatedData,
+                mimeType: 'multipart/form-data',
+                contentType: false,
+                cache: false,
+                processData: false,
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken,
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                success: function(res) {
+                    console.log(res);
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Data telah diperbaharui!',
+                        showConfirmButton: true,
+                        timer: 2000
+                    });
+
+                    setTimeout(() => {
+                        $('#modal-edit-non-organik').modal('toggle');
+                        table.ajax.reload();
+                    }, 2000);
+                },
+                error: function(err) {
+                    console.log(err.responseJSON);
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Data gagal ditambahkan!',
+                        text: err.responseJSON.message,
+                        showConfirmButton: true,
+                        timer: 2000
+                    });
+                }
+            });
+        },
+        rules: { 
+            berita_acara: { required: true },
+            jenis_senjata: { required: true },
+            merk_senjata: { required: true },
+            no_senjata: { required: true },
+            no_bpsa: { required: true },
+            media_senjata: { accept: 'image/png,image/jpeg' },
+            kondisi: { required: true },
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
+    // set edit data to modal
+    $('#data_lainnya tbody').on('click', 'tr td button.btn-info', function(e) {
+        e.preventDefault();
+        
+        const rowData = table.row($(this).parent().parent()).data();
+        const itemId = parseInt($(rowData[1]).find('input[name="id"]').val());
+        
+        const idBeritaAcara = $(rowData[1]).find('input[name="id_berita_acara"]').val();
+        const judulBeritaAcara = $(rowData[1]).find('input[name="judul_berita_acara"]').val();
+        const nomorBeritaAcara = $(rowData[1]).find('input[name="nomor_berita_acara"]').val();
+
+        const mediaFileFullPath = $(rowData[1]).find('input[name="media_file_full_path"]').val();
+        const mediaFileExtension = $(rowData[1]).find('input[name="media_file_extension"]').val();
+
+        $('#form-edit-lainnya').find('input[name="edit_id"]').val(itemId);
+        $("select#select2-data-berita-acara-edit").select2("trigger", "select", {
+            data: { id: idBeritaAcara, text: `<strong>${nomorBeritaAcara}</strong> - ${judulBeritaAcara}` }
+        });
+
+        $('#modal-edit-lainnya .col-6 .media-area').html(
+            mediaFileExtension == 'pdf' ? 
+            `
+                <embed src="<?=site_url()?>/${mediaFileFullPath}" type="application/pdf" width="100%" height="400">
+            `
+            : 
+            `
+                <img src="<?=site_url()?>/${mediaFileFullPath}" alt="${rowData[2]}" width="100%">
+            `
+        );
+
+        $('input#edit_nama').val(rowData[2]);
+        $('input#edit_jumlah').val(rowData[3]);
+        $('select#edit_satuan').val(rowData[4].toLowerCase()).change();
+        $('textarea#edit_keterangan').val(rowData[6]);
+
+        if ($(rowData[5]).text() === 'baik')
+            $('input[name="edit_kondisi"][value="baik"]').prop('checked', true);
+        else
+            $('input[name="edit_kondisi"][value="rusak"]').prop('checked', true);
+        
+        $('#modal-edit-lainnya').modal('toggle');
+    });
 });
 </script>
 

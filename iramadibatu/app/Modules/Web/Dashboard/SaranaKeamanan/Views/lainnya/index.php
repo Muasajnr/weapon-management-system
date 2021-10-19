@@ -81,7 +81,7 @@
 <!-- /.content -->
 
 <?php echo view($moduleViewPath.'lainnya/add_v2') ?>
-<?php echo view($moduleViewPath.'lainnya/edit') ?>
+<?php echo view($moduleViewPath.'lainnya/edit_v2') ?>
 <?php echo view($moduleViewPath.'lainnya/qrcode') ?>
 
 <?=$this->endSection()?>

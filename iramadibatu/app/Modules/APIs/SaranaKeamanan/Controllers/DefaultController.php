@@ -182,14 +182,19 @@ class DefaultController extends ApiController
 
             if ($dataPost['id_jenis_inventaris'] >= 3) {
                 $JSModel = new JenisSaranaModel();
-                $isCreated = $JSModel->createData([
-                    'name'  => $dataPost['nama'],
-                    'desc'  => $dataPost['nama'],
-                    'is_active' => 1,
-                ], true);
-                // print_r($isCreated);die();
-                if ($isCreated)
-                    $data['id_jenis_sarana']    = $isCreated;
+                $checkData = $JSModel->checkByName($dataPost['nama']);
+                if (is_null($checkData)) {
+                    $createdId = $JSModel->createData([
+                        'name'  => $dataPost['nama'],
+                        'desc'  => $dataPost['nama'],
+                        'is_active' => 1,
+                    ], true);
+
+                    if ($createdId)
+                        $data['id_jenis_sarana']    = $createdId;
+                } else {
+                    $data['id_jenis_sarana'] = $checkData['id'];
+                }
             }
             // print_r($data);die();
             $isCreated = $this->SKModel->createData($data, true);
