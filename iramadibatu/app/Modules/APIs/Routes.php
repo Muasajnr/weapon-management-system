@@ -92,9 +92,9 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
         $routes->group('bon_simpan_pinjam', function($routes) {
             $routes->group('pinjam', function($routes) {
                 $routes->post('datatables', 'BonSimpanPinjam\Controllers\PinjamController::datatables'); // works
-                $routes->post('/', 'BonSimpanPinjam\Controllers\PinjamController::create');
-                $routes->get('(:segment)', 'BonSimpanPinjam\Controllers\PinjamController::get/$1');
-                $routes->get('get/byKode', 'BonSimpanPinjam\Controllers\PinjamController::getByKode');
+                $routes->post('/', 'BonSimpanPinjam\Controllers\PinjamController::create'); // works
+                $routes->get('get/detailByKode', 'BonSimpanPinjam\Controllers\PinjamController::get');
+                $routes->get('get/byKode', 'BonSimpanPinjam\Controllers\PinjamController::getByKode'); // works
 
                 // $routes->put('(:segment)/update', 'BeritaAcara\Controllers\DefaultController::update/$1');
 

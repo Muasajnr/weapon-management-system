@@ -22,10 +22,10 @@ class DefaultController extends WebController
     public function pinjam()
     {
         return $this->renderView('pinjam/index', [
-            'page_title'        => 'Jenis Inventaris',
-            'page_header_title' => 'Jenis Inventaris',
+            'page_title'        => 'Sedang Dipinjam',
+            'page_header_title' => 'Sedang Dipinjam',
             'pages_path'        => [
-                'dashboard' => [
+                'Sedang Dipinjam' => [
                     'url'       => '',
                     'active'    => true
                 ]
@@ -44,6 +44,22 @@ class DefaultController extends WebController
                     'active'    => true
                 ]
             ]
+        ]);
+    }
+
+    public function pinjamDetail()
+    {
+        $kodePeminjaman = $this->request->getGet('kode_peminjaman');
+        return $this->renderView('pinjam/show', [
+            'page_title'        => 'Detail Pinjam',
+            'page_header_title' => 'Detail Pinjam',
+            'pages_path'        => [
+                'detail pinjam' => [
+                    'url'       => '',
+                    'active'    => true
+                ]
+            ],
+            'kodePeminjaman'    => $kodePeminjaman
         ]);
     }
 }

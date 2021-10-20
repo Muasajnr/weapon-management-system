@@ -71,8 +71,8 @@ $(function() {
             { "targets": 5, "orderable": true, "searchable": true },
             { "targets": 6, "orderable": false },
             { "targets": 7, "orderable": false },
-            { "targets": 8, "orderable": false },
-            { "targets": 9, "orderable": false }
+            { "targets": 8, "orderable": false }
+            // { "targets": 9, "orderable": false }
         ],
     });
 
@@ -122,8 +122,6 @@ $(function() {
             'X-Requested-With': 'XMLHttpRequest',
         },
         success: function(res) {
-            // console.log(res);
-
             if (res.data != null && res.data.length > 0) {
                 res.data.forEach(function(item, index) {
                     $('#data_choose_pinjam tbody').append(
@@ -239,8 +237,7 @@ $(function() {
                 "nomor_peminjaman": $(form).find('input[name="nomor_peminjaman"]').val(),
                 "kode_peminjaman": $(form).find('input[name="kode_peminjaman"]').val()
             };
-            // console.log(newData);
-            // return;
+            
             $.ajax({
                 type: 'POST',
                 url: baseApiURL,
@@ -301,44 +298,6 @@ $(function() {
             $(element).removeClass('is-invalid');
         }
     });
-
-    /** start of handle edit */
-    // $('#data_pinjam tbody').on('click', 'tr td button.btn-info', function(e) {
-    //     e.preventDefault();
-
-    //     const rowData = table.row($(this).parent().parent()).data();
-    //     const itemId = parseInt($(rowData[1].substring(0, rowData[1].indexOf('>')+1)).val());
-    //     console.log(itemId);
-    //     // $.ajax({
-    //     //     type: 'GET',
-    //     //     url: '<?=site_url('api/v1/dashboard/berita_acara/')?>'+itemId,
-    //     //     dataType: 'json',
-    //     //     headers: {
-    //     //         'Authorization': 'Bearer ' + accessToken
-    //     //     },
-    //     //     success: function(res) {
-    //     //         console.log(res);
-
-    //     //         if (res.data) {
-                    
-    //     //         }
-
-    //             $('#modal_edit_pinjam').modal('toggle');
-    //     //     },
-    //     //     error: function(err) {
-    //     //         console.log(err);
-
-    //     //         Swal.fire({
-    //     //             icon: 'error',
-    //     //             title: 'Data gagal ditampilkan!',
-    //     //             text: err.responseJSON.message,
-    //     //             showConfirmButton: true,
-    //     //             timer: 2000
-    //     //         });
-    //     //     }
-    //     // });
-    // });
-    /** end of handle edit */
 
     /** start of handle delete */
     $('#data_pinjam tbody').on('click', 'tr td button.btn-danger', function(e) {

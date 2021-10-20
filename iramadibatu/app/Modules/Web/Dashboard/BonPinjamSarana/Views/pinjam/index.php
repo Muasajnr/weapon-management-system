@@ -61,7 +61,7 @@
                                     <th>No. Berita Acara</th>
                                     <th>Pihak 1</th>
                                     <th>Pihak 2</th>
-                                    <th>Sarana yang dipinjam</th>
+                                    <!-- <th>Sarana yang dipinjam</th> -->
                                     <th>Jumlah</th>
                                     <th>Tanggal Pinjam</th>
                                     <th>Actions</th>

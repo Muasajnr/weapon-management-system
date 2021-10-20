@@ -14,6 +14,49 @@ class PinjamModel extends CoreApiModel
         parent::__construct('pinjam_sarana');
     }
 
+    public function getDetailPeminjaman(string $kode)
+    {
+        $this->defaultBuilder()->select(
+            '
+            pinjam_sarana.id as id,
+            pinjam_sarana.jumlah as jumlah,
+            sarana_keamanan.nomor_sarana as nomor,
+            sarana_keamanan.nomor_bpsa as bpsa,
+            jenis_sarana.name as nama,
+            merk_sarana.name as merk,
+            jenis_inventaris.name as tipe,
+            berita_acara_media.file_full_path,
+            berita_acara_media.file_extension,
+            pihak_1.nama as pihak_1_nama,
+            pihak_1.nip as pihak_1_nip,
+            pihak_2.nama as pihak_2_nama,
+            pihak_2.nip as pihak_2_nip,
+            berita_acara.nomor as nomor_berita_acara,
+            berita_acara.nama as judul_berita_acara
+            '
+        );
+
+        $this->defaultBuilder()->join('sarana_keamanan', 'pinjam_sarana.id_sarana_keamanan = sarana_keamanan.id', 'left');
+        $this->defaultBuilder()->join('jenis_sarana', 'sarana_keamanan.id_jenis_sarana = jenis_sarana.id', 'left');
+        $this->defaultBuilder()->join('merk_sarana', 'sarana_keamanan.id_merk_sarana = merk_sarana.id', 'left');
+        $this->defaultBuilder()->join('jenis_inventaris', 'sarana_keamanan.id_jenis_inventaris = jenis_inventaris.id', 'left');
+        $this->defaultBuilder()->join('berita_acara', 'pinjam_sarana.id_berita_acara = berita_acara.id', 'left');
+        $this->defaultBuilder()->join('media as berita_acara_media', 'berita_acara.id_media = berita_acara_media.id', 'left');
+        $this->defaultBuilder()->join('penanggung_jawab as pihak_1', 'berita_acara.id_pihak_1 = pihak_1.id', 'left');
+        $this->defaultBuilder()->join('penanggung_jawab as pihak_2', 'berita_acara.id_pihak_2 = pihak_2.id', 'left');
+
+        $this->defaultBuilder()->where('jenis_inventaris.deleted_at', null);
+        $this->defaultBuilder()->where('jenis_sarana.deleted_at', null);
+        $this->defaultBuilder()->where('merk_sarana.deleted_at', null);
+        $this->defaultBuilder()->where('sarana_keamanan.deleted_at', null);
+        $this->defaultBuilder()->where('berita_acara.deleted_at', null);
+        $this->defaultBuilder()->where('pinjam_sarana.deleted_at', null);
+
+        $this->defaultBuilder()->where('pinjam_sarana.kode_peminjaman', $kode);
+
+        return $this->defaultBuilder()->get()->getResultArray();
+    }
+
     public function getByKode(string $kode)
     {
         $this->defaultBuilder()->select(
@@ -70,7 +113,7 @@ class PinjamModel extends CoreApiModel
         $this->defaultBuilder()->select(
             '
             pinjam_sarana.id as pinjam_sarana_id,
-            pinjam_sarana.jumlah as pinjam_sarana_jumlah,
+            sum(pinjam_sarana.jumlah) as pinjam_sarana_jumlah,
             pinjam_sarana.created_at as tanggal_pinjam,
             pinjam_sarana.nomor_peminjaman as nomor_peminjaman,
             pinjam_sarana.kode_peminjaman as kode_peminjaman,
@@ -120,6 +163,8 @@ class PinjamModel extends CoreApiModel
             $this->defaultBuilder()->where('pinjam_sarana.deleted_at', null);
         else
             $this->defaultBuilder()->where('pinjam_sarana.deleted_at is not null');
+
+        $this->defaultBuilder()->groupBy('pinjam_sarana.kode_peminjaman');
 
         $result = $this->defaultBuilder()->get();
         return $result->getResultArray();

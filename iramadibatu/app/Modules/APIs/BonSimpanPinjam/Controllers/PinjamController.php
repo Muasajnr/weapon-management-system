@@ -37,10 +37,10 @@ class PinjamController extends ApiController
             $row[]      = $item['berita_acara_nomor'];
             $row[]      = "<a href=\"javascript:void(0)\" class=\"viewPihak1\">".$item['pihak_1_nama']."</a>";
             $row[]      = "<a href=\"javascript:void(0)\" class=\"viewPihak2\">".$item['pihak_1_nama']."</a>";
-            $row[]      = "<a href=\"javascript:void(0)\" class=\"viewSarana\">".$item['nama_sarana']."</a>";
+            // $row[]      = "<a href=\"javascript:void(0)\" class=\"viewSarana\">".$item['nama_sarana']."</a>";
             $row[]      = $item['pinjam_sarana_jumlah'];
             $row[]      = $item['tanggal_pinjam'];
-            $row[]      = $this->buildCustomActionButtons($item['pinjam_sarana_id']);
+            $row[]      = $this->buildCustomActionButtons($item['pinjam_sarana_id'], $item['kode_peminjaman']);
 
             $resData[] = $row;
         }
@@ -54,6 +54,18 @@ class PinjamController extends ApiController
         return $this->response
             ->setJSON($output)
             ->setStatusCode(ResponseInterface::HTTP_OK);
+    }
+
+    public function get()
+    {
+        $kode = $this->request->getGet('kode_peminjaman');
+        $data = $this->pinjamModel->getDetailPeminjaman($kode);
+        return $this->response
+                ->setJSON([
+                    'status'    => ResponseInterface::HTTP_OK,
+                    'data' => $data
+                ])
+                ->setStatusCode(ResponseInterface::HTTP_OK);
     }
 
     public function create()
@@ -224,9 +236,9 @@ class PinjamController extends ApiController
                 ->setStatusCode(ResponseInterface::HTTP_OK);
     }
 
-    private function buildCustomActionButtons(int $id)
+    private function buildCustomActionButtons(int $id, string $kode)
     {
-        $showUrl = site_url('dashboard/pinjam_sarana/'.$id.'/detail');
+        $showUrl = site_url('dashboard/bon_pinjam_sarana/pinjam/detail?kode_peminjaman='.$kode);
         return "<div class=\"text-center\">
                     <a href=\"javascript:void(0)\" onclick=\"window.open('$showUrl', 'lihat_pinjam_sarana', 'width=800, height=1200')\" class=\"btn btn-primary btn-xs mr-2\"><i class=\"fas fa-eye mr-1\"></i>Detail</a>
                     <button type=\"button\" class=\"btn btn-danger btn-xs\" data-item-id=\"$id\"><i class=\"fas fa-trash mr-1\"></i>Hapus</button>

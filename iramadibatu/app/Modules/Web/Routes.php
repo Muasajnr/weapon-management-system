@@ -26,7 +26,10 @@ $routes->group('dashboard', ['namespace' => '\App\Modules\Web\\'], function($rou
         $controllerPath = 'Dashboard\BonPinjamSarana\Controllers\\';
 
         $routes->get('pinjam', $controllerPath.'DefaultController::pinjam', ['as' => 'pinjam']);
+        $routes->get('pinjam/detail', $controllerPath.'DefaultController::pinjamDetail', ['as' => 'pinjamDetail']);
+
         $routes->get('kembalikan', $controllerPath.'DefaultController::kembalikan', ['as' => 'kembalikan']);
+        $routes->get('kembalikan/(:segment)/detail', $controllerPath.'DefaultController::kembaliDetail', ['as' => 'kembaliDetail']);
     });
 
     $routes->get('distribusi', 'Dashboard\DistribusiSarana\Controllers\DefaultController::index', ['as' => 'distribusi']);
