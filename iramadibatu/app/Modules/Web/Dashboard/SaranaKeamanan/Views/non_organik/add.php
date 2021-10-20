@@ -13,6 +13,7 @@
                         <div class="form-group">
                             <label>Berita Acara</label>
                             <select id="select2-data-berita-acara" name="berita_acara" class="form-control select2" style="width: 100%;"></select>
+                            <a href="<?=route_to('berita_acara')?>">Buat baru</a>
                         </div>
                         <div class="form-group">
                             <label>Jenis Senjata</label>

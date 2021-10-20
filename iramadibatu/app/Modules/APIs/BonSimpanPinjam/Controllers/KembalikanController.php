@@ -3,8 +3,11 @@
 namespace App\Modules\APIs\BonSimpanPinjam\Controllers;
 
 use App\Core\ApiController;
+use App\Exceptions\ApiAccessErrorException;
 use App\Modules\APIs\BonSimpanPinjam\Models\KembalikanModel;
+use App\Modules\APIs\BonSimpanPinjam\Models\PinjamModel;
 use CodeIgniter\HTTP\ResponseInterface;
+use Exception;
 
 class KembalikanController extends ApiController
 {
@@ -49,6 +52,69 @@ class KembalikanController extends ApiController
         return $this->response
             ->setJSON($output)
             ->setStatusCode(ResponseInterface::HTTP_OK);
+    }
+
+    public function create()
+    {
+        try {
+            // print_r($this->request->getVar());die();
+            if (!$this->validate([
+                'id_berita_acara' => 'required',
+                'kode_peminjaman' => 'required'
+            ]))
+                throw new ApiAccessErrorException(
+                    'Validation Error!', 
+                    ResponseInterface::HTTP_UNPROCESSABLE_ENTITY,
+                    $this->validator->getErrors()
+                );
+            
+            $reqData = $this->request->getVar();
+
+            $this->kembalikanModel->setAuthenticatedUser(
+                $this->request
+                    ->header('Logged-User')
+                    ->getValue()
+            );
+            
+            $pinjamModel = new PinjamModel();
+            $pinjamSaranaData = $pinjamModel->getByKode($reqData->kode_peminjaman);
+            $idsToDelete = [];
+            $allData = [];
+            foreach($pinjamSaranaData as $itemPinjam) {
+                array_push($idsToDelete, $itemPinjam['id']);
+                array_push($allData, [
+                    'id_berita_acara' => $reqData->id_berita_acara,
+                    'id_pinjam_sarana'  => $itemPinjam['id'],
+                    'jumlah'    => $itemPinjam['jumlah']
+                ]);
+            }
+
+            $isCreated = $this->kembalikanModel->createBatch($allData);
+            if (!$isCreated)
+                throw new ApiAccessErrorException(
+                    'Terjadi kesalahan!', 
+                    ResponseInterface::HTTP_INTERNAL_SERVER_ERROR
+                );
+            
+            $pinjamModel->deleteMultipleData($idsToDelete);
+            
+            return $this->response
+                ->setJSON([
+                    'status'    => ResponseInterface::HTTP_CREATED,
+                    'message'   => 'Data telah ditambahkan!'
+                ])
+                ->setStatusCode(ResponseInterface::HTTP_CREATED);
+        } catch(ApiAccessErrorException $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode($e->getCode());
+        } catch(Exception $e) {
+            $errOutput = $this->getErrorOutput($e, $this->request);
+            return $this->response
+                ->setJSON($errOutput)
+                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     private function buildCustomActionButtons(int $id)

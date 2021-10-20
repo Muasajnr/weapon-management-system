@@ -16,7 +16,8 @@ $(function() {
     const baseApiURL = '<?=site_url('api/v1/dashboard/bon_simpan_pinjam/pinjam')?>';
     const urlBeritaAcara = '<?=site_url('api/v1/dashboard/berita_acara')?>';
     const urlSaranaKeamanan = '<?=site_url('api/v1/dashboard/sarana_keamanan')?>';
-    
+    var lastNomorPeminjaman = '';
+
     // checkAll
     $('#checkAll').click(function(e) {
         if ($(this).is(":checked")) {
@@ -42,8 +43,6 @@ $(function() {
         "dom": 'lrtip',
         "pageLength": 25,
         "ajax": function(data, callback, settings) {
-            const dataUrl = '';
-
             $.ajax({
                 type: 'POST',
                 url: `${baseApiURL}/datatables`,
@@ -54,6 +53,8 @@ $(function() {
                     'X-Requested-With': 'XMLHttpRequest'
                 },
                 success: function(res) {
+                    console.log(res);
+                    callbackLastPeminjaman(res.lastNomorPeminjaman);
                     callback(res);
                 },
                 error: function(err) {
@@ -70,7 +71,8 @@ $(function() {
             { "targets": 5, "orderable": true, "searchable": true },
             { "targets": 6, "orderable": false },
             { "targets": 7, "orderable": false },
-            { "targets": 8, "orderable": false }
+            { "targets": 8, "orderable": false },
+            { "targets": 9, "orderable": false }
         ],
     });
 
@@ -233,7 +235,9 @@ $(function() {
             
             const newData = {
                 "id_berita_acara": $(form).find('#select2-data-berita-acara option:selected').val(),
-                "ids_pinjam": $(form).find('input[name="ids_pinjam"]').val()
+                "ids_pinjam": $(form).find('input[name="ids_pinjam"]').val(),
+                "nomor_peminjaman": $(form).find('input[name="nomor_peminjaman"]').val(),
+                "kode_peminjaman": $(form).find('input[name="kode_peminjaman"]').val()
             };
             // console.log(newData);
             // return;
@@ -264,7 +268,8 @@ $(function() {
                         $('#form_add_pinjam').find('input[name="ids_pinjam"]').val('');
                         recordedIds = [];
 
-                        table.ajax.reload();
+                        // table.ajax.reload();
+                        location.reload();
                     }, 2000);
                 },
                 error: function(err) {
@@ -435,6 +440,36 @@ $(function() {
         }
     });
     /** end of handle delete */
+
+    function callbackLastPeminjaman(lastPeminjaman)
+    {
+        if (lastPeminjaman != null) {
+            lastPeminjaman = parseInt(lastPeminjaman) + 1;
+            $('#nomor_peminjaman').val(lastPeminjaman);
+            var countDigit = lastPeminjaman.toString().length;
+            var kodePrefix = '';
+            if (countDigit == 1) {
+                kodePrefix = '000000';
+            } else if (countDigit == 2) {
+                kodePrefix = '00000';
+            } else if (countDigit == 3) {
+                kodePrefix = '0000';
+            } else if (countDigit == 4) {
+                kodePrefix = '000';
+            } else if (countDigit == 5) {
+                kodePrefix = '00';
+            } else if (countDigit == 6) {
+                kodePrefix = '0';
+            } else if (countDigit == 7) {
+                kodePrefix = '';
+            }
+
+            $('#kode_peminjaman').val(kodePrefix+lastPeminjaman);
+        } else {
+            $('#nomor_peminjaman').val(1);
+            $('#kode_peminjaman').val('0000001');
+        }
+    }
 });
 </script>
 

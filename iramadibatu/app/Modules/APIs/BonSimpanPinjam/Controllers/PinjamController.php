@@ -32,7 +32,8 @@ class PinjamController extends ApiController
 
             $row        = [];
             $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-item-id=\"".$item['pinjam_sarana_id']."\"></div>";
-            $row[]      = "<input type=\"hidden\" value=\"".$item['pinjam_sarana_id']."\">{$num}.";
+            $row[]      = "<div class=\"text-center\"><input type=\"hidden\" name=\"pinjam_sarana_id\" value=\"".$item['pinjam_sarana_id']."\">{$num}.</div>";
+            $row[]      = $item['kode_peminjaman'] != null ?  "<a href=\"javascript:void(0)\" class=\"copyKodePeminjaman\">".$item['kode_peminjaman']."</a>" : "-";
             $row[]      = $item['berita_acara_nomor'];
             $row[]      = "<a href=\"javascript:void(0)\" class=\"viewPihak1\">".$item['pihak_1_nama']."</a>";
             $row[]      = "<a href=\"javascript:void(0)\" class=\"viewPihak2\">".$item['pihak_1_nama']."</a>";
@@ -48,6 +49,7 @@ class PinjamController extends ApiController
         $output['recordsTotal']     = $this->pinjamModel->customCountTotalDatatable($posts);
         $output['recordsFiltered']  = $this->pinjamModel->customCountTotalFilteredDatatable();
         $output['data']             = $resData;
+        $output['lastNomorPeminjaman'] = $this->pinjamModel->getLastData()['nomor_peminjaman'] ?? null;
 
         return $this->response
             ->setJSON($output)
@@ -81,6 +83,8 @@ class PinjamController extends ApiController
             foreach($idsPinjam as $rawItem) {
                 $item = substr(substr($rawItem, 1), 0, -1);
                 $resItem = explode(',', $item);
+                $data['nomor_peminjaman'] = $reqData->nomor_peminjaman;
+                $data['kode_peminjaman'] = $reqData->kode_peminjaman;
                 $data['id_berita_acara'] = $reqData->id_berita_acara;
                 $data['id_sarana_keamanan'] = $resItem[0];
                 $data['jumlah'] = $resItem[1];
@@ -206,6 +210,18 @@ class PinjamController extends ApiController
                 ->setJSON($errOutput)
                 ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public function getByKode()
+    {
+        $kode = $this->request->getGet('kode');
+        $data = $this->pinjamModel->getByKode($kode);
+        return $this->response
+                ->setJSON([
+                    'status'    => ResponseInterface::HTTP_OK,
+                    'data' => $data
+                ])
+                ->setStatusCode(ResponseInterface::HTTP_OK);
     }
 
     private function buildCustomActionButtons(int $id)

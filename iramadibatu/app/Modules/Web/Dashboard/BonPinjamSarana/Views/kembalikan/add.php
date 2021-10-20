@@ -11,16 +11,17 @@
                 <div class="modal-body pt-0">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="berita_acara">Berita Acara</label>
-                            <select id="berita_acara" name="berita_acara" class="form-control select2" style="width: 100%;"></select>
+                            <label for="kode_peminjaman">Kode Peminjaman</label>
+                            <input type="text" name="kode_peminjaman" class="form-control" id="kode_peminjaman" placeholder="Masukkan Kode Peminjaman">
+                            <button type="button" class="btn btn-info btn-xs"><i class="fas fa-search mr-1"></i>Cari</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="select2_berita_acara">Berita Acara</label>
+                            <select id="select2_berita_acara" name="berita_acara" class="form-control select2" style="width: 100%;"></select>
                         </div>
                         <div class="form-group">
                             <label for="record_data_pinjam">Sarana yang akan dikembalikan</label>
                             <textarea style="resize: none;" name="record_data_pinjam" class="form-control" id="record_data_pinjam" cols="20" rows="10" readonly></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="nomor_peminjaman">Nomor Peminjaman</label>
-                            <input type="text" name="nomor_peminjaman" class="form-control" id="nomor_peminjaman" placeholder="Masukkan Nomor Peminjaman...">
                         </div>
                     </div>
                     <!-- /.card-body -->

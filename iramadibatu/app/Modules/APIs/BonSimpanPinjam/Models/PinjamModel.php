@@ -14,6 +14,47 @@ class PinjamModel extends CoreApiModel
         parent::__construct('pinjam_sarana');
     }
 
+    public function getByKode(string $kode)
+    {
+        $this->defaultBuilder()->select(
+            '
+            pinjam_sarana.id as id,
+            pinjam_sarana.jumlah as jumlah,
+            sarana_keamanan.nomor_sarana as nomor,
+            jenis_sarana.name as nama,
+            merk_sarana.name as merk,
+            jenis_inventaris.name as tipe
+            '
+        );
+
+        $this->defaultBuilder()->join('sarana_keamanan', 'pinjam_sarana.id_sarana_keamanan = sarana_keamanan.id', 'left');
+        $this->defaultBuilder()->join('jenis_sarana', 'sarana_keamanan.id_jenis_sarana = jenis_sarana.id', 'left');
+        $this->defaultBuilder()->join('merk_sarana', 'sarana_keamanan.id_merk_sarana = merk_sarana.id', 'left');
+        $this->defaultBuilder()->join('jenis_inventaris', 'sarana_keamanan.id_jenis_inventaris = jenis_inventaris.id', 'left');
+
+        $this->defaultBuilder()->where('jenis_inventaris.deleted_at', null);
+        $this->defaultBuilder()->where('jenis_sarana.deleted_at', null);
+        $this->defaultBuilder()->where('merk_sarana.deleted_at', null);
+        $this->defaultBuilder()->where('sarana_keamanan.deleted_at', null);
+        $this->defaultBuilder()->where('pinjam_sarana.kode_peminjaman', $kode);
+
+        return $this->defaultBuilder()->get()->getResultArray();
+    }
+
+    /**
+     * get last item
+     */
+    public function getLastData()
+    {
+        $this->defaultBuilder()->select('nomor_peminjaman');
+        $this->defaultBuilder()->where('deleted_at', null);
+        $this->defaultBuilder()->orderBy('id', 'desc');
+        $this->defaultBuilder()->groupBy('nomor_peminjaman');
+        $this->defaultBuilder()->limit(1);
+
+        return $this->defaultBuilder()->get()->getRowArray();
+    }
+
     /**
      * get datatable for pinjam sarana
      * 
@@ -31,6 +72,8 @@ class PinjamModel extends CoreApiModel
             pinjam_sarana.id as pinjam_sarana_id,
             pinjam_sarana.jumlah as pinjam_sarana_jumlah,
             pinjam_sarana.created_at as tanggal_pinjam,
+            pinjam_sarana.nomor_peminjaman as nomor_peminjaman,
+            pinjam_sarana.kode_peminjaman as kode_peminjaman,
 
             sarana_keamanan.nomor_sarana as nomor_sarana,
             jenis_sarana.name as nama_sarana,

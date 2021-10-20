@@ -10,6 +10,11 @@
             <form id="form_add_pinjam">
                 <div class="modal-body pt-0">
                     <div class="card-body">
+                        <input type="hidden" name="nomor_peminjaman" id="nomor_peminjaman">
+                        <div class="form-group">
+                            <label for="kode_peminjaman">Kode Peminjaman</label>
+                            <input type="text" class="form-control" name="kode_peminjaman" id="kode_peminjaman" readonly>
+                        </div>
                         <div class="form-group">
                             <label>Berita Acara</label>
                             <select id="select2-data-berita-acara" name="berita_acara" class="form-control select2" style="width: 100%;"></select>

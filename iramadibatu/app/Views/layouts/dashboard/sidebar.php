@@ -121,12 +121,12 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="<?=route_to('distribusi')?>" class="nav-link <?=service('uri')->getSegment(2) == 'distribusi' ? 'active' : ''?>">
                         <i class="fas fa-undo nav-icon"></i>
                         <p>Distribusi Sarana</p>
                     </a>
-                </li>
+                </li> -->
                 <!-- <li class="nav-item">
                     <a href="<?=route_to('berita_acara')?>" class="nav-link <?=service('uri')->getSegment(2) == 'berita_acara' ? 'active' : ''?>">
                         <i class="fas fa-file-signature nav-icon"></i>

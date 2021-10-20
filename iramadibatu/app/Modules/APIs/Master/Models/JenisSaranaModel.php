@@ -37,6 +37,7 @@ class JenisSaranaModel extends CoreApiModel
     {
         $this->defaultBuilder()->select('id, name');
         $this->defaultBuilder()->where('name', $name);
+        $this->defaultBuilder()->where('deleted_at', null);
         return $this->defaultBuilder()->get()->getRowArray();
     }
 

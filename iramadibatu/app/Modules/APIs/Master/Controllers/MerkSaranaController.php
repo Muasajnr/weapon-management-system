@@ -82,16 +82,16 @@ class MerkSaranaController extends ApiController
                 );
             
             $data = $this->request->getVar();
-            
+
             $this->MSModel->setAuthenticatedUser(
                 $this->request
                     ->header('Logged-User')
                     ->getValue()
             );
 
-            $newData['name'] = $data['name'];
-            $newData['desc'] = $data['desc'];
-            $newData['is_active'] = $data['is_active'];
+            $newData['name'] = $data->name;
+            $newData['desc'] = $data->desc;
+            $newData['is_active'] = $data->is_active;
 
             $isAdded = $this->MSModel->createData($newData);
             if (!$isAdded)
@@ -206,9 +206,9 @@ class MerkSaranaController extends ApiController
 
             $data = $this->request->getVar();
 
-            $updatedData['name'] = $data['name'];
-            $updatedData['desc'] = $data['desc'];
-            $updatedData['is_active'] = $data['is_active'];
+            $updatedData['name'] = $data->name;
+            $updatedData['desc'] = $data->desc;
+            $updatedData['is_active'] = $data->is_active;
 
             $isUpdated = $this->MSModel->updateData($id, $updatedData);
             if (!$isUpdated)

@@ -62,7 +62,8 @@ $(function() {
                 type: 'POST',
                 url: baseUrl,
                 dataType: 'json',
-                data: newData,
+                data: JSON.stringify(newData),
+                contentType: 'application/json',
                 headers: {
                     'Authorization': 'Bearer ' + accessToken,
                     'X-Requested-With': 'XMLHttpRequest'

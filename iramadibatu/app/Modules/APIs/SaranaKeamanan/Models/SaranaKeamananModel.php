@@ -38,10 +38,14 @@ class SaranaKeamananModel extends CoreApiModel
         $this->defaultBuilder()->join('jenis_inventaris', 'sarana_keamanan.id_jenis_inventaris = jenis_inventaris.id', 'left');
         $this->defaultBuilder()->join('jenis_sarana', 'sarana_keamanan.id_jenis_sarana = jenis_sarana.id', 'left');
         $this->defaultBuilder()->join('merk_sarana', 'sarana_keamanan.id_merk_sarana = merk_sarana.id', 'left');
+        $this->defaultBuilder()->join('pinjam_sarana', 'sarana_keamanan.id = pinjam_sarana.id_sarana_keamanan', 'left');
 
         $this->defaultBuilder()->where('jenis_inventaris.deleted_at', null);
         $this->defaultBuilder()->where('jenis_sarana.deleted_at', null);
         $this->defaultBuilder()->where('merk_sarana.deleted_at', null);
+        $this->defaultBuilder()->where('sarana_keamanan.deleted_at', null);
+        $this->defaultBuilder()->where('sarana_keamanan.id NOT IN (SELECT id_sarana_keamanan FROM pinjam_sarana WHERE deleted_at IS NULL)');
+
         $this->defaultBuilder()->orderBy('sarana_keamanan.id_jenis_inventaris', 'asc');
 
         $result = $this->defaultBuilder()->get();

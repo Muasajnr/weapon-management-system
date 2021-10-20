@@ -57,6 +57,7 @@
                                 <tr>
                                     <th><div class="text-center"><input id="checkAll" type="checkbox" name="multi_delete"></div></th>
                                     <th>No.</th>
+                                    <th>Kode Peminjaman</th>
                                     <th>No. Berita Acara</th>
                                     <th>Pihak 1</th>
                                     <th>Pihak 2</th>
