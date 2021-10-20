@@ -31,9 +31,9 @@ class KembalikanController extends ApiController
             $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-item-id=\"".$item['kembalikan_sarana_id']."\"></div>";
             $row[]      = "<input type=\"hidden\" value=\"".$item['kembalikan_sarana_id']."\">{$num}.";
             $row[]      = $item['berita_acara_nomor'];
-            $row[]      = $item['pihak_1_nama'];
-            $row[]      = $item['pihak_2_nama'];
-            $row[]      = $item['nomor_sarana'].' - '.$item['nama_sarana'].' - '.$item['merk_sarana'];
+            $row[]      = "<a href=\"javascript:void(0)\" class=\"viewPihak1\">".$item['pihak_1_nama']."</a>";
+            $row[]      = "<a href=\"javascript:void(0)\" class=\"viewPihak2\">".$item['pihak_1_nama']."</a>";
+            $row[]      = "<a href=\"javascript:void(0)\" class=\"viewSarana\">".$item['nama_sarana']."</a>";
             $row[]      = $item['kembalikan_sarana_jumlah'];
             $row[]      = $item['kembalikan_sarana_tanggal'];
             $row[]      = $this->buildCustomActionButtons($item['kembalikan_sarana_id']);
@@ -55,8 +55,7 @@ class KembalikanController extends ApiController
     {
         $showUrl = site_url('dashboard/kembalikan_sarana/'.$id.'/detail');
         return "<div class=\"text-center\">
-                    <a href=\"javascript:void(0)\" onclick=\"window.open('$showUrl', 'lihat_pinjam_sarana', 'width=800, height=1200')\" class=\"btn btn-primary btn-sm mr-2\"><i class=\"fas fa-eye mr-1\"></i> Detail</a>
-                    <button type=\"button\" class=\"btn btn-danger btn-sm\" data-item-id=\"$id\"><i class=\"fas fa-trash mr-1\"></i>Hapus</button>
+                    <a href=\"javascript:void(0)\" onclick=\"window.open('$showUrl', 'lihatKembalikanSarana', 'width=800, height=1200')\" class=\"btn btn-primary btn-xs mr-2\"><i class=\"fas fa-eye mr-1\"></i> Detail</a>
                 </div>";
     }
 }

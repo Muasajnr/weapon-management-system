@@ -15,6 +15,38 @@ class SaranaKeamananModel extends CoreApiModel
     {
         parent::__construct('sarana_keamanan');
     }
+
+    /**
+     * get all data
+     * 
+     * @return array|null
+     */
+    public function getAllData() : ?array
+    {
+        $this->defaultBuilder()->select(
+            '
+            sarana_keamanan.id,
+            sarana_keamanan.nomor_bpsa,
+            sarana_keamanan.nomor_sarana,
+            sarana_keamanan.jumlah,
+            sarana_keamanan.created_at,
+            jenis_inventaris.name as tipe,
+            jenis_sarana.name as nama,
+            merk_sarana.name as merk
+            '
+        );
+        $this->defaultBuilder()->join('jenis_inventaris', 'sarana_keamanan.id_jenis_inventaris = jenis_inventaris.id', 'left');
+        $this->defaultBuilder()->join('jenis_sarana', 'sarana_keamanan.id_jenis_sarana = jenis_sarana.id', 'left');
+        $this->defaultBuilder()->join('merk_sarana', 'sarana_keamanan.id_merk_sarana = merk_sarana.id', 'left');
+
+        $this->defaultBuilder()->where('jenis_inventaris.deleted_at', null);
+        $this->defaultBuilder()->where('jenis_sarana.deleted_at', null);
+        $this->defaultBuilder()->where('merk_sarana.deleted_at', null);
+        $this->defaultBuilder()->orderBy('sarana_keamanan.id_jenis_inventaris', 'asc');
+
+        $result = $this->defaultBuilder()->get();
+        return $result->getResultArray();
+    }
     
     /**
      * get datatables

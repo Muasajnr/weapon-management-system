@@ -39,8 +39,11 @@
                         <button type="button" class="btn btn-primary btn-xs mr-2" data-toggle="modal" data-target="#modal-add-senjata-api">
                             <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Data
                         </button>
+                        <!-- <button type="button" class="btn btn-info btn-xs mr-2" data-toggle="modal" data-target="#modal-add-senjata-api-multi">
+                            <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Banyak
+                        </button> -->
                         <button type="button" class="btn btn-danger btn-xs" id="btn-delete-multiple">
-                            <i class="fas fa-trash"></i>&nbsp;&nbsp;Hapus banyak
+                            <i class="fas fa-trash"></i>&nbsp;&nbsp;Hapus Banyak
                         </button>
                     </div>
                     <!-- /.card-header -->
@@ -77,6 +80,7 @@
 <!-- /.content -->
 
 <?php echo view($moduleViewPath.'senjata_api/add') ?>
+<!-- <?php //echo view($moduleViewPath.'senjata_api/add_multi') ?> -->
 <?php echo view($moduleViewPath.'senjata_api/edit') ?>
 <?php echo view($moduleViewPath.'senjata_api/qrcode') ?>
 

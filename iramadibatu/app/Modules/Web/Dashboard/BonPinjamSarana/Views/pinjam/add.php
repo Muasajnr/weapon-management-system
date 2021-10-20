@@ -18,36 +18,26 @@
                             <div class="mb-2">
                                 <strong>Pilih Senjata</strong>
                             </div>
-                            <table class="table table-sm table-border">
+                            <table id="data_choose_pinjam" class="table table-sm table-border">
                                 <thead style="display:table; width: 100%; table-layout:fixed;" class="thead-dark">
                                     <tr>
-                                        <th>No. Senjata</th>
-                                        <th>Nama Sarana</th>
+                                        <th width="40px">No.</th>
+                                        <th width="120px">No. Senjata</th>
+                                        <th>Tipe</th>
+                                        <th>Nama & Merk</th>
                                         <th>Jumlah</th>
-                                        <th>Action</th>
+                                        <th width="100px">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody style="display: block; white-space: nowrap; height: 250px; overflow-y: auto;">
-                                    <?php for($i = 0; $i < 50; $i++): ?>
-                                        <tr style="display:table; width:100%; table-layout:fixed;">
-                                            <td>123456789</td>
-                                            <td>Sniper - Merk</td>
-                                            <td>
-                                                <div>
-                                                    <input type="text" class="mr-1" value="1">
-                                                    <strong>of 5</strong>
-                                                </div>
-                                            </td>
-                                            <td><button type="button" class="btn btn-primary btn-sm">Pinjam</button></td>
-                                        </tr>
-                                    <?php endfor; ?>
-                                </tbody>
+                                <tbody style="display: block; white-space: nowrap; height: 250px; overflow-y: auto;"></tbody>
                             </table>
                         </div>
                         <div class="form-group">
-                            <label for="record_data_pinjam">Sarana yang akan dipinjam</label>
-                            <textarea style="resize: none;" name="record_data_pinjam" class="form-control" id="record_data_pinjam" cols="20" rows="10" readonly></textarea>
+                            <label>Sarana yang akan dipinjam</label>
+                            <textarea style="resize: none;" name="record_data_pinjam" class="form-control mb-1" cols="20" rows="10" readonly></textarea>
+                            <button type="button" class="btn btn-danger btn-xs">Clear</button>
                         </div>
+                        <input type="hidden" name="ids_pinjam">
                     </div>
                     <!-- /.card-body -->
                 </div>

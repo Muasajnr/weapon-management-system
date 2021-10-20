@@ -21,6 +21,17 @@ class DefaultController extends ApiController
         $this->SKModel = new SaranaKeamananModel();
     }
 
+    public function index()
+    {
+        $allData = $this->SKModel->getAllData();
+        return $this->response
+            ->setJSON([
+                'status'    => ResponseInterface::HTTP_OK,
+                'data'      => $allData
+            ])
+            ->setStatusCode(ResponseInterface::HTTP_OK);
+    }
+
     public function get($id)
     {
         $data = $this->SKModel->getOne($id);
@@ -364,8 +375,7 @@ class DefaultController extends ApiController
             if (!$this->SKModel->isExist((int) $id))
                 throw new ApiAccessErrorException(
                     'Not Found!', 
-                    ResponseInterface::HTTP_NOT_FOUND,
-                    $this->validator->getErrors()
+                    ResponseInterface::HTTP_NOT_FOUND
                 );
 
             $this->SKModel->setAuthenticatedUser(

@@ -93,21 +93,23 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
             $routes->group('pinjam', function($routes) {
                 $routes->post('datatables', 'BonSimpanPinjam\Controllers\PinjamController::datatables'); // works
                 $routes->post('/', 'BonSimpanPinjam\Controllers\PinjamController::create');
+                $routes->get('(:segment)', 'BonSimpanPinjam\Controllers\PinjamController::get/$1');
 
-                $routes->put('(:segment)/update', 'BeritaAcara\Controllers\DefaultController::update/$1');
+                // $routes->put('(:segment)/update', 'BeritaAcara\Controllers\DefaultController::update/$1');
 
-                $routes->delete('(:segment)/delete', 'BeritaAcara\Controllers\DefaultController::delete/$1');
-                $routes->delete('delete/multiple', 'BeritaAcara\Controllers\DefaultController::deleteMultiple');
+                $routes->delete('(:segment)/delete', 'BonSimpanPinjam\Controllers\PinjamController::delete/$1'); // works
+                $routes->delete('delete/multiple', 'BonSimpanPinjam\Controllers\PinjamController::deleteMultiple'); // works
             });
 
             $routes->group('kembalikan', function($routes) {
                 $routes->post('datatables', 'BonSimpanPinjam\Controllers\KembalikanController::datatables'); // works
                 $routes->post('/', 'BonSimpanPinjam\Controllers\KembalikanController::create');
+                $routes->get('(:segment)', 'BonSimpanPinjam\Controllers\KembalikanController::get/$1');
                 
-                $routes->put('(:segment)/update', 'BonSimpanPinjam\Controllers\KembalikanController::update/$1');
+                // $routes->put('(:segment)/update', 'BonSimpanPinjam\Controllers\KembalikanController::update/$1');
 
-                $routes->delete('(:segment)/delete', 'BonSimpanPinjam\Controllers\KembalikanController::delete/$1');
-                $routes->delete('delete/multiple', 'BonSimpanPinjam\Controllers\KembalikanController::deleteMultiple');
+                // $routes->delete('(:segment)/delete', 'BonSimpanPinjam\Controllers\KembalikanController::delete/$1');
+                // $routes->delete('delete/multiple', 'BonSimpanPinjam\Controllers\KembalikanController::deleteMultiple');
             });
         });
 
