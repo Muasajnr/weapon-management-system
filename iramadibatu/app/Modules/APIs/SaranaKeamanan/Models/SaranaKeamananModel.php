@@ -230,6 +230,7 @@ class SaranaKeamananModel extends CoreApiModel
             sarana_keamanan.keterangan,
             sarana_keamanan.created_at,
             sarana_keamanan.qrcode_secret,
+            sarana_keamanan.jumlah,
 
             media.file_full_path as media_file_full_path,
             media.file_extension as media_file_extension,

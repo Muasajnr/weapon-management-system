@@ -47,8 +47,26 @@ $(function() {
                     $('#scan-result').html(
                         `
                         <dl class="row">
-                            <dt class="col-sm-4">Jenis Sarana : </dt>
+                            <dt class="col-sm-4">Nomor : </dt>
+                            <dd class="col-sm-8">${res.data.nomor_sarana}</dd>
+                            <dt class="col-sm-4">BPSA : </dt>
+                            <dd class="col-sm-8">${res.data.nomor_bpsa}</dd>
+                            <dt class="col-sm-4">Nomor Sarana : </dt>
                             <dd class="col-sm-8">${res.data.nama_jenis_sarana}</dd>
+                            <dt class="col-sm-4">Nama : </dt>
+                            <dd class="col-sm-8">${res.data.nama_jenis_sarana}</dd>
+                            <dt class="col-sm-4">Merk : </dt>
+                            <dd class="col-sm-8">${res.data.nama_merk_sarana}</dd>
+                            <dt class="col-sm-4">Keterangan : </dt>
+                            <dd class="col-sm-8">${res.data.keterangan}</dd>
+                            <dt class="col-sm-4">Kondisi : </dt>
+                            <dd class="col-sm-8">${res.data.kondisi}</dd>
+                            <dt class="col-sm-4">Jumlah : </dt>
+                            <dd class="col-sm-8">${res.data.jumlah}</dd>
+                            <dt class="col-sm-4">Created At : </dt>
+                            <dd class="col-sm-8">${res.data.created_at}</dd>
+                            <dt class="col-sm-4">Gambar : </dt>
+                            <dd class="col-sm-8"><img src="<?=site_url()?>/${res.data.media_file_full_path}" alt="${res.data.nama_jenis_sarana}" width="100%"></dd>
                         </dl>
                         ${res.data}
                         `
