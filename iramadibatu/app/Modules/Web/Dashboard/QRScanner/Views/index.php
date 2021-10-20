@@ -51,8 +51,6 @@ $(function() {
                             <dd class="col-sm-8">${res.data.nomor_sarana}</dd>
                             <dt class="col-sm-4">BPSA : </dt>
                             <dd class="col-sm-8">${res.data.nomor_bpsa}</dd>
-                            <dt class="col-sm-4">Nomor Sarana : </dt>
-                            <dd class="col-sm-8">${res.data.nama_jenis_sarana}</dd>
                             <dt class="col-sm-4">Nama : </dt>
                             <dd class="col-sm-8">${res.data.nama_jenis_sarana}</dd>
                             <dt class="col-sm-4">Merk : </dt>
