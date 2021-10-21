@@ -29,7 +29,7 @@ class KembalikanModel extends CoreApiModel
         $this->defaultBuilder()->select(
             '
             kembalikan_sarana.id as kembalikan_sarana_id,
-            kembalikan_sarana.jumlah as kembalikan_sarana_jumlah,
+            sum(kembalikan_sarana.jumlah) as kembalikan_sarana_jumlah,
             kembalikan_sarana.created_at as kembalikan_sarana_tanggal,
 
             sarana_keamanan.nomor_sarana as nomor_sarana,
@@ -42,6 +42,8 @@ class KembalikanModel extends CoreApiModel
             pihak_1.nip as pihak_1_nip,
             pihak_2.nama as pihak_2_nama,
             pihak_2.nip as pihak_2_nip,
+
+            pinjam_sarana.kode_peminjaman as kode,
             '
         );
 
@@ -78,6 +80,8 @@ class KembalikanModel extends CoreApiModel
             $this->defaultBuilder()->where('kembalikan_sarana.deleted_at', null);
         else
             $this->defaultBuilder()->where('kembalikan_sarana.deleted_at is not null');
+
+        $this->defaultBuilder()->groupBy('kembalikan_sarana.id_berita_acara');
 
         $result = $this->defaultBuilder()->get();
         return $result->getResultArray();

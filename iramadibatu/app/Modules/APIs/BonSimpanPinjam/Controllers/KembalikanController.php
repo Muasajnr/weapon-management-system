@@ -39,7 +39,7 @@ class KembalikanController extends ApiController
             $row[]      = "<a href=\"javascript:void(0)\" class=\"viewSarana\">".$item['nama_sarana']."</a>";
             $row[]      = $item['kembalikan_sarana_jumlah'];
             $row[]      = $item['kembalikan_sarana_tanggal'];
-            $row[]      = $this->buildCustomActionButtons($item['kembalikan_sarana_id']);
+            $row[]      = $this->buildCustomActionButtons($item['kembalikan_sarana_id'], $item['kode'] ?? '');
 
             $resData[] = $row;
         }
@@ -117,9 +117,9 @@ class KembalikanController extends ApiController
         }
     }
 
-    private function buildCustomActionButtons(int $id)
+    private function buildCustomActionButtons(int $id, string $kode)
     {
-        $showUrl = site_url('dashboard/kembalikan_sarana/'.$id.'/detail');
+        $showUrl = site_url('dashboard/bon_pinjam_sarana/pinjam/detail?kode_peminjaman='.$kode);
         return "<div class=\"text-center\">
                     <a href=\"javascript:void(0)\" onclick=\"window.open('$showUrl', 'lihatKembalikanSarana', 'width=800, height=1200')\" class=\"btn btn-primary btn-xs mr-2\"><i class=\"fas fa-eye mr-1\"></i> Detail</a>
                 </div>";
