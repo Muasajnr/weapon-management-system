@@ -138,7 +138,12 @@ class DefaultController extends ApiController
                 $dataMedia['file_size'] = $media->getSize();
                 $dataMedia['file_mime_type'] = $media->getMimeType();
 
-                $filepath = ROOTPATH.'../public/uploads/berita_acara/';
+                $filepath = '';
+                if (getenv('CI_ENVIRONMENT') === 'production') {
+                    $filepath = ROOTPATH.'../../../public_html/uploads/berita_acara/';
+                } else if (getenv('CI_ENVIRONMENT') === 'development') {
+                    $filepath = ROOTPATH.'../public/uploads/berita_acara/';
+                }
                 $media->move($filepath, $filename);
 
                 $mediaCreatedId = $this->beritaAcaraModel->createMediaData($dataMedia, true);
