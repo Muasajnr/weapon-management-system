@@ -227,7 +227,13 @@ class DefaultController extends ApiController
                 $dataMedia['file_size']         = $media->getSize();
                 $dataMedia['file_mime_type']    = $media->getMimeType();
 
-                $filepath = ROOTPATH.'../public/uploads/sarana_keamanan/';
+                $filepath = '';
+                if (getenv('CI_ENVIRONMENT') === 'production') {
+                    $filepath = ROOTPATH.'../../../public_html/uploads/sarana_keamanan/';
+                } else if (getenv('CI_ENVIRONMENT') === 'development') {
+                    $filepath = ROOTPATH.'../public/uploads/sarana_keamanan/';
+                }
+                
                 $media->move($filepath, $filename);
 
                 $insertedId = $this->SKModel->createMediaData($dataMedia, true);
