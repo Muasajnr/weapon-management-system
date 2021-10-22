@@ -83,6 +83,7 @@
 <?php echo view($moduleViewPath.'lainnya/add_v2') ?>
 <?php echo view($moduleViewPath.'lainnya/edit_v2') ?>
 <?php echo view($moduleViewPath.'lainnya/qrcode') ?>
+<?php echo view($moduleViewPath.'common/show_modal') ?>
 
 <?=$this->endSection()?>
 

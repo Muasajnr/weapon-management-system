@@ -79,6 +79,7 @@
 <?php echo view($moduleViewPath.'non_organik/add') ?>
 <?php echo view($moduleViewPath.'non_organik/edit') ?>
 <?php echo view($moduleViewPath.'non_organik/qrcode') ?>
+<?php echo view($moduleViewPath.'common/show_modal') ?>
 
 <?=$this->endSection()?>
 

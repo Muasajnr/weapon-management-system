@@ -58,6 +58,56 @@ $(function() {
         ],
     });
 
+    // clear show modal
+    $('#modal_show_detail').on('hidden.bs.modal', function (e) {
+        $('#data_detail').html('');
+    })
+
+    // handle show detail
+    $('#data_non_organik tbody').on('click', 'tr td button.btn-primary', function(e) {
+        e.preventDefault();
+
+        const rowData = table.row($(this).parent().parent()).data();
+        const itemId = parseInt($(rowData[1]).find('input[name="id"]').val());
+        
+        $.ajax({
+            type: 'GET',
+            url: `${urlSaranaKeamanan}/${itemId}`,
+            dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            success: function(res) {
+                console.log(res);
+
+                if (res.data) {
+                    for (const [key, value] of Object.entries(res.data)) {
+                        $('#data_detail').append(
+                            `
+                            <dt class="col-sm-4">${key}</dt>
+                            <dd id="show-name" class="col-sm-8">${value == null ? '-' : value}</dd>
+                            `
+                        );
+                    }
+                }
+
+                $('#modal_show_detail').modal('toggle');
+            },
+            error: function(err) {
+                console.log(err);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Data gagal ditampilkan!',
+                    text: err.responseJSON.message,
+                    showConfirmButton: true,
+                    timer: 2000
+                });
+            }
+        });
+    });
+
     // handle list berita acara
     $('#select2-data-berita-acara').select2({
         // allowClear: true,

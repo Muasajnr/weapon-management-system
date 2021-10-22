@@ -83,6 +83,7 @@
 <!-- <?php //echo view($moduleViewPath.'senjata_api/add_multi') ?> -->
 <?php echo view($moduleViewPath.'senjata_api/edit') ?>
 <?php echo view($moduleViewPath.'senjata_api/qrcode') ?>
+<?php echo view($moduleViewPath.'common/show_modal') ?>
 
 <?=$this->endSection()?>
 
