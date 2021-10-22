@@ -34,7 +34,7 @@ class DefaultController extends ApiController
 
     public function get($id)
     {
-        $data = $this->SKModel->getOne($id);
+        $data = $this->SKModel->getDetail($id);
         return $this->response
             ->setJSON([
                 'status'    => ResponseInterface::HTTP_OK,

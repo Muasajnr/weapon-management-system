@@ -51,6 +51,37 @@ class SaranaKeamananModel extends CoreApiModel
         $result = $this->defaultBuilder()->get();
         return $result->getResultArray();
     }
+
+    public function getDetail($id)
+    {
+
+        $this->defaultBuilder()->select(
+            '
+            sarana_keamanan.id,
+            jenis_sarana.name as nama,
+            merk_sarana.name as merk,
+            jenis_inventaris.name as tipe,
+            sarana_keamanan.nomor_bpsa,
+            sarana_keamanan.nomor_sarana,
+            sarana_keamanan.jumlah,
+            sarana_keamanan.satuan,
+            sarana_keamanan.kondisi,
+            sarana_keamanan.keterangan,
+            media.file_full_path as media_file_full_path,
+            media.file_extension as media_file_extension,
+            sarana_keamanan.created_at
+            '
+        );
+
+        $this->defaultBuilder()->join('jenis_inventaris', 'sarana_keamanan.id_jenis_inventaris = jenis_inventaris.id', 'left');
+        $this->defaultBuilder()->join('jenis_sarana', 'sarana_keamanan.id_jenis_sarana = jenis_sarana.id', 'left');
+        $this->defaultBuilder()->join('merk_sarana', 'sarana_keamanan.id_merk_sarana = merk_sarana.id', 'left');
+        $this->defaultBuilder()->join('media', 'sarana_keamanan.id_media = media.id', 'left');
+
+        $this->defaultBuilder()->where('sarana_keamanan.id', $id);
+
+        return $this->defaultBuilder()->get()->getRowArray();
+    }
     
     /**
      * get datatables

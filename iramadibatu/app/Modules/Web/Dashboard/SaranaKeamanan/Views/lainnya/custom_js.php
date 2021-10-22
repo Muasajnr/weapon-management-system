@@ -117,10 +117,10 @@ $(function() {
                 if (res.data) {
                     for (const [key, value] of Object.entries(res.data)) {
                         $('#data_detail').append(
-                            `
+                            key !== 'media_file_full_path' ? `
                             <dt class="col-sm-4">${key}</dt>
-                            <dd id="show-name" class="col-sm-8">${value == null ? '-' : value}</dd>
-                            `
+                            <dd class="col-sm-8">${value == null ? '-' : value}</dd>
+                            ` : `<dt class="col-sm-4">${key}</dt><dd class="col-sm-8"><img src="/${value}" alt="Nothing" width="100%"></dd>`
                         );
                     }
                 }
