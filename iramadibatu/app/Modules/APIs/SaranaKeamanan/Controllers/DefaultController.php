@@ -90,8 +90,8 @@ class DefaultController extends ApiController
                         <input type=\"hidden\" name=\"qrcode_secret\" value=\"".$item['qrcode_secret']."\">
                     </div>
                 ";
-                $row[]      = $item['nomor_sarana'] != null && $item['nomor_sarana'] != 0 ? $item['nomor_sarana'] : '-';
-                $row[]      = $item['nomor_bpsa'] != null && $item['nomor_bpsa'] != 0 ? $item['nomor_bpsa'] : '-';
+                $row[]      = $item['nomor_sarana'] ?? '-';
+                $row[]      = $item['nomor_bpsa'] ?? '-';
                 $row[]      = $item['nama'] ?? '-';
                 $row[]      = $item['merk'] ?? '-';
                 $row[]      = $item['jumlah'] ?? '-';
