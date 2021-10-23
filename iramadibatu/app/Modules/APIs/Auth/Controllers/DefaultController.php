@@ -76,6 +76,12 @@ class DefaultController extends ApiController
             $this->authModel->setAuthenticatedUser($userdata['username']);
             $this->authModel->updateLastLogin($userdata['id']);
 
+            // set user level session
+            $session = session();
+            $session->set([
+                'userdata'  => $userdata
+            ]);
+
             return $this->response
                 ->setJSON([
                     'status'    => ResponseInterface::HTTP_OK,
@@ -158,7 +164,7 @@ class DefaultController extends ApiController
             $token = $this->request->getVar('token');
 
             $username = validateRefreshToken($token);
-
+            // print_r($token);die();
             if (!$this->authModel->isTokenExist('token', $token))
                 throw new ApiAccessErrorException('Token doesn\'t exist!', ResponseInterface::HTTP_NOT_FOUND);
 
@@ -167,6 +173,10 @@ class DefaultController extends ApiController
                 throw new ApiAccessErrorException('Terjadi kesalahan!', ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
 
             $this->authModel->updateLastLogout($username);
+
+            // destroy session
+            // session_destroy();
+            session()->remove(['userdata']);
 
             return $this->response
                 ->setStatusCode(ResponseInterface::HTTP_NO_CONTENT);
@@ -177,7 +187,7 @@ class DefaultController extends ApiController
         } catch (Exception $e) {
             $errOutput = $this->getErrorOutput($e, $this->request);
             return $this->response->setJSON($errOutput)
-                ->setStatusCode($e->getCode());
+                ->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

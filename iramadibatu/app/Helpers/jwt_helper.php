@@ -47,14 +47,14 @@ function validateRefreshToken(string $encodedToken): string
 function createAccessToken(array $data): string
 {
     $iat = time();
-    $nbf = $iat + 10;
+    // $nbf = $iat + 10;
     $exp = $iat + (int) Services::getAccessTokenLifetime();
     
     $payload = [
         'iss'   => 'The_Claim1',
         'aud'   => 'The_Aud1',
         'iat'   => $iat,
-        'nbf'   => $nbf,
+        // 'nbf'   => $nbf,
         'exp'   => $exp,
         'data'  => $data,
     ];

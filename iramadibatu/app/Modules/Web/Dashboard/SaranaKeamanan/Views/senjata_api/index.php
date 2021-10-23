@@ -36,15 +36,17 @@
             <div class="col-12">
                 <div class="card card-outline card-primary">
                     <div class="card-header">
-                        <button type="button" class="btn btn-primary btn-xs mr-2" data-toggle="modal" data-target="#modal-add-senjata-api">
-                            <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Data
-                        </button>
-                        <!-- <button type="button" class="btn btn-info btn-xs mr-2" data-toggle="modal" data-target="#modal-add-senjata-api-multi">
-                            <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Banyak
-                        </button> -->
-                        <button type="button" class="btn btn-danger btn-xs" id="btn-delete-multiple">
-                            <i class="fas fa-trash"></i>&nbsp;&nbsp;Hapus Banyak
-                        </button>
+                        <?php if ($userLevel === 'admin'): ?>
+                            <button type="button" class="btn btn-primary btn-xs mr-2" data-toggle="modal" data-target="#modal-add-senjata-api">
+                                <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Data
+                            </button>
+                            <!-- <button type="button" class="btn btn-info btn-xs mr-2" data-toggle="modal" data-target="#modal-add-senjata-api-multi">
+                                <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Banyak
+                            </button> -->
+                            <button type="button" class="btn btn-danger btn-xs" id="btn-delete-multiple">
+                                <i class="fas fa-trash"></i>&nbsp;&nbsp;Hapus Banyak
+                            </button>
+                        <?php endif; ?>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">

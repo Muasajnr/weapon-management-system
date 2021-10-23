@@ -239,10 +239,20 @@ class PinjamController extends ApiController
     private function buildCustomActionButtons(int $id, string $kode)
     {
         $showUrl = site_url('dashboard/bon_pinjam_sarana/pinjam/detail?kode_peminjaman='.$kode);
-        return "<div class=\"text-center\">
-                    <a href=\"javascript:void(0)\" onclick=\"window.open('$showUrl', 'lihat_pinjam_sarana', 'width=800, height=1200')\" class=\"btn btn-primary btn-xs mr-2\"><i class=\"fas fa-eye mr-1\"></i>Detail</a>
-                    <button type=\"button\" class=\"btn btn-danger btn-xs\" data-item-id=\"$id\"><i class=\"fas fa-trash mr-1\"></i>Hapus</button>
-                </div>";
+        $session = session();
+
+        if ($session->userdata['level'] === 'admin')
+            return "<div class=\"text-center\">
+                        <a href=\"javascript:void(0)\" onclick=\"window.open('$showUrl', 'lihat_pinjam_sarana', 'width=800, height=1200')\" class=\"btn btn-primary btn-xs mr-2\"><i class=\"fas fa-eye mr-1\"></i>Detail</a>
+                        <button type=\"button\" class=\"btn btn-danger btn-xs\" data-item-id=\"$id\"><i class=\"fas fa-trash mr-1\"></i>Hapus</button>
+                    </div>";
+
+        if ($session->userdata['level'] === 'user')
+            return "<div class=\"text-center\">
+                        <a href=\"javascript:void(0)\" onclick=\"window.open('$showUrl', 'lihat_pinjam_sarana', 'width=800, height=1200')\" class=\"btn btn-primary btn-xs mr-2\"><i class=\"fas fa-eye mr-1\"></i>Detail</a>
+                    </div>";
+
+        return "<strong>forbidden</strong>";
     }
     
 }

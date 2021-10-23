@@ -357,10 +357,19 @@ class JenisInventarisController extends ApiController
 
     protected function buildCustomButtonActions($id)
     {
-        return "<div class=\"text-center\">
-                    <button type=\"button\" class=\"btn btn-primary btn-xs mr-2\" data-item-id=\"$id\"><i class=\"fas fa-eye mr-1\"></i>Detail</button>
-                    <button type=\"button\" class=\"btn btn-info btn-xs mr-2\" data-item-id=\"$id\"><i class=\"fas fa-pencil-alt mr-1\"></i>Edit</button>
-                    <button type=\"button\" class=\"btn btn-danger btn-xs\" data-item-id=\"$id\"><i class=\"fas fa-trash mr-1\"></i>Hapus</button>
-                </div>";
+        $session = session();
+        if ($session->userdata['level'] === 'admin')
+            return "<div class=\"text-center\">
+                        <button type=\"button\" class=\"btn btn-primary btn-xs mr-2\" data-item-id=\"$id\"><i class=\"fas fa-eye mr-1\"></i>Detail</button>
+                        <button type=\"button\" class=\"btn btn-info btn-xs mr-2\" data-item-id=\"$id\"><i class=\"fas fa-pencil-alt mr-1\"></i>Edit</button>
+                        <button type=\"button\" class=\"btn btn-danger btn-xs\" data-item-id=\"$id\"><i class=\"fas fa-trash mr-1\"></i>Hapus</button>
+                    </div>";
+
+        if ($session->userdata['level'] === 'user')
+            return "<div class=\"text-center\">
+                        <button type=\"button\" class=\"btn btn-primary btn-xs mr-2\" data-item-id=\"$id\"><i class=\"fas fa-eye mr-1\"></i>Detail</button>
+                    </div>";
+
+        return "<strong>forbidden</strong>";
     }
 }
