@@ -5,7 +5,11 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
     $routes->post('logout', 'Auth\Controllers\DefaultController::logout');
 
     $routes->group('dashboard', function($routes) {
-        $routes->get('/', 'Dashboard\Controllers\DefaultController::index');
+        $routes->get('/', 'Dashboard\Controllers\DefaultController::index'); // works
+        $routes->get('listStok', 'Dashboard\Controllers\DefaultController::listStok');
+        $routes->get('listDipinjam', 'Dashboard\Controllers\DefaultController::listDipinjam');
+        $routes->get('summary_data', 'Dashboard\Controllers\DefaultController::summaryData'); // works
+        $routes->get('stok_by_jenis_inventaris', 'Dashboard\Controllers\DefaultController::stokByJenisInventaris'); // workss
 
         $routes->group('master', function($routes) {
             $routes->group('jenis_inventaris', function($routes) {
@@ -62,6 +66,8 @@ $routes->group('api/v1', ['namespace' => '\App\Modules\APIs'], function($routes)
 
             $routes->delete('(:segment)/delete', 'SaranaKeamanan\Controllers\DefaultController::delete/$1'); // works
             $routes->delete('delete/multiple', 'SaranaKeamanan\Controllers\DefaultController::deleteMultiple'); // works
+
+
         });
 
         $routes->group('berita_acara', function($routes) {
