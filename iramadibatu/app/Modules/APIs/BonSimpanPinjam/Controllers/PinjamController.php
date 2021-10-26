@@ -236,7 +236,7 @@ class PinjamController extends ApiController
                 ->setStatusCode(ResponseInterface::HTTP_OK);
     }
 
-    private function buildCustomActionButtons(int $id, string $kode)
+    private function buildCustomActionButtons(int $id, ?string $kode)
     {
         $showUrl = site_url('dashboard/bon_pinjam_sarana/pinjam/detail?kode_peminjaman='.$kode);
         $session = session();
