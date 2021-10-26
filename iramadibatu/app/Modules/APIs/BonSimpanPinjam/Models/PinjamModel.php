@@ -6,7 +6,7 @@ use App\Core\CoreApiModel;
 
 class PinjamModel extends CoreApiModel
 {
-    protected $columnSearch = [];
+    protected $columnSearch = ['kode', 'no_berita_acara', 'pihak_1', 'pihak_2'];
     protected $columnOrder = [];
     
     public function __construct()
@@ -142,9 +142,17 @@ class PinjamModel extends CoreApiModel
             if (isset($dtParams['search'])) {
                 if ($i === 0) {
                     $this->defaultBuilder()->groupStart();
-                    $this->defaultBuilder()->like($column, $dtParams['search']['value']);
+                    $this->defaultBuilder()->like('pinjam_sarana.kode_peminjaman', $dtParams['search']['value']);
                 } else {
-                    $this->defaultBuilder()->orLike($column, $dtParams['search']['value']);
+                    if ($column === 'no_berita_acara') {
+                        $this->defaultBuilder()->orLike('berita_acara.nomor', $dtParams['search']['value']);
+                    } else if ($column === 'pihak_1') {
+                        $this->defaultBuilder()->orLike('pihak_1.nama', $dtParams['search']['value']);
+                    } else if ($column === 'pihak_2') {
+                        $this->defaultBuilder()->orLike('pihak_2.nama', $dtParams['search']['value']);
+                    } else {
+                        $this->defaultBuilder()->orLike('pinjam_sarana.'.$column, $dtParams['search']['value']);
+                    }
                 }
 
                 if (count($this->columnSearch) - 1 === $i)
@@ -182,13 +190,26 @@ class PinjamModel extends CoreApiModel
     public function customCountTotalDatatable(array $dtParams, bool $history = false)
     {
         $i = 0;
+
+        $this->defaultBuilder()->join('berita_acara', 'pinjam_sarana.id_berita_acara = berita_acara.id', 'left');
+        $this->defaultBuilder()->join('penanggung_jawab as pihak_1', 'berita_acara.id_pihak_1 = pihak_1.id', 'left');
+        $this->defaultBuilder()->join('penanggung_jawab as pihak_2', 'berita_acara.id_pihak_2 = pihak_2.id', 'left');
+
         foreach($this->columnSearch as $column) {
             if (isset($dtParams['search']) && !empty($dtParams['search'])) {
                 if ($i === 0) {
                     $this->defaultBuilder()->groupStart();
-                    $this->defaultBuilder()->like($column, $dtParams['search']['value']);
+                    $this->defaultBuilder()->like('pinjam_sarana.kode_peminjaman', $dtParams['search']['value']);
                 } else {
-                    $this->defaultBuilder()->orLike($column, $dtParams['search']['value']);
+                    if ($column === 'no_berita_acara') {
+                        $this->defaultBuilder()->orLike('berita_acara.nomor', $dtParams['search']['value']);
+                    } else if ($column === 'pihak_1') {
+                        $this->defaultBuilder()->orLike('pihak_1.nama', $dtParams['search']['value']);
+                    } else if ($column === 'pihak_2') {
+                        $this->defaultBuilder()->orLike('pihak_2.nama', $dtParams['search']['value']);
+                    } else {
+                        $this->defaultBuilder()->orLike('pinjam_sarana.'.$column, $dtParams['search']['value']);
+                    }
                 }
 
                 if (count($this->columnSearch) - 1 === $i)

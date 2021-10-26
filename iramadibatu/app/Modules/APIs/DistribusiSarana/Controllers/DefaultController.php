@@ -31,9 +31,9 @@ class DefaultController extends ApiController
             $row[]      = "<div class=\"text-center\"><input class=\"multi_delete\" type=\"checkbox\" name=\"multi_delete[]\" data-item-id=\"".$item['distribusi_sarana_id']."\"></div>";
             $row[]      = "<input type=\"hidden\" value=\"".$item['distribusi_sarana_id']."\">{$num}.";
             $row[]      = $item['berita_acara_nomor'];
-            $row[]      = $item['pihak_1_nama'];
-            $row[]      = $item['pihak_2_nama'];
-            $row[]      = $item['nomor_sarana'].' - '.$item['nama_sarana'].' - '.$item['merk_sarana'];
+            $row[]      = "<a href=\"javascript:void(0)\" class=\"viewPihak1\">".$item['pihak_1_nama']."</a>";
+            $row[]      = "<a href=\"javascript:void(0)\" class=\"viewPihak2\">".$item['pihak_2_nama']."</a>";
+            $row[]      = "<a href=\"javascript:void(0)\" class=\"viewSarana\">".$item['nama_sarana']."</a>";
             $row[]      = $item['distribusi_sarana_jumlah'];
             $row[]      = $item['distribusi_sarana_lokasi'];
             $row[]      = $item['distribusi_sarana_tanggal'];

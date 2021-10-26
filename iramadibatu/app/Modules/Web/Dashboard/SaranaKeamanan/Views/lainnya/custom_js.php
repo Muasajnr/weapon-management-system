@@ -46,7 +46,7 @@ $(function() {
         "columns": [
             { "targets": 0, "orderable": false, "searchable": false },
             { "targets": 1, "orderable": false, "searchable": false },
-            { "targets": 2, "orderable": false, "searchable": false },
+            { "targets": 2, "orderable": true, "searchable": true },
             { "targets": 3, "orderable": false, "searchable": false },
             { "targets": 4, "orderable": false, "searchable": false },
             { "targets": 5, "orderable": false, "searchable": false },

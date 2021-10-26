@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="info">
-                <a href="#" class="d-block">testuser18</a>
+                <a href="#" class="d-block"><?=$loggedUsername?></a>
             </div>
         </div>
 

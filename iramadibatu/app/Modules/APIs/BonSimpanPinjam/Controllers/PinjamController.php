@@ -36,7 +36,7 @@ class PinjamController extends ApiController
             $row[]      = $item['kode_peminjaman'] != null ?  "<a href=\"javascript:void(0)\" class=\"copyKodePeminjaman\">".$item['kode_peminjaman']."</a>" : "-";
             $row[]      = $item['berita_acara_nomor'];
             $row[]      = "<a href=\"javascript:void(0)\" class=\"viewPihak1\">".$item['pihak_1_nama']."</a>";
-            $row[]      = "<a href=\"javascript:void(0)\" class=\"viewPihak2\">".$item['pihak_1_nama']."</a>";
+            $row[]      = "<a href=\"javascript:void(0)\" class=\"viewPihak2\">".$item['pihak_2_nama']."</a>";
             // $row[]      = "<a href=\"javascript:void(0)\" class=\"viewSarana\">".$item['nama_sarana']."</a>";
             $row[]      = $item['pinjam_sarana_jumlah'];
             $row[]      = $item['tanggal_pinjam'];

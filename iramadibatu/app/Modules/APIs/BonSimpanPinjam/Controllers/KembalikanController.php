@@ -35,7 +35,7 @@ class KembalikanController extends ApiController
             $row[]      = "<input type=\"hidden\" value=\"".$item['kembalikan_sarana_id']."\">{$num}.";
             $row[]      = $item['berita_acara_nomor'];
             $row[]      = "<a href=\"javascript:void(0)\" class=\"viewPihak1\">".$item['pihak_1_nama']."</a>";
-            $row[]      = "<a href=\"javascript:void(0)\" class=\"viewPihak2\">".$item['pihak_1_nama']."</a>";
+            $row[]      = "<a href=\"javascript:void(0)\" class=\"viewPihak2\">".$item['pihak_2_nama']."</a>";
             $row[]      = "<a href=\"javascript:void(0)\" class=\"viewSarana\">".$item['nama_sarana']."</a>";
             $row[]      = $item['kembalikan_sarana_jumlah'];
             $row[]      = $item['kembalikan_sarana_tanggal'];

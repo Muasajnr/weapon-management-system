@@ -66,9 +66,9 @@ $(function() {
             { "targets": 0, "orderable": false, "searchable": false },
             { "targets": 1, "orderable": false, "searchable": false },
             { "targets": 2, "orderable": true, "searchable": true },
-            { "targets": 3, "orderable": false, "searchable": false },
-            { "targets": 4, "orderable": false, "searchable": false },
-            { "targets": 5, "orderable": true, "searchable": true },
+            { "targets": 3, "orderable": true, "searchable": true },
+            { "targets": 4, "orderable": true, "searchable": true },
+            { "targets": 5, "orderable": false, "searchable": false },
             { "targets": 6, "orderable": false },
             { "targets": 7, "orderable": false },
             { "targets": 8, "orderable": false }
@@ -429,6 +429,15 @@ $(function() {
             $('#kode_peminjaman').val('0000001');
         }
     }
+
+    // fitler data
+    $('#filter_data').submit(function(e) {
+        e.preventDefault();
+
+        let searchQuery = $('input#searchQuery').val();
+        
+        table.search(searchQuery).draw();
+    });
 });
 </script>
 

@@ -8,8 +8,8 @@ use CodeIgniter\I18n\Time;
 class SaranaKeamananModel extends CoreApiModel
 {
     
-    protected $columnSearch = ['nomor_sarana', 'nomor_bpsa'];
-    protected $columnOrder = ['nomor_sarana', 'nomor_bpsa'];
+    protected $columnSearch = ['nomor_sarana', 'nomor_bpsa', 'jenis_sarana', 'merk_sarana'];
+    protected $columnOrder = ['nomor_sarana', 'nomor_bpsa', 'jenis_sarana', 'merk_sarana'];
 
     public function __construct()
     {
@@ -132,9 +132,17 @@ class SaranaKeamananModel extends CoreApiModel
             if (isset($dtParams['search'])) {
                 if ($i === 0) {
                     $this->defaultBuilder()->groupStart();
-                    $this->defaultBuilder()->like($column, $dtParams['search']['value']);
+                    $this->defaultBuilder()->like('sarana_keamanan.'.$column, $dtParams['search']['value']);
                 } else {
-                    $this->defaultBuilder()->orLike($column, $dtParams['search']['value']);
+                    if ($column === 'jenis_sarana') {
+                        // print_r($column);die();
+                        $this->defaultBuilder()->orLike('jenis_sarana.name', $dtParams['search']['value']);
+                    } else if ($column === 'merk_sarana') {
+                        $this->defaultBuilder()->orLike('merk_sarana.name', $dtParams['search']['value']);
+                    } else {
+                        // print_r($column);die();
+                        $this->defaultBuilder()->orLike('sarana_keamanan.'.$column, $dtParams['search']['value']);
+                    }
                 }
 
                 if (count($this->columnSearch) - 1 === $i)
@@ -181,9 +189,17 @@ class SaranaKeamananModel extends CoreApiModel
             if (isset($dtParams['search']) && !empty($dtParams['search'])) {
                 if ($i === 0) {
                     $this->defaultBuilder()->groupStart();
-                    $this->defaultBuilder()->like($column, $dtParams['search']['value']);
+                    $this->defaultBuilder()->like('sarana_keamanan.'.$column, $dtParams['search']['value']);
                 } else {
-                    $this->defaultBuilder()->orLike($column, $dtParams['search']['value']);
+                    if ($column === 'jenis_sarana') {
+                        // print_r($column);die();
+                        $this->defaultBuilder()->orLike('jenis_sarana.name', $dtParams['search']['value']);
+                    } else if ($column === 'merk_sarana') {
+                        $this->defaultBuilder()->orLike('merk_sarana.name', $dtParams['search']['value']);
+                    } else {
+                        // print_r($column);die();
+                        $this->defaultBuilder()->orLike('sarana_keamanan.'.$column, $dtParams['search']['value']);
+                    }
                 }
 
                 if (count($this->columnSearch) - 1 === $i)

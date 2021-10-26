@@ -5,6 +5,7 @@ Aplikasi inventaris sarana keamanan pada instansi kepolisian yang bertujuan untu
 
 - Auth
 - Admin Panel
+- Manajemen Master Data
 - Manajemen Sarana Keamanan
 - Peminjaman dan Pengembalian Sarana Keamanan
 - Manajemen Berita Acara

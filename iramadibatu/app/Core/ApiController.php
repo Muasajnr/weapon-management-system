@@ -41,11 +41,19 @@ class ApiController extends BaseController
 
     protected function buildActionButtons($id)
     {
-        return "<div class=\"text-center\">
-                    <button type=\"button\" class=\"btn btn-primary btn-sm mr-2\" data-item-id=\"$id\"><i class=\"fas fa-eye\"></i></button>
-                    <button type=\"button\" class=\"btn btn-info btn-sm mr-2\" data-item-id=\"$id\"><i class=\"fas fa-pencil-alt\"></i></button>
-                    <button type=\"button\" class=\"btn btn-danger btn-sm\" data-item-id=\"$id\"><i class=\"fas fa-trash\"></i></button>
-                </div>";
+        if (session('userdata')['level'] === 'admin')
+            return "<div class=\"text-center\">
+                        <button type=\"button\" class=\"btn btn-primary btn-sm mr-2\" data-item-id=\"$id\"><i class=\"fas fa-eye\"></i></button>
+                        <button type=\"button\" class=\"btn btn-info btn-sm mr-2\" data-item-id=\"$id\"><i class=\"fas fa-pencil-alt\"></i></button>
+                        <button type=\"button\" class=\"btn btn-danger btn-sm\" data-item-id=\"$id\"><i class=\"fas fa-trash\"></i></button>
+                    </div>";
+        
+        if (session('userdata')['level'] === 'admin')
+            return "<div class=\"text-center\">
+                        <button type=\"button\" class=\"btn btn-primary btn-sm mr-2\" data-item-id=\"$id\"><i class=\"fas fa-eye\"></i></button>
+                    </div>";
+
+        return "<p><strong>forbidden</strong></p>";
     }
 
     protected function buildStatusSwitch($id, $isActive)

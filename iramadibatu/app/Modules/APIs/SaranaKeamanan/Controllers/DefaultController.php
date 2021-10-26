@@ -64,6 +64,10 @@ class DefaultController extends ApiController
         if (empty($posts)) {
             $posts = (array) $this->request->getVar();
         }
+        // echo "<pre>";
+        // print_r($posts);
+        // echo "</pre>";
+        // die();
         $data = $this->SKModel->customDatatable($posts);
 
         $num = $posts['start'];

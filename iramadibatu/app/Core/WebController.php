@@ -35,6 +35,7 @@ class WebController extends BaseController
         $data['moduleViewPath'] = implode('\\', $arrPath) . '\\';
         $data['contentIncludeData'] = $this->contentIncludes;
         $data['userLevel'] = session('userdata')['level'] ?? '';
+        $data['loggedUsername'] = session('userdata')['username'] ?? '';
         
         return view($data['moduleViewPath'].$viewName, $data);
     }
