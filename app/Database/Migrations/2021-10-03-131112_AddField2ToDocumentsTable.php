@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class AddFieldToDocumentsTable extends Migration
+class AddField2ToDocumentsTable extends Migration
 {
     public function up()
     {

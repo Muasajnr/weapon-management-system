@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class ModifySaranaKeamananTable extends Migration
+class ModifySaranaKeamananTable2 extends Migration
 {
     public function up()
     {

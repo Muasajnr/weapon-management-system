@@ -30,7 +30,6 @@ $routes->setAutoRoute(true);
  * Route Definitions
  * --------------------------------------------------------------------
  */
-
 if (!is_cli()) {
     $router = service('router');
 
