@@ -4,7 +4,7 @@ namespace App\Database\Migrations\Logs\ApiErrorsLogs;
 
 use CodeIgniter\Database\Migration;
 
-class ModifyTable extends Migration
+class ModifyTable3 extends Migration
 {
 
     protected $DBGroup = 'logs';

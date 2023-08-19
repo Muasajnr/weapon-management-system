@@ -4,26 +4,10 @@ namespace App\Database\Migrations\Logs\ApiErrorsLogs;
 
 use CodeIgniter\Database\Migration;
 
-class ModifyTable extends Migration
+class ModifyLogsTable extends Migration
 {
-    protected $DBGroup = 'logs';
-    
+
     public function up()
-    {
-        $this->forge->dropColumn('api_errors_logs', 'sys_created_at');
-        $this->forge->dropColumn('api_errors_logs', 'sys_updated_at');
-        $this->forge->dropColumn('api_errors_logs', 'sys_deleted_at');
-
-        $this->forge->addColumn('api_errors_logs', [
-            'issued_at' => [
-                'type' => 'datetime', 
-                'null' => true,
-                'after' => 'trace'
-            ]
-        ]);
-    }
-
-    public function down()
     {
         $this->forge->addColumn('api_errors_logs', [
             'sys_created_at' => [
@@ -45,6 +29,16 @@ class ModifyTable extends Migration
                 'after' => 'deleted_at'
             ],
         ]);
-        $this->forge->dropColumn('api_errors_logs', 'issued_at');
+    }
+
+    public function down()
+    {
+        $this->db->disableForeignKeyChecks();
+
+        $this->forge->dropColumn('api_errors_logs', 'sys_created_at');
+        $this->forge->dropColumn('api_errors_logs', 'sys_updated_at');
+        $this->forge->dropColumn('api_errors_logs', 'sys_deleted_at');
+
+        $this->db->enableForeignKeyChecks();
     }
 }

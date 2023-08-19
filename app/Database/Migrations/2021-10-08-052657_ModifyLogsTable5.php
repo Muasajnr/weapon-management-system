@@ -4,10 +4,8 @@ namespace App\Database\Migrations\Logs\ApiErrorsLogs;
 
 use CodeIgniter\Database\Migration;
 
-class ModifyTable extends Migration
+class ModifyLogsTable5 extends Migration
 {
-
-    protected $DBGroup = 'logs';
 
     public function up()
     {
