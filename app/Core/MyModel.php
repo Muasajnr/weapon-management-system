@@ -52,24 +52,24 @@ class MyModel extends Model {
             'sys_updated_user',
             'deleted_at',
             'sys_deleted_user',
-            'sys_purged_user'
+            // 'sys_purged_user'
         ]);
     }
 
     protected function setupCommonFields(array $data)
     {
         $currentTime = Time::now();
-        $currentUser  = $data['data']['username'];
+        // $currentUser  = $data['data']['username'] ?? null;
 
         $data['data']['created_at'] = $currentTime->toDateTimeString();
-        $data['data']['sys_created_user'] = $currentUser;
+        // $data['data']['sys_created_user'] = $currentUser;
         $data['data']['updated_at'] = $currentTime->toDateTimeString();
-        $data['data']['sys_updated_user'] = $currentUser;
-        $data['data']['deleted_at'] = null;
-        $data['data']['sys_deleted_user'] = $currentUser;
-        $data['data']['sys_purged_user'] = $currentUser;
+        // $data['data']['sys_updated_user'] = $currentUser;
+        // $data['data']['deleted_at'] = null;
+        // $data['data']['sys_deleted_user'] = $currentUser;
+        // $data['data']['sys_purged_user'] = $currentUser;
 
-        unset($data['data']['username']);
+        // unset($data['data']['username']);
 
         return $data;
     }

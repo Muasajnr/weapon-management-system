@@ -217,6 +217,8 @@ class JenisSaranaController extends ApiController
             
             $data = $this->request->getVar();
 
+            $data = (array) $data;
+
             $updatedData['name'] = $data['name'];
             $updatedData['desc'] = $data['desc'];
             $updatedData['is_active'] = $data['is_active'];

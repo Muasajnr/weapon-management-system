@@ -97,11 +97,11 @@ class DefaultController extends ApiController
             return $this->response
                 ->setJSON($errOutput)
                 ->setStatusCode($e->getCode());
-        } catch(Exception $e) { 
+        } catch(Exception $e) {
             $errOutput = $this->getErrorOutput($e, $this->request);
             return $this->response
                 ->setJSON($errOutput)
-                ->setStatusCode($e->getCode());
+                ->setStatusCode(ResponseInterface::HTTP_BAD_REQUEST);
         }
     }
 

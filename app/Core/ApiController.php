@@ -8,6 +8,7 @@ use App\Modules\Shared\Models\ApiErrorLogModel;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\I18n\Time;
 
 class ApiController extends BaseController
@@ -85,17 +86,18 @@ class ApiController extends BaseController
     protected function getErrorOutput($exception, IncomingRequest $request) : array
     {
         $data = [
-            'req_body'  => null,
-            'req_headers'   => null,
-            'req_method' => $request->getMethod(),
-            'req_ip_addr'   => $request->getIPAddress(),
-            'req_is_ajax'   => $request->isAJAX() ?? 0,
-            'req_path' => $request->getPath(),
-            'message'   => $exception->getMessage(),
-            'code'  => $exception->getCode(),
-            'file'  => $exception->getFile(),
-            'line'  => $exception->getLine(),
-            'trace' => $exception->getTraceAsString(),
+            // 'req_body'  => null,
+            // 'req_headers'   => null,
+            // 'req_method' => $request->getMethod(),
+            // 'req_ip_addr'   => $request->getIPAddress(),
+            // 'req_is_ajax'   => $request->isAJAX() ?? 0,
+            // 'req_path' => $request->getPath(),
+            'accessed_url_path' => $request->getPath(),
+            'message'           => $exception->getMessage(),
+            'code'              => $exception->getCode(),
+            'file'              => $exception->getFile(),
+            'line'              => $exception->getLine(),
+            'trace'             => $exception->getTraceAsString(),
         ];
 
         $errors = [];
@@ -105,7 +107,8 @@ class ApiController extends BaseController
         $this->logModel->addLogs($data);
 
         return [
-            'status'    => $exception->getCode(),
+            // 'status'    => $exception->getCode(),
+            'status'    => ResponseInterface::HTTP_BAD_REQUEST,
             'message'   => $exception->getMessage(),
             'errors'    => $errors,
         ];

@@ -122,9 +122,9 @@ class AuthModel extends CoreApiModel
      */
     public function createToken(array $data) : bool
     {
-        $now = Time::now();
-        $data['created_at'] = $now->toDateTimeString();
-        $data['updated_at'] = $now->toDateTimeString();
+        // $now = Time::now();
+        // $data['created_at'] = $now->toDateTimeString();
+        // $data['updated_at'] = $now->toDateTimeString();
         
         $result = $this->builder('users_tokens')
             ->insert($data);
