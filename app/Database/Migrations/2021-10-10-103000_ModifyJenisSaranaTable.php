@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database\Migrations\Defaults\JenisSarana;
+namespace App\Database\Migrations\JenisSarana;
 
 use CodeIgniter\Database\Migration;
 

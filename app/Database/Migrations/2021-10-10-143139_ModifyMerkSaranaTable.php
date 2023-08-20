@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database\Migrations\Defaults\MerkSarana;
+namespace App\Database\Migrations\MerkSarana;
 
 use CodeIgniter\Database\Migration;
 

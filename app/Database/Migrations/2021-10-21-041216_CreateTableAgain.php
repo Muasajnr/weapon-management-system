@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database\Migrations\Defaults\KembalikanSarana;
+namespace App\Database\Migrations\KembalikanSarana;
 
 use CodeIgniter\Database\Migration;
 

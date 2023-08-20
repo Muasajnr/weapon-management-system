@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database\Migrations\Defaults\PinjamSarana;
+namespace App\Database\Migrations\PinjamSarana;
 
 use CodeIgniter\Database\Migration;
 

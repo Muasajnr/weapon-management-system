@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database\Migrations\Defaults\BeritaAcara;
+namespace App\Database\Migrations\BeritaAcara;
 
 use CodeIgniter\Database\Migration;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database\Migrations\Defaults\PenanggungJawab;
+namespace App\Database\Migrations\PenanggungJawab;
 
 use CodeIgniter\Database\Migration;
 
