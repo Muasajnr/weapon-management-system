@@ -1,7 +1,7 @@
 {
     "name": "rasyidcode/weapon-management-system",
     "type": "project",
-    "description": "The CodeIgniter framework v4",
+    "description": "Weapon management system",
     "homepage": "https://codeigniter.com",
     "license": "MIT",
     "require": {
