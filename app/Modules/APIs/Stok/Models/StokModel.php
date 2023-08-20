@@ -92,6 +92,9 @@ class StokModel extends CoreApiModel
     public function customCountTotalDatatable(array $dtParams, bool $history = false)
     {
         $i = 0;
+
+        $this->defaultBuilder()->select('MAX(sarana_keamanan.id)');
+
         foreach($this->columnSearch as $column) {
             if (isset($dtParams['search']) && !empty($dtParams['search'])) {
                 if ($i === 0) {
@@ -132,6 +135,8 @@ class StokModel extends CoreApiModel
      */
     public function customCountTotalFilteredDatatable(bool $history = false) : int
     {
+        $this->defaultBuilder()->select('MAX(sarana_keamanan.id)');
+        
         if (!$history)
             $this->defaultBuilder()->where('deleted_at', null);
         else
