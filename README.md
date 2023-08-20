@@ -1,10 +1,23 @@
 # Weapon Management System
 
+## Known Bugs
+
+- Master Data - Data Jenis Sarana, Duplicate data on clicking detail button
+- Master Data - Data User
+    - Duplicate data on clicking detail button
+    - User level color should be different
+    - Cannot reset the filter
+    - Current login user has no action, or readonly
+- Filter card is too small
+- Berita Acara - Error detail, cannot showing uploaded file
+
+
 ## Docker Commands
 
 - Run with spark
 ```shell
-docker run -it --rm --name run-wms-php74 -p 8080:8080 -v $PWD:/usr/src/myapp -w /usr/src/myapp php74-cli-intl php spark serve --host 0.0.0.0
+docker run -it --rm --name run-wms-php74 --network my-network -p 8080:8080 -v $PWD:/usr/src/myapp -w /usr/src/myapp ci4-php74-cli php spark serve --host 0.0.0.0
+docker exec -it run-wms-php74 php spark migrate
 ```
 
 ## Docker Commands (Not Working for Now)
