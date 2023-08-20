@@ -28,22 +28,22 @@ class KembalikanModel extends CoreApiModel
 
         $this->defaultBuilder()->select(
             '
-            kembalikan_sarana.id as kembalikan_sarana_id,
+            max(kembalikan_sarana.id) as kembalikan_sarana_id,
             sum(kembalikan_sarana.jumlah) as kembalikan_sarana_jumlah,
-            kembalikan_sarana.created_at as kembalikan_sarana_tanggal,
+            max(kembalikan_sarana.created_at) as kembalikan_sarana_tanggal,
 
-            sarana_keamanan.nomor_sarana as nomor_sarana,
-            jenis_sarana.name as nama_sarana,
-            merk_sarana.name as merk_sarana,
+            max(sarana_keamanan.nomor_sarana) as nomor_sarana,
+            max(jenis_sarana.name) as nama_sarana,
+            max(merk_sarana.name) as merk_sarana,
 
-            berita_acara.nomor as berita_acara_nomor,
+            max(berita_acara.nomor) as berita_acara_nomor,
 
-            pihak_1.nama as pihak_1_nama,
-            pihak_1.nip as pihak_1_nip,
-            pihak_2.nama as pihak_2_nama,
-            pihak_2.nip as pihak_2_nip,
+            max(pihak_1.nama)   as pihak_1_nama,
+            max(pihak_1.nip)    as pihak_1_nip,
+            max(pihak_2.nama)   as pihak_2_nama,
+            max(pihak_2.nip)    as pihak_2_nip,
 
-            pinjam_sarana.kode_peminjaman as kode,
+            max(pinjam_sarana.kode_peminjaman) as kode,
             '
         );
 

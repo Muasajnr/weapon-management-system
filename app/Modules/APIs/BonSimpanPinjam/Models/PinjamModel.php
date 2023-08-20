@@ -92,7 +92,6 @@ class PinjamModel extends CoreApiModel
         $this->defaultBuilder()->select('nomor_peminjaman');
         $this->defaultBuilder()->where('deleted_at', null);
         $this->defaultBuilder()->orderBy('id', 'desc');
-        $this->defaultBuilder()->groupBy('nomor_peminjaman');
         $this->defaultBuilder()->limit(1);
 
         return $this->defaultBuilder()->get()->getRowArray();
@@ -112,22 +111,22 @@ class PinjamModel extends CoreApiModel
 
         $this->defaultBuilder()->select(
             '
-            pinjam_sarana.id as pinjam_sarana_id,
+            max(pinjam_sarana.id) as pinjam_sarana_id,
             sum(pinjam_sarana.jumlah) as pinjam_sarana_jumlah,
-            pinjam_sarana.created_at as tanggal_pinjam,
-            pinjam_sarana.nomor_peminjaman as nomor_peminjaman,
+            max(pinjam_sarana.created_at) as tanggal_pinjam,
+            max(pinjam_sarana.nomor_peminjaman) as nomor_peminjaman,
             pinjam_sarana.kode_peminjaman as kode_peminjaman,
 
-            sarana_keamanan.nomor_sarana as nomor_sarana,
-            jenis_sarana.name as nama_sarana,
-            merk_sarana.name as merk_sarana,
+            max(sarana_keamanan.nomor_sarana) as nomor_sarana,
+            max(jenis_sarana.name) as nama_sarana,
+            max(merk_sarana.name) as merk_sarana,
 
-            berita_acara.nomor as berita_acara_nomor,
+            max(berita_acara.nomor) as berita_acara_nomor,
 
-            pihak_1.nama as pihak_1_nama,
-            pihak_1.nip as pihak_1_nip,
-            pihak_2.nama as pihak_2_nama,
-            pihak_2.nip as pihak_2_nip,
+            max(pihak_1.nama)    as pihak_1_nama,
+            max(pihak_1.nip)     as pihak_1_nip,
+            max(pihak_2.nama)    as pihak_2_nama,
+            max(pihak_2.nip)     as pihak_2_nip,
             '
         );
 

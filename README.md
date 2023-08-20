@@ -11,7 +11,6 @@
 - Filter card is too small
 - Berita Acara - Error detail, cannot showing uploaded file
 
-
 ## Docker Commands
 
 - Run with spark
