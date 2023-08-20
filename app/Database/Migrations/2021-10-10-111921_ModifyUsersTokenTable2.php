@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database\Migrations\UsersTokens;
+namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
