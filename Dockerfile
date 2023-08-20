@@ -4,4 +4,6 @@ RUN curl -sSLf -o /usr/local/bin/install-php-extensions https://github.com/mloca
     
 RUN chmod +x /usr/local/bin/install-php-extensions
     
-RUN install-php-extensions intl mysqli
+RUN install-php-extensions intl mysqli zip
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

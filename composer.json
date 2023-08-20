@@ -1,5 +1,5 @@
 {
-    "name": "codeigniter4/framework",
+    "name": "rasyidcode/weapon-management-system",
     "type": "project",
     "description": "The CodeIgniter framework v4",
     "homepage": "https://codeigniter.com",
@@ -13,7 +13,8 @@
         "kint-php/kint": "^3.3",
         "laminas/laminas-escaper": "^2.8",
         "psr/log": "^1.1",
-        "firebase/php-jwt": "^5.4"
+        "firebase/php-jwt": "^5.4",
+        "codeigniter4/framework": "v4.1.4"
     },
     "require-dev": {
         "codeigniter/coding-standard": "^1.1",
